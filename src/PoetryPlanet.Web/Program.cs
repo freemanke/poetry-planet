@@ -20,16 +20,6 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.WebHost.ConfigureKestrel((_, b) => { b.Listen(new IPEndPoint(IPAddress.Any, 5255)); });
-        builder.Configuration.AddUserSecrets<Program>();
-        builder.Logging.ClearProviders();
-        // builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-        builder.Logging.AddSimpleConsole(options =>
-        {
-            options.SingleLine = true;
-            options.TimestampFormat = "yyyy-MM-dd HH:mm:ss.sss ";
-        });
-        
         RegisterServices(builder);
         RegisterDbMysql(builder);
        
@@ -49,24 +39,31 @@ public class Program
     public static void RegisterServices(WebApplicationBuilder builder)
     {
         var services = builder.Services;
+        builder.WebHost.ConfigureKestrel((_, b) => { b.Listen(new IPEndPoint(IPAddress.Any, 5255)); });
+        builder.Configuration.AddUserSecrets<Program>();
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSimpleConsole(options =>
+        {
+            options.SingleLine = true;
+            options.TimestampFormat = "yyyy-MM-dd HH:mm:ss.sss ";
+        });
         services.AddBlazoredLocalStorage();
         services.AddRazorComponents().AddInteractiveServerComponents();
         services.AddRadzenComponents();
         services.AddCascadingAuthenticationState();
-        services.AddScoped<IdentityUserAccessor>();
-        services.AddScoped<IdentityRedirectManager>();
-        services.AddScoped<WorkService>();
-        services.AddScoped<SettingService>();
-        services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddAutoMapper(typeof(AutoMapperProfile));
-        services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddAuthentication(options =>
             {
                 options.DefaultScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
             .AddIdentityCookies();
-
+        services.AddScoped<IdentityUserAccessor>();
+        services.AddScoped<IdentityRedirectManager>();
+        services.AddScoped<WorkService>();
+        services.AddScoped<SettingService>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
     }
 

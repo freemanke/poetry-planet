@@ -5,17 +5,43 @@ using PoetryPlanet.Web.Data.Models;
 namespace PoetryPlanet.Web.Data;
 
 public interface IDynastyRepository : IRepository<Dynasty>;
+public interface IWorkRepository : IRepository<Work>;
+public interface IQuoteRepository : IRepository<Quote>;
+public interface ICollectionRepository : IRepository<Collection>;
 
 public class DynastyRepository : Repository<Dynasty>, IDynastyRepository
 {
-    public DynastyRepository(ILogger<DynastyRepository> loggerFactory, ApplicationDbContext context) 
-        : base(loggerFactory, context)
+    public DynastyRepository(ILogger logger, ApplicationDbContext context) : base(logger, context)
+    {
+    }
+}
+
+public class WorkRepository : Repository<Work>, IWorkRepository
+{
+    public WorkRepository(ILogger logger, ApplicationDbContext context) : base(logger, context)
+    {
+    }
+}
+
+public class CollectionRepository : Repository<Collection>, ICollectionRepository
+{
+    public CollectionRepository(ILogger logger, ApplicationDbContext context) : base(logger, context)
+    {
+    }
+}
+
+public class QuoteRepository : Repository<Quote>, IQuoteRepository
+{
+    public QuoteRepository(ILogger logger, ApplicationDbContext context) : base(logger, context)
     {
     }
 }
 
 public interface IUnitOfWork: IDisposable {
     IDynastyRepository Dynasty { get; }
+    IWorkRepository Work { get; }
+    ICollectionRepository Collection { get; }
+    IQuoteRepository Quote { get; }
     bool Save();
 }
 
@@ -26,12 +52,18 @@ public class UnitOfWork : IUnitOfWork
 
     public UnitOfWork(ILoggerFactory loggerFactory, ApplicationDbContext context)
     {
-        logger = loggerFactory.CreateLogger<UnitOfWork>();
         this.context = context;
+        logger = loggerFactory.CreateLogger<UnitOfWork>();
         Dynasty = new DynastyRepository(loggerFactory.CreateLogger<DynastyRepository>(), this.context);
+        Work = new WorkRepository(loggerFactory.CreateLogger<WorkRepository>(), this.context);
+        Collection = new CollectionRepository(loggerFactory.CreateLogger<CollectionRepository>(), this.context);
+        Quote = new QuoteRepository(loggerFactory.CreateLogger<QuoteRepository>(), this.context);
     }
 
     public IDynastyRepository Dynasty { get; }
+    public IWorkRepository Work { get; }
+    public  ICollectionRepository Collection { get; }
+    public IQuoteRepository Quote { get; }
 
     public void Dispose()
     {
@@ -68,10 +100,10 @@ public interface IRepository<T> where T : class
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    private readonly ILogger<Repository<T>> logger;
+    private readonly ILogger logger;
     protected readonly ApplicationDbContext context;
 
-    protected Repository(ILogger<Repository<T>> logger, ApplicationDbContext context)
+    protected Repository(ILogger logger, ApplicationDbContext context)
     {
         this.logger = logger;
         this.context = context;
