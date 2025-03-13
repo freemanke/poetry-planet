@@ -8,20 +8,23 @@
     <RadzenText TextStyle="TextStyle.H6" Text="调试工具"></RadzenText>
 </RadzenStack>
 
-<RadzenCard class="mb-2 rounded-2">
-    <RadzenAccordion class="mb-2" Style="" Multiple="true">
-        <Items>
-            <RadzenAccordionItem class="rounded-2" Selected="true" Text="功能测试" Icon="check_circle">
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="2">
+<RadzenAccordion class="mb-2" Style="" Multiple="true">
+    <Items>
+        <RadzenAccordionItem class="rounded-2" Selected="true" Text="功能测试" Icon="check_circle">
+            <RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal">
                     <RadzenButton class="mb-2" ButtonStyle="ButtonStyle.Danger" Text="触发页面类抛出异常" Click="TriggerPageException"></RadzenButton>
                     <RadzenButton class="mb-2" ButtonStyle="ButtonStyle.Danger" Text="触发服务类抛出异常" Click="TriggerServiceException"></RadzenButton>
                 </RadzenStack>
-            </RadzenAccordionItem>
-        </Items>
-    </RadzenAccordion>
-</RadzenCard>
-
-<RadzenAlert AlertStyle="AlertStyle.Secondary" Text="@buildInfo" AllowClose="false"/>
+            </RadzenStack>
+        </RadzenAccordionItem>
+        <RadzenAccordionItem class="rounded-2" Selected="true" Text="系统信息" Icon="help_outline">
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="2">
+                <RadzenText TextStyle="TextStyle.Body1" Text="@buildInfo"/>
+            </RadzenStack>
+        </RadzenAccordionItem>
+    </Items>
+</RadzenAccordion>
 
 @code 
 {

@@ -22,7 +22,7 @@ public class Program
         builder.WebHost.ConfigureKestrel((_, b) => { b.Listen(new IPEndPoint(IPAddress.Any, 5255)); });
         builder.Configuration.AddUserSecrets<Program>();
         builder.Logging.ClearProviders();
-        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+       // builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         builder.Logging.AddSimpleConsole(options =>
         {
             options.SingleLine = true;
@@ -143,7 +143,7 @@ public class Program
                     db.EnsuredInitialize(sp.GetRequiredService<IMapper>());
                     break;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     logger.LogError($"迁移数据库错误，{interval} 后重试");
                 }

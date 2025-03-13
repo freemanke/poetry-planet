@@ -12,12 +12,6 @@
 <RadzenTooltip />
 
 <RadzenLayout>
-    @*<div id="blazor-error-ui" data-nosnippet>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
-            <RadzenLabel TextAlign="TextAlign.Center" class="" Text="发生内部错误，请重新加载"></RadzenLabel>
-            <RadzenButton ButtonStyle="ButtonStyle.Primary" href="" class="reload">重新加载</RadzenButton>
-        </RadzenStack>
-    </div>*@
     <RadzenHeader>
         <RadzenRow AlignItems="AlignItems.Center">
             <RadzenColumn Size="6">
@@ -61,7 +55,23 @@
     </RadzenSidebar>
     <RadzenBody>
         <div class="">
-            @Body
+            <ErrorBoundary @ref="@errorBoundary">
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent>
+                    <RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+                        <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.H6" Text="系统错误"></RadzenText>
+                    </RadzenStack>
+                    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
+                        <RadzenAlert AlertStyle="AlertStyle.Warning" AllowClose="false">
+                            <RadzenLabel TextAlign="TextAlign.Center" class="">
+                                抱歉，发生系统内部错误，请稍后重新加载或联系管理员
+                            </RadzenLabel>
+                        </RadzenAlert>
+                    </RadzenStack>
+                </ErrorContent>
+            </ErrorBoundary>
         </div>
     </RadzenBody>
     <RadzenFooter class="rz-display-md-show" Style="padding: 6px">
@@ -73,8 +83,14 @@
 
 @code
 {
+    private ErrorBoundary? errorBoundary;
     private bool isSidebarExpanded = true;
 
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+    
     protected override async Task OnInitializedAsync()
     {
         NavigationManager.LocationChanged += OnLocationChanged;
