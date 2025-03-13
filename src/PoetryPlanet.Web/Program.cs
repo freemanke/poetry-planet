@@ -4,6 +4,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using PoetryPlanet.Web.Components;
@@ -22,7 +23,7 @@ public class Program
         builder.WebHost.ConfigureKestrel((_, b) => { b.Listen(new IPEndPoint(IPAddress.Any, 5255)); });
         builder.Configuration.AddUserSecrets<Program>();
         builder.Logging.ClearProviders();
-       // builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        // builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         builder.Logging.AddSimpleConsole(options =>
         {
             options.SingleLine = true;
@@ -56,6 +57,7 @@ public class Program
         services.AddScoped<IdentityRedirectManager>();
         services.AddScoped<WorkService>();
         services.AddScoped<SettingService>();
+        services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddAuthentication(options =>

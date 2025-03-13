@@ -1,6 +1,6 @@
 ﻿@attribute [Route(Consts.RouterDynasties)]
 
-@inject ApplicationDbContext Db
+@inject IUnitOfWork unit
 
 <PageTitle>朝代信息</PageTitle>
 
@@ -11,6 +11,7 @@
 <RadzenTabs>
     <Tabs>
         <RadzenTabsItem Text="时间轴">
+            <RadzenText Visible="@(!allDynasties.Any())" Text="没有查询到数据"></RadzenText>
             <RadzenTimeline LinePosition="LinePosition.Left" AlignItems="AlignItems.Center">
                 <Items>
                     @foreach (var dynasty in allDynasties)
@@ -25,7 +26,7 @@
                                     <RadzenText TextStyle="TextStyle.Subtitle2"> (@dynasty.GetYearString())</RadzenText>
                                 </RadzenStack>
                                 <RadzenText Text="@dynasty.Intro"></RadzenText>
-                                
+
                             </ChildContent>
                         </RadzenTimelineItem>
                     }
@@ -65,7 +66,7 @@
     IQueryable<Dynasty> items = new List<Dynasty>().AsQueryable();
     IList<Dynasty> selected = new List<Dynasty>();
     private string keyword = "";
-    private List<Dynasty> allDynasties = [];
+    private IEnumerable<Dynasty> allDynasties = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,8 +81,8 @@
 
     private async Task UpdateAsync()
     {
-        allDynasties = await Db.Dynasties.OrderBy(a => a.StartYear).ToListAsync();
-        var query = Db.Dynasties.Where(a => a.Id > 0);
+        allDynasties = await unit.Dynasty.ToListAsync();
+        var query = unit.Dynasty.Where(a => a.Id > 0);
         if (!string.IsNullOrEmpty(keyword))
         {
             query = query.Where(a =>
