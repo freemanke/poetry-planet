@@ -89,7 +89,7 @@
     
     private async Task UpdateAsync()
     {
-        allCollectionKinds = await Db.Collections.OrderBy(a=>a.Id).Select(a => a.Kind).Distinct().ToListAsync();
+        allCollectionKinds = (await Db.Collections.OrderBy(a=>a.Id).Select(a => a.Kind).ToListAsync()).Distinct().ToList();
         var query = Db.Collections.Where(a => a.Id > 0);
         if (!string.IsNullOrEmpty(keyword))
         {

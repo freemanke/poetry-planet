@@ -52,7 +52,7 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="Work" Property="Title" Title="标题" Width="260px" Sortable="true">
             <Template Context="data">
-                <a style="font-weight: bold; text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => DetailAsync(data.Id))">@data.Title</a>
+                <a style="text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => DetailAsync(data.Id))">@data.Title</a>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="Work" Property="Author" Title="诗人" Width="90px">
