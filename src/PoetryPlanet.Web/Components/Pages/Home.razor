@@ -1,0 +1,45 @@
+﻿@page "/home"
+@inject ApplicationDbContext db
+
+<PageTitle>诗词星球</PageTitle>
+
+<RadzenRow>
+    <RadzenColumn Size="3">
+        <RadzenCard class="bg-light">
+            <RadzenText Text="诗词曲赋数量分布"></RadzenText>
+            <RadzenChart>
+                <RadzenPieSeries Data="@items" Title="诗词分布" CategoryProperty="Kind" ValueProperty="Count">
+                    <RadzenSeriesDataLabels Visible="false"/>
+                </RadzenPieSeries>
+            </RadzenChart>
+        </RadzenCard>
+    </RadzenColumn>
+    <RadzenColumn Size="3">
+        <RadzenCard class="bg-light">
+            <RadzenText Text="诗词曲赋朝代分布"></RadzenText>
+            <RadzenChart>
+                <RadzenPieSeries Data="@items" Title="诗词朝代" CategoryProperty="Kind" ValueProperty="Count">
+                    <RadzenSeriesDataLabels Visible="false"/>
+                </RadzenPieSeries>
+            </RadzenChart>
+        </RadzenCard>
+    </RadzenColumn>
+</RadzenRow>
+
+@code
+{
+    class DataItem
+    {
+        public string Kind { get; set; } = "";
+        public int Count { get; set; }
+    }
+
+    private DataItem[] items = [
+        new() {Kind = "诗 (3290)", Count = 3290},
+        new(){Kind = "词 (4741)", Count = 4741},
+        new(){Kind = "曲 (378)", Count = 378},
+        new(){Kind = "赋 (27)", Count = 27},
+        new(){Kind = "文 (2971)", Count = 2971},
+    ];
+}
+

@@ -1,0 +1,1 @@
+./build_staging_image.sh && ./deploy/staging/deploy.sh

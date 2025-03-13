@@ -1,0 +1,98 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
+@inject ThemeService ThemeService
+@inject ILocalStorageService Localstorage
+@inject IHostEnvironment HostEnvironment
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+<RadzenTooltip />
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenRow AlignItems="AlignItems.Center">
+            <RadzenColumn Size="6">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                    <RadzenSidebarToggle Click="@(() => isSidebarExpanded = !isSidebarExpanded)"/>
+                    <RadzenLabel Style="font-weight: bold;font-size: 18px">诗词星球 <small>1.0.0</small></RadzenLabel>
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn Size="6" Style="padding-right: 24px">
+                <RadzenStack 
+                    Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" 
+                    JustifyContent="JustifyContent.End" Gap="2">
+                    <RadzenAppearanceToggle />
+                    <RadzenDropDown
+                        Style="width: 150px" Name="ThemeDropDown" TValue="string" Value="ThemeService.Theme" 
+                        ValueChanged="@ChangeThemeAsync" Data="@Themes.Free.ToArray()"
+                        TextProperty="@nameof(Theme.Text)" ValueProperty="@nameof(Theme.Value)"/>
+                    <RadzenMenu>
+                        <RadzenMenuItem Text="Freeman Ke" Icon="account_circle">
+                            <RadzenMenuItem Text="修改密码" Click="ChangePassword" Icon="edit"></RadzenMenuItem>
+                            <RadzenMenuItem Text="退出登录" Icon="exit_to_app"></RadzenMenuItem>
+                        </RadzenMenuItem>
+                    </RadzenMenu>
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenHeader>
+    <RadzenSidebar Style="width: 160px" @bind-Expanded="@isSidebarExpanded">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="诗词星球" Path="@Consts.RouterHome" Icon="travel_explore" />
+            <RadzenPanelMenuItem Text="我的收藏" Path="@Consts.RouterMyFavorites" Icon="favorite" />
+            <RadzenPanelMenuItem Text="我的诗集" Path="@Consts.RouterMyCollections" Icon="book_4" />
+            <RadzenPanelMenuItem Text="诗词搜索" Path="@Consts.RouterWorks" Icon="g_translate"/>
+            <RadzenPanelMenuItem Text="朝代信息" Path="@Consts.RouterDynasties" Icon="history_toggle_off"/>
+            <RadzenPanelMenuItem Text="诗人信息" Path="@Consts.RouterAuthors" Icon="group"/>
+            <RadzenPanelMenuItem Text="诗集信息" Path="@Consts.RouterCollections" Icon="apps"/>
+            <RadzenPanelMenuItem Text="诗词佳句" Path="@Consts.RouterQuotes" Icon="thumb_up"/>
+            <RadzenPanelMenuItem Text="系统设置" Path="@Consts.RouterSettings" Icon="person" />
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="">
+            @Body
+        </div>
+    </RadzenBody>
+    <RadzenFooter class="rz-display-md-show" Style="padding: 6px">
+        <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center">
+            <RadzenText TextStyle="TextStyle.Body2" Style="margin: 0">©️2025 诗词星球·畅想未来 (@HostEnvironment.EnvironmentName)</RadzenText>
+        </RadzenStack>
+    </RadzenFooter>
+</RadzenLayout>
+
+@code
+{
+    private bool isSidebarExpanded = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+        await Task.CompletedTask;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var theme = await Localstorage.GetItemAsync<string>(Consts.CURRENT_THEME);
+        if (!string.IsNullOrEmpty(theme) && !ThemeService.Theme.Equals(theme)) ThemeService.SetTheme(theme);
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    private void ChangePassword()
+    {
+        NotificationService.Notify(NotificationSeverity.Info, "修改密码", "修改密码");
+    }
+
+    private async Task ChangeThemeAsync(string value)
+    {
+        ThemeService.SetTheme(value);
+        await Localstorage.SetItemAsStringAsync(Consts.CURRENT_THEME, ThemeService.Theme);
+    }
+}

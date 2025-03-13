@@ -1,0 +1,1 @@
+./build_image.sh latest Staging

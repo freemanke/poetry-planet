@@ -1,0 +1,76 @@
+﻿@attribute [Route(Consts.RouterMyCollections)]
+
+@inject ApplicationDbContext db
+
+<PageTitle>我的诗集</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="我的诗集"></RadzenText>
+</RadzenStack>
+
+<RadzenRow>
+    <RadzenColumn size="12">
+        <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."/>
+        <RadzenButton class="mb-2" Click="SearchAsync" Icon="search" Text=""></RadzenButton>
+    </RadzenColumn>
+</RadzenRow>
+
+
+<RadzenRow class="mb-2">
+    <RadzenColumn Size="12">
+        <RadzenDataGrid 
+            class="rounded-2" Data="@items" TItem="Collection" PagerPosition="@PagerPosition.Bottom" 
+            AllowPaging="true" AllowColumnResize="true" SelectionMode="DataGridSelectionMode.Single"
+            AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
+            <Columns>
+                <RadzenDataGridColumn TItem="Collection" Property="Name" Title="名称" Width="170px" />
+                <RadzenDataGridColumn TItem="Collection" Property="Kind" Title="文体" Width="80px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn TItem="Collection" Property="Desc" Title="描述" />
+                <RadzenDataGridColumn TItem="Collection" Property="WorksCount" Title="诗词" Width="80px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn TItem="Collection" Property="QuotesCount" Title="佳句" Width="80px" TextAlign="TextAlign.Center" />
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenColumn>
+</RadzenRow>
+
+@code
+{
+    private IEnumerable<string> selectedKinds = [];
+    private List<string> allCollectionKinds = [];
+    private IQueryable<Collection> items = new List<Collection>().AsQueryable();
+    private IList<Collection> selected = new List<Collection>();
+    private string keyword = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await UpdateAsync();
+        selectedKinds = allCollectionKinds;
+    }
+
+    private Task SearchAsync()
+    {
+        return UpdateAsync();
+    }
+
+    private async Task UpdateAsync()
+    {
+        allCollectionKinds = await db.Collections.Select(a => a.Kind).Distinct().ToListAsync();
+        var query = db.Collections.Where(a => a.Id > 0);
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            query = query.Where(a =>
+                a.Name.Contains(keyword)
+                || a.Kind.Contains(keyword)
+                || a.Desc.Contains(keyword));
+        }
+
+        if (selectedKinds.Count() != 0)
+        {
+            query = query.Where(a => selectedKinds.Contains(a.Kind));
+        }
+
+        items = query.OrderBy(a => a.ShowOrder).AsQueryable();
+        await Task.CompletedTask;
+    }
+}

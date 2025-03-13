@@ -1,0 +1,78 @@
+﻿@attribute [Route(Consts.RouterAuthors)]
+
+@inject ApplicationDbContext db
+@inject DialogService dialogService
+
+<PageTitle>诗人信息</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="诗人信息"></RadzenText>
+</RadzenStack>
+
+<RadzenRow>
+    <RadzenColumn size="12">
+        <RadzenTextBox class=" mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."></RadzenTextBox>
+        <RadzenButton class=" mb-2" Click="SearchAsync" Icon="search" Text=""></RadzenButton>
+    </RadzenColumn>
+</RadzenRow>
+
+<RadzenDataGrid class="rounded-2"
+    Data="@items" TItem="Author" 
+    PagerPosition="@PagerPosition.Bottom" 
+    AllowPaging="true" 
+    AllowColumnResize="true"
+    SelectionMode="DataGridSelectionMode.Single" 
+    AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
+    <Columns>
+        <RadzenDataGridColumn TItem="Author" Property="Name" Title="姓名" Width="100px">
+            <Template Context="data">
+                <a style="font-weight: bold; text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => ShowAuthorDetailAsync(data.Id))">@data.Name</a>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Author" Property="Dynasty" Title="朝代" Width="80px" TextAlign="TextAlign.Center"  />
+        <RadzenDataGridColumn TItem="Author" Property="BirthYear" Title="生于" Width="90px" />
+        <RadzenDataGridColumn TItem="Author" Property="DeathYear" Title="死于" Width="90px"/>
+        <RadzenDataGridColumn TItem="Author" Property="Intro" Title="简介" />
+        
+    </Columns>
+</RadzenDataGrid>
+
+@code 
+{
+    IQueryable<Author> items = new List<Author>().AsQueryable();
+    IList<Author> selected = new List<Author>();
+    private string keyword = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await UpdateAsync();
+    }
+
+    private Task SearchAsync()
+    {
+        return UpdateAsync();
+    }
+
+    private async Task UpdateAsync()
+    {
+        var query = db.Authors.Where(a => a.Id > 0);
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            query = query.Where(a =>
+                a.Intro.Contains(keyword)
+                || a.Dynasty.Contains(keyword)
+                || a.Name.Contains(keyword));
+        }
+
+        items = query.AsQueryable();
+        await Task.CompletedTask;
+    }
+
+    private async Task ShowAuthorDetailAsync(int id)
+    {
+        await dialogService.OpenAsync<AuthorDetail>("",
+            new Dictionary<string, object> { { "id", id } },
+            new DialogOptions { Width = "800px", Resizable = false, Draggable = true, ShowClose = false });
+    }
+}

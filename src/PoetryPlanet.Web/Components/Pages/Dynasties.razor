@@ -1,0 +1,96 @@
+﻿@attribute [Route(Consts.RouterDynasties)]
+
+@inject ApplicationDbContext Db
+
+<PageTitle>朝代信息</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="朝代信息"></RadzenText>
+</RadzenStack>
+
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="时间轴">
+            <RadzenTimeline LinePosition="LinePosition.Left" AlignItems="AlignItems.Center">
+                <Items>
+                    @foreach (var dynasty in allDynasties)
+                    {
+                        <RadzenTimelineItem PointSize="PointSize.Medium" PointShadow="6" PointStyle="PointStyle.Primary">
+                            <LabelContent>
+                                <RadzenText TextStyle="TextStyle.H6" Text="@dynasty.Name"></RadzenText>
+                            </LabelContent>
+                            <ChildContent>
+                                <RadzenStack Orientation="Orientation.Horizontal">
+                                    <RadzenText TextStyle="TextStyle.H6" Text="@dynasty.Name"></RadzenText>
+                                    <RadzenText TextStyle="TextStyle.Subtitle2"> (@dynasty.GetYearString())</RadzenText>
+                                </RadzenStack>
+                                <RadzenText Text="@dynasty.Intro"></RadzenText>
+                                
+                            </ChildContent>
+                        </RadzenTimelineItem>
+                    }
+                </Items>
+            </RadzenTimeline>
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="列表">
+            <RadzenRow>
+                <RadzenColumn Size="12">
+                    <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."></RadzenTextBox>
+                    <RadzenButton class="mb-2" Click="SearchAsync" Icon="search" Text=""></RadzenButton>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenDataGrid class="rounded-2"
+                            Data="@items" TItem="Dynasty"
+                            PagerPosition="@PagerPosition.Bottom"
+                            AllowPaging="true"
+                            AllowColumnResize="true"
+                            SelectionMode="DataGridSelectionMode.Single"
+                            AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Dynasty" Property="Name" Title="名称" Width="100px" />
+                    <RadzenDataGridColumn TItem="Dynasty" Property="StartYear" Title="朝代" Width="200px">
+                        <Template Context="data">
+                            @data.GetYearString()
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="Dynasty" Property="Intro" Title="简介" />
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>
+
+@code 
+{
+    IQueryable<Dynasty> items = new List<Dynasty>().AsQueryable();
+    IList<Dynasty> selected = new List<Dynasty>();
+    private string keyword = "";
+    private List<Dynasty> allDynasties = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await UpdateAsync();
+    }
+
+    private Task SearchAsync()
+    {
+        return UpdateAsync();
+    }
+
+    private async Task UpdateAsync()
+    {
+        allDynasties = await Db.Dynasties.OrderBy(a => a.StartYear).ToListAsync();
+        var query = Db.Dynasties.Where(a => a.Id > 0);
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            query = query.Where(a =>
+                a.Name.Contains(keyword)
+                || a.Intro.Contains(keyword)
+                || a.NameTr.Contains(keyword));
+        }
+
+        items = query.OrderBy(a => a.StartYear).AsQueryable();
+        await Task.CompletedTask;
+    }
+}

@@ -1,0 +1,39 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PoetryPlanet.Client.App"
+             x:DataType="vm:MainWindowViewModel"
+             xmlns:local="using:PoetryPlanet.Client"
+             xmlns:vm="clr-namespace:PoetryPlanet.Client.ViewModels"
+             xmlns:semi="https://irihi.tech/semi"
+             xmlns:services="clr-namespace:PoetryPlanet.Client.Services"
+             RequestedThemeVariant="Light">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <Application.DataTemplates>
+        <services:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Styles>
+        <semi:SemiTheme Locale="zh-CN" />
+    </Application.Styles>
+             
+     <TrayIcon.Icons>
+         <TrayIcons>
+             <TrayIcon Icon="/Assets/avalonia-logo.ico" ToolTipText="用户管理系统">
+                 <TrayIcon.Menu>
+                     <NativeMenu>
+                         <NativeMenuItem Header="帮助" Click="menuAbout_OnClick"></NativeMenuItem>
+                         <NativeMenuItem Header="设置...">
+                             <NativeMenu>
+                                 <NativeMenuItem Header="用户设置" />
+                                 <NativeMenuItem Header="样式设置" />
+                                 <NativeMenuItemSeparator />
+                                 <NativeMenuItem Header="其他设置" />
+                             </NativeMenu>
+                         </NativeMenuItem>
+                         <NativeMenuItem Header="退出" Click="mnuQuit_OnClick"></NativeMenuItem>
+                     </NativeMenu>
+                 </TrayIcon.Menu>
+             </TrayIcon>
+         </TrayIcons>
+     </TrayIcon.Icons>
+</Application>

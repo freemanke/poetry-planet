@@ -1,0 +1,78 @@
+﻿@attribute [Route(Consts.RouterSettings)]
+
+
+@inject ILocalStorageService localStorage;
+@inject NotificationService notificationService;
+
+<PageTitle>系统配置</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="系统配置"></RadzenText>
+</RadzenStack>
+
+<RadzenCard class="mb-2 rounded-2">
+    <RadzenAccordion class="mb-2" Style="" Multiple="true">
+        <Items>
+            <RadzenAccordionItem Selected="true"  class="rounded-2" Text="个人信息" Icon="account_balance_wallet">
+                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                    <RadzenLabel>姓名</RadzenLabel>
+                    <RadzenTextBox Style="width: 400px" Placeholder="姓名..."></RadzenTextBox>
+                </RadzenStack>
+                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                    <RadzenLabel>昵称</RadzenLabel>
+                    <RadzenTextBox Style="width: 400px" Placeholder="昵称..."></RadzenTextBox>
+                </RadzenStack>
+                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                    <RadzenLabel>性别</RadzenLabel>
+                    <RadzenRadioButtonList Value="0" TValue="int">
+                        <Items>
+                            <RadzenRadioButtonListItem Text="男" Value="0"></RadzenRadioButtonListItem>
+                            <RadzenRadioButtonListItem Text="女" Value="1"></RadzenRadioButtonListItem>
+                        </Items>
+                    </RadzenRadioButtonList>
+                </RadzenStack>
+                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
+                    <RadzenLabel>备注</RadzenLabel>
+                    <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="备注信息.."></RadzenTextArea>
+                </RadzenStack>
+            </RadzenAccordionItem>
+            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="account_balance_wallet">
+                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
+                    <RadzenLabel>说明</RadzenLabel>
+                    <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="说明.."></RadzenTextArea>
+                </RadzenStack>
+            </RadzenAccordionItem>
+            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="account_balance_wallet">
+                <RadzenStack class="mb-2" Orientation="Orientation.Vertical">
+                    <RadzenButton ButtonStyle="ButtonStyle.Secondary" Style="width: 250px" Text="重置浏览器本地化配置" Click="ResetLocalSetting"></RadzenButton>
+                </RadzenStack>
+            </RadzenAccordionItem>
+        </Items>
+    </RadzenAccordion>
+</RadzenCard>
+
+<RadzenAlert AlertStyle="AlertStyle.Secondary" Text="@buildInfo" AllowClose="false"/>
+
+@code 
+{
+    private string buildInfo = "";
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        buildInfo = await Task.Run(() =>
+        {
+            var filePath = GetType().Assembly.Location;
+            var file = new System.IO.FileInfo(filePath);
+            return $"Build at {file.LastWriteTime:yyyy-MM-dd HH:mm:ss} Powered by Blazor + dotnet 9.0 + Radzen.Blazor";
+        });
+    }
+
+    private async Task ResetLocalSetting()
+    {
+        if( await localStorage.ContainKeyAsync(Consts.WORKS_ALERT_CLOSED))
+            await localStorage.RemoveItemAsync(Consts.WORKS_ALERT_CLOSED);
+       
+        G.IsWorksAlertClosed = false;
+        notificationService.Notify(NotificationSeverity.Success, "重置浏览器本地存储成功");
+    }
+}

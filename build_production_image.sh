@@ -1,0 +1,1 @@
+./build_image.sh 1.0.0 Production

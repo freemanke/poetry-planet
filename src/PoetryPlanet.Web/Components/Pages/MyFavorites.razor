@@ -1,0 +1,80 @@
+﻿@attribute [Route(Consts.RouterMyFavorites)]
+
+@inject ApplicationDbContext db
+@attribute [StreamRendering]
+
+<PageTitle>我的收藏</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Orientation="Orientation.Vertical">
+    <RadzenText TextStyle="TextStyle.H6" Text="我的收藏 · 诗词世界"></RadzenText>
+    <RadzenText TextStyle="TextStyle.Body1" Text="莫听穿林打叶声，何妨吟啸且徐行。竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。">
+    </RadzenText>
+</RadzenStack>
+
+<RadzenStack 
+    Visible="@isLoading" AlignItems="AlignItems.Center" Orientation="Orientation.Vertical" 
+    JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap">
+    <RadzenProgressBarCircular 
+        ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" 
+        Mode="ProgressBarMode.Indeterminate" />
+    <RadzenText Text="数据加载中..."></RadzenText>
+</RadzenStack>
+
+<RadzenAlert 
+    class="opacity-75" Visible="@isAlertVisible" AllowClose="true" AlertStyle="AlertStyle.Secondary" 
+    Text="您还没有收藏任何诗词，请前往诗词搜索收藏您关注的诗词！"/>
+
+<RadzenStack 
+    Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" 
+    JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap">
+    @foreach (var work in items)
+    {
+        <RadzenCard class="rounded-2 mb-2">
+            <RadzenStack Style="width: 400px" class="mb-2">
+                <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.H6" Text="@work.Title"/>
+                <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.Body1" Text="@(work.Author +" · "+work.Dynasty)"/>
+                <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.Body1" Text="@work.Content"/>
+                <RadzenTabs>
+                    <Tabs>
+                        <RadzenTabsItem Text="简介">
+                            <RadzenText TextStyle="TextStyle.Body2">@work.Intro</RadzenText>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="注释">
+                            <RadzenText TextStyle="TextStyle.Body2">@work.Translation</RadzenText>
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="作者简介">
+                            <RadzenText TextStyle="TextStyle.Body2">@work.GetAuthorDesc()</RadzenText>
+                        </RadzenTabsItem>
+                    </Tabs>
+                </RadzenTabs>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</RadzenStack>
+@code 
+{
+    private bool isAlertVisible;
+    private bool isLoading = true;
+    private IQueryable<Work> items = new List<Work>().AsQueryable();
+    private List<UserFavoriteWork> userFavoriteWorks = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await UpdateAsync();
+        isAlertVisible = !items.Any();
+    }
+
+    private async Task UpdateAsync()
+    {
+        isLoading = true;
+        await UpdateFavoritesAsync();
+        var query = db.Works.Where(a => userFavoriteWorks.Select(b=>b.WorkId).Contains(a.Id));
+        items = query.AsQueryable();
+        await Task.CompletedTask;
+        isLoading = false;
+    }
+
+    private async Task UpdateFavoritesAsync() =>
+        userFavoriteWorks = await db.UserFavoriteWorks.Where(a => a.Username == G.Username).ToListAsync();
+}

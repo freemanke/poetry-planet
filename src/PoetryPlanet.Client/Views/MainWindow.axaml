@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PoetryPlanet.Client.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="PoetryPlanet.Client.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="{Binding Title}">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <Window.Styles>
+        <Style Selector="Label.form-label">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="0,0,6,0"></Setter>
+        </Style>
+        <Style Selector="StackPanel > TextBox, NumericUpDown, ComboBox">
+            <Setter Property="Width" Value="300"></Setter>
+        </Style>
+    </Window.Styles>
+    
+    <StackPanel>
+        <TextBlock Margin="8,8,0,0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" Text="{Binding Caption}"></TextBlock>
+        <TextBlock Margin="8,5,5,5" FontSize="12" HorizontalAlignment="Left" Text="基于 AvaloniaUI 的用户管理系统演示样例"></TextBlock>
+        <TabControl>
+            <TabItem Header="设置">
+                <StackPanel Margin="6" VerticalAlignment="Center">
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <Label Classes="form-label">我的问候</Label>
+                        <TextBox Text="{Binding Greeting}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <Label Classes="form-label">用户名称</Label>
+                        <TextBox Name="tbxUserName" Text="{Binding Setting.UserSetting.Username}"></TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <Label Classes="form-label">用户密码</Label>
+                        <TextBox Text="{Binding Setting.UserSetting.Password}" PasswordChar="*"></TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <Label Classes="form-label">个人年龄</Label>
+                        <NumericUpDown Value="{Binding Setting.UserSetting.Age}" Minimum="1" Maximum="200"></NumericUpDown>
+                    </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal">
+                        <Label Classes="form-label">个人爱好</Label>
+                        <ComboBox SelectedValueBinding="{Binding Setting.UserSetting.Hobby}">
+                            <ComboBoxItem>足球</ComboBoxItem>
+                            <ComboBoxItem>篮球</ComboBoxItem>
+                            <ComboBoxItem>羽毛球</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button Margin="64,0" HorizontalAlignment="Left" Name="btnSave" Command="{Binding SaveCommand}">保存设置</Button>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="应用">
+                <WrapPanel Margin="6" Orientation="Horizontal">
+                    <Rectangle Fill="Navy" Width="100" Height="100" Margin="20"/>
+                    <Rectangle Fill="Yellow" Width="100" Height="100" Margin="20"/>
+                    <Rectangle Fill="Green" Width="100" Height="100" Margin="20"/>
+                    <Rectangle Fill="Red" Width="100" Height="100" Margin="20"/>
+                    <Rectangle Fill="Purple" Width="100" Height="100" Margin="20"/>
+                </WrapPanel>
+            </TabItem>
+            <TabItem Header="可停靠容器">
+                <DockPanel Margin="6">
+                    <Rectangle Fill="Red" Height="100" DockPanel.Dock="Top"/>
+                    <Rectangle Fill="Blue" Width="100" DockPanel.Dock="Left" />
+                    <Rectangle Fill="Green" Height="100" DockPanel.Dock="Bottom"/>
+                    <Rectangle Fill="Orange" Width="100" DockPanel.Dock="Right" Opacity="0.5"/>
+                    <Rectangle Fill="Gray" />
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
+</Window>

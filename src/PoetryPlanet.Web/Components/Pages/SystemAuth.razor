@@ -1,0 +1,14 @@
+﻿@attribute [Route(Consts.RouterAuth)]
+
+
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+<PageTitle>授权管理</PageTitle>
+
+<h1>您已授权</h1>
+
+<AuthorizeView>
+    Hello @context.User.Identity?.Name!
+</AuthorizeView>

@@ -1,0 +1,42 @@
+﻿@attribute [Route(Consts.RouterWorkDetail)]
+
+
+@inject ApplicationDbContext db
+@inject DialogService dialogService
+
+<PageTitle></PageTitle>
+
+<RadzenStack class="mb-2">
+    <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.H4">@work.Title</RadzenText>
+    <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.Body1">@work.Author · @work.Dynasty</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body1">@work.Content</RadzenText>
+    <RadzenTabs>
+        <Tabs>
+            <RadzenTabsItem Text="简介">
+                <RadzenText TextStyle="TextStyle.Body2">@work.Intro</RadzenText>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="注释">
+                <RadzenText TextStyle="TextStyle.Body2">@work.Translation</RadzenText>
+            </RadzenTabsItem>
+            <RadzenTabsItem Text="作者简介">
+                <RadzenText TextStyle="TextStyle.Body2">@work.GetAuthorDesc()</RadzenText>
+            </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
+</RadzenStack>
+<RadzenStack AlignItems="AlignItems.Center">
+    <RadzenButton Text="关闭" Click="@(()=>dialogService.Close())"></RadzenButton>
+</RadzenStack>
+
+@code
+{
+    [Parameter] public int Id { get; set; }
+    private Work work = new ();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var find = await db.Works.FirstOrDefaultAsync(a => a.Id == Id);
+        if (find != null) work = find;
+    }
+
+}

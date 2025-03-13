@@ -1,0 +1,70 @@
+﻿@attribute [Route(Consts.RouterQuotes)]
+
+@inject ApplicationDbContext db
+
+<PageTitle>诗词佳句</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="诗词佳句"></RadzenText>
+</RadzenStack>
+
+<RadzenRow>
+    <RadzenColumn  Size="12">
+        <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."/>
+        <RadzenButton class="mb-2" Click="SearchAsync" Icon="search" Text=""></RadzenButton>
+    </RadzenColumn>
+</RadzenRow>
+
+<RadzenDataGrid class="rounded-2"
+    Data="@items" TItem="Quote" 
+    PagerPosition="@PagerPosition.Bottom" 
+    AllowPaging="true" 
+    AllowColumnResize="true"
+    SelectionMode="DataGridSelectionMode.Single" 
+    AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
+    <Columns>
+        <RadzenDataGridColumn TItem="Quote" Property="QuoteText" Title="佳句" Width="300px" />
+        <RadzenDataGridColumn TItem="Quote" Property="Author" Title="诗人" Width="120px"/>
+        <RadzenDataGridColumn TItem="Quote" TextAlign="TextAlign.Center" Property="Dynasty" Title="朝代" Width="100px" />
+        <RadzenDataGridColumn TItem="Quote" TextAlign="TextAlign.Center" Property="Kind" Title="文体" Width="75px">
+            <Template Context="data">
+                @data.GetKindString()
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Quote" Property="WorkTitle" Title="出自" />
+    </Columns>
+</RadzenDataGrid>
+
+@code 
+{
+    IQueryable<Quote> items = new List<Quote>().AsQueryable();
+    IList<Quote> selected = new List<Quote>();
+    private string keyword = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await UpdateAsync();
+    }
+
+    private Task SearchAsync()
+    {
+        return UpdateAsync();
+    }
+
+    private async Task UpdateAsync()
+    {
+        var query = db.Quotes.Where(a => a.Id > 0);
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            query = query.Where(a =>
+                a.Author.Contains(keyword)
+                || a.Dynasty.Contains(keyword)
+                || a.QuoteText.Contains(keyword)
+                || a.Kind.Contains(keyword));
+        }
+
+        items = query.AsQueryable();
+        await Task.CompletedTask;
+    }
+}

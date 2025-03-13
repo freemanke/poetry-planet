@@ -1,0 +1,28 @@
+########################################################################
+# 请在同目录下 .env 文件中配置 MYSQL 数据库密码环境变量
+
+version: '2.3'
+services:
+  poetry-planet:
+    image: home.freemanke.com:60012/freemanke/poetry-planet:latest
+    container_name: poetry-planet
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "5255:5255"
+    volumes:
+      - ./data/poetry-planet:/app/data
+  poetry-planet-mysql:
+    image: mysql:5.7
+    container_name: poetry-planet-mysql
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    command: ['mysqld','--lower_case_table_names=1', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']

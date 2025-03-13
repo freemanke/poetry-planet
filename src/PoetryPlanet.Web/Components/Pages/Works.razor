@@ -1,0 +1,182 @@
+﻿@attribute [Route(Consts.RouterWorks)]
+@attribute [Route(Consts.RouterHome)]
+
+@inject TooltipService tooltipService
+@inject DialogService dialogService
+@inject ApplicationDbContext db
+@inject ILocalStorageService localStorage
+@attribute [StreamRendering]
+
+<PageTitle>诗词搜索</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="诗词搜索"></RadzenText>
+</RadzenStack>
+
+<RadzenRow>
+    <RadzenColumn Size="12">
+        <RadzenDropDown
+            class="mb-2" Style="width: 140px" TValue="List<string>" Name="Dynasties" Multiple="true"
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Placeholder="选择朝代"
+            AllowFiltering="true" @bind-Value="@selectedDynastyNames" Data="@allDynastyNames" Change="UpdateAsync"/>
+        <RadzenDropDown
+            class="mb-2" Style="width: 140px" TValue="List<string>" Name="Authors" Multiple="true"
+            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true"
+            @bind-Value="@selectedAuthorNames" Data="@allAuthorNames" Change="UpdateAsync" Placeholder="选择诗人"/>
+        <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..." />
+        <RadzenButton class="mb-2" Click="SearchAsync" Icon="search" Text="" />
+    </RadzenColumn>
+</RadzenRow>
+<RadzenRow>
+    <RadzenAlert
+        class="mb-2 opacity-75" Visible="@(!G.IsWorksAlertClosed)" Style="margin: 0" 
+        AlertStyle="AlertStyle.Secondary" Close="OnAlertClosedAsync" AllowClose="true" 
+        Text="提示：点击标题可以查看诗词详细内容，点击左侧收藏按钮可以收藏诗词" />
+</RadzenRow>
+
+<RadzenDataGrid 
+    class="rounded-2 mb-2" Data="@items" TItem="Work" PagerPosition="@PagerPosition.Bottom" AllowPaging="true" 
+    AllowColumnResize="true" SelectionMode="DataGridSelectionMode.Single" AllowRowSelectOnRowClick="true" 
+    PageSize="20" AllowSorting="true" @bind-Value="@selected">
+    <Columns>
+        <RadzenDataGridColumn TItem="Work" Property="" Width="60px">
+            <Template Context="data">
+                @{
+                    var hasFavorite = userFavoriteWorks.Any(a => a.WorkId == data.Id);
+                    var buttonStyle = hasFavorite ? ButtonStyle.Success : ButtonStyle.Light;
+                    <RadzenButton
+                        ButtonStyle="@buttonStyle"
+                        Click="@(() => ToggleFavoriteAsync(data.Id))"
+                        MouseEnter="@(args => tooltipService.ShowTooltip(args, hasFavorite ? "取消收藏" : "收藏"))"
+                        Size="ButtonSize.ExtraSmall" Icon="favorite"/>
+                }
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Work" Property="Title" Title="标题" Width="260px" Sortable="true">
+            <Template Context="data">
+                <a style="font-weight: bold; text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => DetailAsync(data.Id))">@data.Title</a>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Work" Property="Author" Title="诗人" Width="90px">
+            <Template Context="data">
+                <a style="text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => ShowAuthorDetailAsync(data.AuthorId))">@data.Author</a>
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Work" TextAlign="TextAlign.Center" Property="Dynasty" Title="朝代" Width="75px" />
+        <RadzenDataGridColumn TItem="Work" TextAlign="TextAlign.Center" Property="Kind" Title="文体" Width="75px">
+            <Template Context="data">
+                @data.GetKindString()
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Work" Property="Content" Title="内容" Width="500px"/>
+        <RadzenDataGridColumn TItem="Work" Property="Intro" Title="介绍"/>
+    </Columns>
+</RadzenDataGrid>
+
+<RadzenStack 
+    Visible="@isLoading" AlignItems="AlignItems.Center" Orientation="Orientation.Vertical" 
+    JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap">
+    <RadzenProgressBarCircular 
+        ProgressBarStyle="ProgressBarStyle.Primary" Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+    <RadzenText Text="正在加载数据，请稍候..."></RadzenText>
+</RadzenStack>
+
+@code 
+{
+    private bool isLoading = true;
+    private string[] allDynastyNames = [];
+    private string[] allAuthorNames = [];
+    private List<string> selectedDynastyNames = [];
+    private List<string> selectedAuthorNames = [];
+    private IQueryable<Work> items = new List<Work>().AsQueryable();
+    private IList<Work> selected = new List<Work>();
+    private string keyword = "";
+    private List<UserFavoriteWork> userFavoriteWorks = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        allDynastyNames = await db.Dynasties.OrderBy(a => a.StartYear).Select(a => a.Name).ToArrayAsync();
+        allAuthorNames = await db.Authors.Select(a => a.Name).Distinct().ToArrayAsync();
+        
+        await UpdateFavoritesAsync();
+        await UpdateAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (await localStorage.ContainKeyAsync(Consts.WORKS_ALERT_CLOSED))
+            G.IsWorksAlertClosed = await localStorage.GetItemAsync<bool>(Consts.WORKS_ALERT_CLOSED);
+    }
+
+    private Task SearchAsync()
+    {
+        return UpdateAsync();
+    }
+
+    private async Task UpdateAsync()
+    {
+        isLoading = true;
+        var query = db.Works.Where(a => a.Id > 0);
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            query = query.Where(a =>
+                a.Author.Contains(keyword)
+                || a.Content.Contains(keyword)
+                || a.Intro.Contains(keyword));
+        }
+
+        if (selectedDynastyNames.Count != 0)
+        {
+            query = query.Where(a => selectedDynastyNames.Contains(a.Dynasty));
+        }
+
+        if (selectedAuthorNames.Count != 0)
+        {
+            query = query.Where(a => selectedAuthorNames.Contains(a.Author));
+        }
+
+        items = query.OrderBy(a=>a.Id).AsQueryable();
+        await Task.CompletedTask;
+        isLoading = false;
+    }
+
+    private async Task ToggleFavoriteAsync(int workId)
+    {
+        var userFavorite = await db.UserFavoriteWorks.FirstOrDefaultAsync(a => a.WorkId == workId);
+        if (userFavorite == null)
+        {
+            userFavorite = new UserFavoriteWork { Username = G.Username, WorkId = workId };
+            db.UserFavoriteWorks.Add(userFavorite);
+        }
+        else
+        {
+            db.UserFavoriteWorks.Remove(userFavorite);
+        }
+
+        await db.SaveChangesAsync();
+        await UpdateFavoritesAsync();
+    }
+
+    private async Task UpdateFavoritesAsync() =>
+        userFavoriteWorks = await db.UserFavoriteWorks.Where(a => a.Username == G.Username).ToListAsync();
+
+    private async Task DetailAsync(int id)
+    {
+        await dialogService.OpenAsync<WorkDetail>("",
+            new Dictionary<string, object> { { "id", id } },
+            new DialogOptions { Width = "800px", Resizable = false, Draggable = true, ShowClose = false });
+    }
+    
+    private async Task ShowAuthorDetailAsync(int id)
+    {
+        await dialogService.OpenAsync<AuthorDetail>("",
+            new Dictionary<string, object> { { "id", id } },
+            new DialogOptions { Width = "800px", Resizable = false, Draggable = true, ShowClose = false });
+    }
+
+    private async Task OnAlertClosedAsync()
+    {
+        G.IsWorksAlertClosed = true;
+        await localStorage.SetItemAsync(Consts.WORKS_ALERT_CLOSED, G.IsWorksAlertClosed);
+    }
+}
