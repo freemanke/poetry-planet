@@ -22,6 +22,7 @@ public class Program
         builder.WebHost.ConfigureKestrel((_, b) => { b.Listen(new IPEndPoint(IPAddress.Any, 5255)); });
         builder.Configuration.AddUserSecrets<Program>();
         builder.Logging.ClearProviders();
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         builder.Logging.AddSimpleConsole(options =>
         {
             options.SingleLine = true;
@@ -50,11 +51,11 @@ public class Program
         services.AddBlazoredLocalStorage();
         services.AddRazorComponents().AddInteractiveServerComponents();
         services.AddRadzenComponents();
-        services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddCascadingAuthenticationState();
         services.AddScoped<IdentityUserAccessor>();
         services.AddScoped<IdentityRedirectManager>();
         services.AddScoped<WorkService>();
+        services.AddScoped<SettingService>();
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddAuthentication(options =>
@@ -84,7 +85,7 @@ public class Program
         
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseMySql(cb.ConnectionString, serverVersion).EnableDetailedErrors();
+            options.UseMySql(cb.ConnectionString, serverVersion);
         });
         services.AddDatabaseDeveloperPageExceptionFilter();
         services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -130,9 +131,27 @@ public class Program
         logger.LogInformation($"系统时间: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         logger.LogInformation($"数据库: {cb}");
         logger.LogInformation("=====================================================");
-        logger.LogInformation("正在迁移数据库...");
-        db.Database.Migrate();
-        db.EnsuredInitialize(sp.GetRequiredService<IMapper>());
-        logger.LogInformation("数据库迁移完成");
+        Task.Run(() =>
+        {
+            var interval = TimeSpan.FromSeconds(10);
+            logger.LogInformation("正在迁移数据库...");
+            while (true)
+            {
+                try
+                {
+                    db.Database.Migrate();
+                    db.EnsuredInitialize(sp.GetRequiredService<IMapper>());
+                    break;
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"迁移数据库错误，{interval} 后重试");
+                }
+                
+                Thread.Sleep(interval);
+            }
+
+            logger.LogInformation("数据库迁移完成");
+        });
     }
 }

@@ -6,42 +6,62 @@ namespace PoetryPlanet.Web.Services;
 
 public class WorkService(ILogger<WorkService> logger, ApplicationDbContext db)
 {
-    private readonly ILogger<WorkService> logger = logger;
-
     public async Task<string[]> GetAllDynastyNamesAsync()
     {
-        return (await db.Dynasties.OrderBy(a => a.StartYear).Select(a => a.Name)
-            .ToArrayAsync()).Distinct().ToArray();
+        try
+        {
+            return (await db.Dynasties.OrderBy(a => a.StartYear).Select(a => a.Name)
+                .ToArrayAsync()).Distinct().ToArray();
+        }
+        catch (Exception ex)
+        {
+            return [];
+        }
     }
 
     public async Task<string[]> GetAllAuthorNamesAsync()
     {
-        return (await db.Authors.Select(a => a.Name)
-            .ToArrayAsync()).Distinct().ToArray();
+        try
+        {
+            return (await db.Authors.Select(a => a.Name)
+                .ToArrayAsync()).Distinct().ToArray();
+        }
+        catch (Exception ex)
+        {
+            return [];
+        }
     }
 
     public IQueryable<Work> GetWorks(string keyword, IList<string> dynastyNames, IList<string> authorNames)
     {
-        var query = db.Works.Where(a => a.Id > 0);
-        if (!string.IsNullOrEmpty(keyword))
+        try
         {
-            query = query.Where(a =>
-                a.Author.Contains(keyword)
-                || a.Content.Contains(keyword)
-                || a.Intro.Contains(keyword));
-        }
 
-        if (dynastyNames.Count != 0)
+            var query = db.Works.Where(a => a.Id > 0);
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(a =>
+                    a.Author.Contains(keyword)
+                    || a.Content.Contains(keyword)
+                    || a.Intro.Contains(keyword));
+            }
+
+            if (dynastyNames.Count != 0)
+            {
+                query = query.Where(a => dynastyNames.Contains(a.Dynasty));
+            }
+
+            if (authorNames.Count != 0)
+            {
+                query = query.Where(a => authorNames.Contains(a.Author));
+            }
+
+            return query.OrderBy(a => a.Id).AsQueryable();
+        }
+        catch (Exception ex)
         {
-            query = query.Where(a => dynastyNames.Contains(a.Dynasty));
+            return new List<Work>().AsQueryable();
         }
-
-        if (authorNames.Count != 0)
-        {
-            query = query.Where(a => authorNames.Contains(a.Author));
-        }
-
-        return query.OrderBy(a => a.Id).AsQueryable();
     }
 
     public async Task ToggleFavoriteAsync(string username, int workId)
@@ -59,6 +79,17 @@ public class WorkService(ILogger<WorkService> logger, ApplicationDbContext db)
         await db.SaveChangesAsync();
     }
 
-    public async Task<List<UserFavoriteWork>> GetAllUserFavoriteWorksAsync(string username) =>
-        await db.UserFavoriteWorks.Where(a => a.Username == username).ToListAsync();
+    public async Task<List<UserFavoriteWork>> GetAllUserFavoriteWorksAsync(string username)
+    {
+        try
+        {
+            await db.UserFavoriteWorks.Where(a => a.Username == username).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            return [];
+        }
+
+        return [];
+    }
 }

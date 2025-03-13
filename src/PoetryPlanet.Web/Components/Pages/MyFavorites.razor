@@ -59,7 +59,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         await UpdateAsync();
         isAlertVisible = !items.Any();
     }

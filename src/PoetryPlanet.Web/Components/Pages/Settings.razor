@@ -1,8 +1,7 @@
 ﻿@attribute [Route(Consts.RouterSettings)]
 
-
-@inject ILocalStorageService localStorage;
-@inject NotificationService notificationService;
+@inject ILocalStorageService localStorage
+@inject NotificationService notificationService
 
 <PageTitle>系统配置</PageTitle>
 
@@ -13,7 +12,7 @@
 <RadzenCard class="mb-2 rounded-2">
     <RadzenAccordion class="mb-2" Style="" Multiple="true">
         <Items>
-            <RadzenAccordionItem Selected="true"  class="rounded-2" Text="个人信息" Icon="account_balance_wallet">
+            <RadzenAccordionItem Selected="true" class="rounded-2" Text="个人信息" Icon="account_circle">
                 <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
                     <RadzenLabel>姓名</RadzenLabel>
                     <RadzenTextBox Style="width: 400px" Placeholder="姓名..."></RadzenTextBox>
@@ -36,13 +35,13 @@
                     <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="备注信息.."></RadzenTextArea>
                 </RadzenStack>
             </RadzenAccordionItem>
-            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="account_balance_wallet">
+            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="settings">
                 <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
                     <RadzenLabel>说明</RadzenLabel>
                     <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="说明.."></RadzenTextArea>
                 </RadzenStack>
             </RadzenAccordionItem>
-            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="account_balance_wallet">
+            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="lock">
                 <RadzenStack class="mb-2" Orientation="Orientation.Vertical">
                     <RadzenButton ButtonStyle="ButtonStyle.Secondary" Style="width: 250px" Text="重置浏览器本地化配置" Click="ResetLocalSetting"></RadzenButton>
                 </RadzenStack>

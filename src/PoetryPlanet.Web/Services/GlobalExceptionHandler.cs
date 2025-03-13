@@ -10,15 +10,13 @@ public class GlobalExceptionHandler : IExceptionHandler
     {
         var problemDetails = new ProblemDetails
         {
-            Title = "错误",
+            Title = "服务错误",
             Status = StatusCodes.Status500InternalServerError,
-            Detail = exception.Message
+            Detail = "由于系统发生错误，请稍后刷新页面重试，给您带来的不便深表歉意，紧急情况请联系管理员。"
         };
 
         httpContext.Response.StatusCode = problemDetails.Status.Value;
-
-        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
-        return true;
+        httpContext.Response.Redirect(Consts.RouterError);
+        return await Task.FromResult(true);
     }
 }

@@ -24,4 +24,5 @@ public static class Consts
     public const string RouterMyFavorites = "/my-favorites";
     public const string RouterMyCollections = "/my-collections";
     public const string RouterSettings = "/settings";
+    public const string RouterDebugTool = "/debug";
 }

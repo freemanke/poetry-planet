@@ -1,0 +1,49 @@
+﻿@attribute [Route(Consts.RouterDebugTool)]
+
+@inject SettingService settingService
+
+<PageTitle>调试工具</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="调试工具"></RadzenText>
+</RadzenStack>
+
+<RadzenCard class="mb-2 rounded-2">
+    <RadzenAccordion class="mb-2" Style="" Multiple="true">
+        <Items>
+            <RadzenAccordionItem class="rounded-2" Selected="true" Text="功能测试" Icon="check_circle">
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="2">
+                    <RadzenButton class="mb-2" ButtonStyle="ButtonStyle.Danger" Text="触发页面类抛出异常" Click="TriggerPageException"></RadzenButton>
+                    <RadzenButton class="mb-2" ButtonStyle="ButtonStyle.Danger" Text="触发服务类抛出异常" Click="TriggerServiceException"></RadzenButton>
+                </RadzenStack>
+            </RadzenAccordionItem>
+        </Items>
+    </RadzenAccordion>
+</RadzenCard>
+
+<RadzenAlert AlertStyle="AlertStyle.Secondary" Text="@buildInfo" AllowClose="false"/>
+
+@code 
+{
+    private string buildInfo = "";
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        buildInfo = await Task.Run(() =>
+        {
+            var filePath = GetType().Assembly.Location;
+            var file = new System.IO.FileInfo(filePath);
+            return $"Build at {file.LastWriteTime:yyyy-MM-dd HH:mm:ss} Powered by Blazor + dotnet 9.0 + Radzen.Blazor";
+        });
+    }
+
+    private void TriggerPageException()
+    {
+        throw new Exception("这是通过页面点击按钮主动触发的异常，用于测试异常后的页面显示逻辑");
+    }
+    
+    private void TriggerServiceException()
+    {
+        settingService.TriggerException();
+    }
+}

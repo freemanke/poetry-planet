@@ -12,12 +12,12 @@
 <RadzenTooltip />
 
 <RadzenLayout>
-    <div id="blazor-error-ui" data-nosnippet>
+    @*<div id="blazor-error-ui" data-nosnippet>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
             <RadzenLabel TextAlign="TextAlign.Center" class="" Text="发生内部错误，请重新加载"></RadzenLabel>
             <RadzenButton ButtonStyle="ButtonStyle.Primary" href="" class="reload">重新加载</RadzenButton>
         </RadzenStack>
-    </div>
+    </div>*@
     <RadzenHeader>
         <RadzenRow AlignItems="AlignItems.Center">
             <RadzenColumn Size="6">
@@ -56,6 +56,7 @@
             <RadzenPanelMenuItem Text="诗集信息" Path="@Consts.RouterCollections" Icon="apps"/>
             <RadzenPanelMenuItem Text="诗词佳句" Path="@Consts.RouterQuotes" Icon="thumb_up"/>
             <RadzenPanelMenuItem Text="系统设置" Path="@Consts.RouterSettings" Icon="person"/>
+            <RadzenPanelMenuItem Text="调试工具" Path="@Consts.RouterDebugTool" Icon="adb"/>
         </RadzenPanelMenu>
     </RadzenSidebar>
     <RadzenBody>
