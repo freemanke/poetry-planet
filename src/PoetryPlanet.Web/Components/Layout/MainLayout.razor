@@ -12,6 +12,12 @@
 <RadzenTooltip />
 
 <RadzenLayout>
+    <div id="blazor-error-ui" data-nosnippet>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
+            <RadzenLabel TextAlign="TextAlign.Center" class="" Text="发生内部错误，请重新加载"></RadzenLabel>
+            <RadzenButton ButtonStyle="ButtonStyle.Primary" href="" class="reload">重新加载</RadzenButton>
+        </RadzenStack>
+    </div>
     <RadzenHeader>
         <RadzenRow AlignItems="AlignItems.Center">
             <RadzenColumn Size="6">
@@ -21,12 +27,12 @@
                 </RadzenStack>
             </RadzenColumn>
             <RadzenColumn Size="6" Style="padding-right: 24px">
-                <RadzenStack 
-                    Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" 
+                <RadzenStack
+                    Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
                     JustifyContent="JustifyContent.End" Gap="2">
-                    <RadzenAppearanceToggle />
+                    <RadzenAppearanceToggle/>
                     <RadzenDropDown
-                        Style="width: 150px" Name="ThemeDropDown" TValue="string" Value="ThemeService.Theme" 
+                        Style="width: 150px" Name="ThemeDropDown" TValue="string" Value="ThemeService.Theme"
                         ValueChanged="@ChangeThemeAsync" Data="@Themes.Free.ToArray()"
                         TextProperty="@nameof(Theme.Text)" ValueProperty="@nameof(Theme.Value)"/>
                     <RadzenMenu>
@@ -41,15 +47,15 @@
     </RadzenHeader>
     <RadzenSidebar Style="width: 160px" @bind-Expanded="@isSidebarExpanded">
         <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="诗词星球" Path="@Consts.RouterHome" Icon="travel_explore" />
-            <RadzenPanelMenuItem Text="我的收藏" Path="@Consts.RouterMyFavorites" Icon="favorite" />
-            <RadzenPanelMenuItem Text="我的诗集" Path="@Consts.RouterMyCollections" Icon="book_4" />
+            <RadzenPanelMenuItem Text="诗词星球" Path="@Consts.RouterHome" Icon="travel_explore"/>
+            <RadzenPanelMenuItem Text="我的收藏" Path="@Consts.RouterMyFavorites" Icon="favorite"/>
+            <RadzenPanelMenuItem Text="我的诗集" Path="@Consts.RouterMyCollections" Icon="book_4"/>
             <RadzenPanelMenuItem Text="诗词搜索" Path="@Consts.RouterWorks" Icon="g_translate"/>
             <RadzenPanelMenuItem Text="朝代信息" Path="@Consts.RouterDynasties" Icon="history_toggle_off"/>
             <RadzenPanelMenuItem Text="诗人信息" Path="@Consts.RouterAuthors" Icon="group"/>
             <RadzenPanelMenuItem Text="诗集信息" Path="@Consts.RouterCollections" Icon="apps"/>
             <RadzenPanelMenuItem Text="诗词佳句" Path="@Consts.RouterQuotes" Icon="thumb_up"/>
-            <RadzenPanelMenuItem Text="系统设置" Path="@Consts.RouterSettings" Icon="person" />
+            <RadzenPanelMenuItem Text="系统设置" Path="@Consts.RouterSettings" Icon="person"/>
         </RadzenPanelMenu>
     </RadzenSidebar>
     <RadzenBody>

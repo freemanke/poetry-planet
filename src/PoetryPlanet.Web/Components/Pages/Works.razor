@@ -2,8 +2,8 @@
 @attribute [Route(Consts.RouterHome)]
 
 @inject DialogService dialogService
-@inject ApplicationDbContext db
 @inject ILocalStorageService localStorage
+@inject WorkService workService
 @attribute [StreamRendering]
 
 <PageTitle>诗词搜索</PageTitle>
@@ -81,6 +81,7 @@
 
 @code 
 {
+    private string keyword = "";
     private bool isLoading = true;
     private string[] allDynastyNames = [];
     private string[] allAuthorNames = [];
@@ -88,15 +89,13 @@
     private List<string> selectedAuthorNames = [];
     private IQueryable<Work> items = new List<Work>().AsQueryable();
     private IList<Work> selected = new List<Work>();
-    private string keyword = "";
     private List<UserFavoriteWork> userFavoriteWorks = [];
 
     protected override async Task OnInitializedAsync()
     {
-        allDynastyNames = (await db.Dynasties.OrderBy(a=>a.StartYear).Select(a => a.Name).ToArrayAsync()).Distinct().ToArray();
-        allAuthorNames = (await db.Authors.Select(a => a.Name).ToArrayAsync()).Distinct().ToArray();
-        
-        await UpdateFavoritesAsync();
+        allDynastyNames = await workService.GetAllDynastyNamesAsync();
+        allAuthorNames = await workService.GetAllAuthorNamesAsync();
+        userFavoriteWorks = await workService.GetAllUserFavoriteWorksAsync(G.Username);
         await UpdateAsync();
     }
 
@@ -114,62 +113,29 @@
     private async Task UpdateAsync()
     {
         isLoading = true;
-        var query = db.Works.Where(a => a.Id > 0);
-        if (!string.IsNullOrEmpty(keyword))
-        {
-            query = query.Where(a =>
-                a.Author.Contains(keyword)
-                || a.Content.Contains(keyword)
-                || a.Intro.Contains(keyword));
-        }
-
-        if (selectedDynastyNames.Count != 0)
-        {
-            query = query.Where(a => selectedDynastyNames.Contains(a.Dynasty));
-        }
-
-        if (selectedAuthorNames.Count != 0)
-        {
-            query = query.Where(a => selectedAuthorNames.Contains(a.Author));
-        }
-
-        items = query.OrderBy(a=>a.Id).AsQueryable();
-        await Task.CompletedTask;
+        items = workService.GetWorks(keyword, selectedDynastyNames, selectedAuthorNames);
         isLoading = false;
+        await Task.CompletedTask;
     }
 
     private async Task ToggleFavoriteAsync(int workId)
     {
-        var userFavorite = await db.UserFavoriteWorks.FirstOrDefaultAsync(a => a.WorkId == workId);
-        if (userFavorite == null)
-        {
-            userFavorite = new UserFavoriteWork { Username = G.Username, WorkId = workId };
-            db.UserFavoriteWorks.Add(userFavorite);
-        }
-        else
-        {
-            db.UserFavoriteWorks.Remove(userFavorite);
-        }
-
-        await db.SaveChangesAsync();
-        await UpdateFavoritesAsync();
+        await workService.ToggleFavoriteAsync(G.Username, workId);
+        userFavoriteWorks = await workService.GetAllUserFavoriteWorksAsync(G.Username);
     }
-
-    private async Task UpdateFavoritesAsync() =>
-        userFavoriteWorks = await db.UserFavoriteWorks.Where(a => a.Username == G.Username).ToListAsync();
 
     private async Task DetailAsync(int id)
     {
         await dialogService.OpenAsync<WorkDetail>("",
             new Dictionary<string, object> { { "id", id } },
-            new DialogOptions { Width = "800px", Resizable = false, Draggable = true, ShowClose = false });
+            new DialogOptions { Width = "800px" });
     }
-    
+
     private async Task ShowAuthorDetailAsync(int id)
     {
         await dialogService.OpenAsync<AuthorDetail>("",
             new Dictionary<string, object> { { "id", id } },
-            new DialogOptions { Width = "800px", Resizable = false, Draggable = true, ShowClose = false });
+            new DialogOptions { Width = "800px" });
     }
 
     private async Task OnAlertClosedAsync()

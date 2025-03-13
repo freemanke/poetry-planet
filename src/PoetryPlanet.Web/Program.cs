@@ -9,6 +9,7 @@ using MySqlConnector;
 using PoetryPlanet.Web.Components;
 using PoetryPlanet.Web.Components.Account;
 using PoetryPlanet.Web.Data;
+using PoetryPlanet.Web.Services;
 using Radzen;
 
 namespace PoetryPlanet.Web;
@@ -31,15 +32,8 @@ public class Program
         RegisterDbMysql(builder);
        
         var app = builder.Build();
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseMigrationsEndPoint();
-        }
-        else
-        {
-            app.UseExceptionHandler(Consts.RouterError);
-            app.UseHsts();
-        }
+        app.UseExceptionHandler(Consts.RouterError);
+        app.UseHsts();
         app.UseAntiforgery();
         app.MapStaticAssets();
         app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
@@ -56,9 +50,11 @@ public class Program
         services.AddBlazoredLocalStorage();
         services.AddRazorComponents().AddInteractiveServerComponents();
         services.AddRadzenComponents();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddCascadingAuthenticationState();
         services.AddScoped<IdentityUserAccessor>();
         services.AddScoped<IdentityRedirectManager>();
+        services.AddScoped<WorkService>();
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddAuthentication(options =>
