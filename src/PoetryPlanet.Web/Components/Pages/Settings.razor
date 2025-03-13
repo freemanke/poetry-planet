@@ -9,61 +9,55 @@
     <RadzenText TextStyle="TextStyle.H6" Text="系统配置"></RadzenText>
 </RadzenStack>
 
-<RadzenCard class="mb-2 rounded-2">
-    <RadzenAccordion class="mb-2" Style="" Multiple="true">
-        <Items>
-            <RadzenAccordionItem Selected="true" class="rounded-2" Text="个人信息" Icon="account_circle">
-                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-                    <RadzenLabel>姓名</RadzenLabel>
-                    <RadzenTextBox Style="width: 400px" Placeholder="姓名..."></RadzenTextBox>
-                </RadzenStack>
-                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-                    <RadzenLabel>昵称</RadzenLabel>
-                    <RadzenTextBox Style="width: 400px" Placeholder="昵称..."></RadzenTextBox>
-                </RadzenStack>
-                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
-                    <RadzenLabel>性别</RadzenLabel>
-                    <RadzenRadioButtonList Value="0" TValue="int">
-                        <Items>
-                            <RadzenRadioButtonListItem Text="男" Value="0"></RadzenRadioButtonListItem>
-                            <RadzenRadioButtonListItem Text="女" Value="1"></RadzenRadioButtonListItem>
-                        </Items>
-                    </RadzenRadioButtonList>
-                </RadzenStack>
-                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
-                    <RadzenLabel>备注</RadzenLabel>
-                    <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="备注信息.."></RadzenTextArea>
-                </RadzenStack>
-            </RadzenAccordionItem>
-            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="settings">
-                <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
-                    <RadzenLabel>说明</RadzenLabel>
-                    <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="说明.."></RadzenTextArea>
-                </RadzenStack>
-            </RadzenAccordionItem>
-            <RadzenAccordionItem Selected="true" Text="系统设置" Icon="lock">
-                <RadzenStack class="mb-2" Orientation="Orientation.Vertical">
-                    <RadzenButton ButtonStyle="ButtonStyle.Secondary" Style="width: 250px" Text="重置浏览器本地化配置" Click="ResetLocalSetting"></RadzenButton>
-                </RadzenStack>
-            </RadzenAccordionItem>
-        </Items>
-    </RadzenAccordion>
-</RadzenCard>
+<RadzenAccordion class="mb-2" Style="" Multiple="true">
+    <Items>
+        <RadzenAccordionItem Selected="true" class="rounded-2" Text="个人信息" Icon="account_circle">
+            <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                <RadzenLabel>姓名</RadzenLabel>
+                <RadzenTextBox Style="width: 400px" Placeholder="姓名..."></RadzenTextBox>
+            </RadzenStack>
+            <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                <RadzenLabel>昵称</RadzenLabel>
+                <RadzenTextBox Style="width: 400px" Placeholder="昵称..."></RadzenTextBox>
+            </RadzenStack>
+            <RadzenStack class="mb-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+                <RadzenLabel>性别</RadzenLabel>
+                <RadzenRadioButtonList Value="0" TValue="int">
+                    <Items>
+                        <RadzenRadioButtonListItem Text="男" Value="0"></RadzenRadioButtonListItem>
+                        <RadzenRadioButtonListItem Text="女" Value="1"></RadzenRadioButtonListItem>
+                    </Items>
+                </RadzenRadioButtonList>
+            </RadzenStack>
+            <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
+                <RadzenLabel>备注</RadzenLabel>
+                <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="备注信息.."></RadzenTextArea>
+            </RadzenStack>
+        </RadzenAccordionItem>
+        <RadzenAccordionItem Text="系统设置" Icon="settings">
+            <RadzenStack class="mb-2" Orientation="Orientation.Horizontal">
+                <RadzenLabel>说明</RadzenLabel>
+                <RadzenTextArea Style="width: 400px" Rows="3" Placeholder="说明.."></RadzenTextArea>
+            </RadzenStack>
+        </RadzenAccordionItem>
+        <RadzenAccordionItem Selected="@selected" SelectedChanged="@(()=>selected = !selected)" Text="浏览器本地配置" Icon="lock">
+            <RadzenStack>
+                <RadzenRow AlignItems="AlignItems.Center">
+                    <RadzenText Style="padding-top: 3px" TextAlign="TextAlign.Center">状态</RadzenText>
+                    <RadzenButton ButtonStyle="ButtonStyle.Secondary" Text="重置浏览器本地配置" Click="ResetLocalSetting"/>
+                </RadzenRow>
+            </RadzenStack>
+        </RadzenAccordionItem>
+    </Items>
+</RadzenAccordion>
 
-<RadzenAlert AlertStyle="AlertStyle.Secondary" Text="@buildInfo" AllowClose="false"/>
 
 @code 
 {
-    private string buildInfo = "";
+    private bool selected = true;
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        buildInfo = await Task.Run(() =>
-        {
-            var filePath = GetType().Assembly.Location;
-            var file = new System.IO.FileInfo(filePath);
-            return $"Build at {file.LastWriteTime:yyyy-MM-dd HH:mm:ss} Powered by Blazor + dotnet 9.0 + Radzen.Blazor";
-        });
     }
 
     private async Task ResetLocalSetting()

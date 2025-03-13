@@ -48,4 +48,6 @@ dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "真实数据库密码"
 
 ## 常见问题
 
-1. 
+### 如何处理全局未处理异常，确保页面可响应
+
+[参考文档](https://www.telerik.com/blogs/work-unhandled-exceptions-gracefully-blazor-server-dotnet-6-error-boundaries)

@@ -60,14 +60,14 @@
                     @Body
                 </ChildContent>
                 <ErrorContent>
+                    <!--通过使用 ErrorBoundary 组件来处理系统未处理的异常信息，当异常发生时，显示以下内容提示用户，通过
+                        重载 OnParametersSet 方法，并在内部调用 errorBoundary?.Recover() 方法确保组件恢复到正常状态-->
                     <RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
                         <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.H6" Text="系统错误"></RadzenText>
                     </RadzenStack>
-                    <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
+                    <RadzenStack>
                         <RadzenAlert AlertStyle="AlertStyle.Warning" AllowClose="false">
-                            <RadzenLabel TextAlign="TextAlign.Center" class="">
-                                抱歉，发生系统内部错误，请稍后重新加载或联系管理员
-                            </RadzenLabel>
+                            <RadzenLabel Text="抱歉，发生系统内部错误，请稍后重新加载或联系管理员"/>
                         </RadzenAlert>
                     </RadzenStack>
                 </ErrorContent>
