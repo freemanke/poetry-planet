@@ -70,7 +70,7 @@
         isLoading = true;
         await UpdateFavoritesAsync();
         var query = db.Works.Where(a => userFavoriteWorks.Select(b=>b.WorkId).Contains(a.Id));
-        items = query.AsQueryable();
+        items = query.OrderBy(a=>a.Id).AsQueryable();
         await Task.CompletedTask;
         isLoading = false;
     }

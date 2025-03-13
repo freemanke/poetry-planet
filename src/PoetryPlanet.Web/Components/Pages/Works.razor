@@ -1,7 +1,6 @@
 ﻿@attribute [Route(Consts.RouterWorks)]
 @attribute [Route(Consts.RouterHome)]
 
-@inject TooltipService tooltipService
 @inject DialogService dialogService
 @inject ApplicationDbContext db
 @inject ILocalStorageService localStorage
@@ -47,7 +46,6 @@
                     <RadzenButton
                         ButtonStyle="@buttonStyle"
                         Click="@(() => ToggleFavoriteAsync(data.Id))"
-                        MouseEnter="@(args => tooltipService.ShowTooltip(args, hasFavorite ? "取消收藏" : "收藏"))"
                         Size="ButtonSize.ExtraSmall" Icon="favorite"/>
                 }
             </Template>
@@ -95,8 +93,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        allDynastyNames = await db.Dynasties.OrderBy(a => a.StartYear).Select(a => a.Name).ToArrayAsync();
-        allAuthorNames = await db.Authors.Select(a => a.Name).Distinct().ToArrayAsync();
+        allDynastyNames = (await db.Dynasties.OrderBy(a=>a.StartYear).Select(a => a.Name).ToArrayAsync()).Distinct().ToArray();
+        allAuthorNames = (await db.Authors.Select(a => a.Name).ToArrayAsync()).Distinct().ToArray();
         
         await UpdateFavoritesAsync();
         await UpdateAsync();

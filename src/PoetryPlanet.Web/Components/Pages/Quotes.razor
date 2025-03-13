@@ -64,7 +64,7 @@
                 || a.Kind.Contains(keyword));
         }
 
-        items = query.AsQueryable();
+        items = query.OrderBy(a=>a.Id).AsQueryable();
         await Task.CompletedTask;
     }
 }
