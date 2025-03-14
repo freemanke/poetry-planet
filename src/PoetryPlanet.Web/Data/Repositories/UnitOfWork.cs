@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using PoetryPlanet.Web;
 using PoetryPlanet.Web.Data.Models;
 
@@ -14,7 +15,7 @@ public interface IWorkRepository : IRepository<Work>;
 public interface IQuoteRepository : IRepository<Quote>;
 public interface ICollectionRepository : IRepository<Collection>;
 public interface IAuthorRepository : IRepository<Author>;
-public interface IEntityForTestRepository : IRepository<EntityForTest>;
+public interface ITestEntityRepository : IRepository<TestEntity>;
 
 public class DynastyRepository(ILogger logger, ApplicationDbContext context)
     : Repository<Dynasty>(logger, context), IDynastyRepository;
@@ -31,8 +32,8 @@ public class QuoteRepository(ILogger logger, ApplicationDbContext context)
 public class AuthorRepository(ILogger logger, ApplicationDbContext context)
     : Repository<Author>(logger, context), IAuthorRepository;
 
-public class EntityForTestRepository(ILogger logger, ApplicationDbContext context)
-    : Repository<EntityForTest>(logger, context), IEntityForTestRepository;
+public class TestEntityRepository(ILogger logger, ApplicationDbContext context)
+    : Repository<TestEntity>(logger, context), ITestEntityRepository;
 
 public interface IUnitOfWork: IDisposable {
     IDynastyRepository Dynasties { get; }
@@ -40,8 +41,9 @@ public interface IUnitOfWork: IDisposable {
     ICollectionRepository Collections { get; }
     IQuoteRepository Quotes { get; }
     IAuthorRepository Authors { get; }
-    IEntityForTestRepository EntityForTests { get; }
-    bool Save();
+    ITestEntityRepository TestTestEntities { get; }
+    Task<IDbContextTransaction> BeginTransactionAsync();
+    Task<bool> SaveChangeAsync();
 }
 
 public class UnitOfWork : IUnitOfWork
@@ -58,8 +60,7 @@ public class UnitOfWork : IUnitOfWork
         Collections = new CollectionRepository(loggerFactory.CreateLogger<CollectionRepository>(), this.context);
         Quotes = new QuoteRepository(loggerFactory.CreateLogger<QuoteRepository>(), this.context);
         Authors = new AuthorRepository(loggerFactory.CreateLogger<AuthorRepository>(), this.context);
-        EntityForTests =
-            new EntityForTestRepository(loggerFactory.CreateLogger<EntityForTestRepository>(), this.context);
+        TestTestEntities = new TestEntityRepository(loggerFactory.CreateLogger<TestEntityRepository>(), this.context);
     }
 
     public IDynastyRepository Dynasties { get; }
@@ -67,32 +68,37 @@ public class UnitOfWork : IUnitOfWork
     public ICollectionRepository Collections { get; }
     public IQuoteRepository Quotes { get; }
     public IAuthorRepository Authors { get; }
-    public IEntityForTestRepository EntityForTests { get; }
+    public ITestEntityRepository TestTestEntities { get; }
 
     public void Dispose()
     {
         context.Dispose();
     }
-
-    public bool Save()
+    
+    public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
-        context.SaveChanges();
+       return await context.Database.BeginTransactionAsync();
+    }
+
+    public async Task<bool> SaveChangeAsync()
+    {
+        await context.SaveChangesAsync();
         return true;
     }
 }
 
 public interface IRepository<T> where T : class
 {
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
     Task<T?> FindAsync(int id);
-    Task<List<T>> ToListAsync(Expression<Func<T, bool>> expression);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
     Task<List<T>> ToListAsync();
-    IQueryable<T> Where(Expression<Func<T, bool>> expression);
+    Task<List<T>> ToListAsync(Expression<Func<T, bool>> expression);
+    Task<List<TResult>> SelectToListAsync<TResult>(Expression<Func<T, TResult>> expression);
     void Add(T entity);
     void AddRange(IEnumerable<T> entities);
     void Remove(T entity);
     void RemoveRange(IEnumerable<T> entities);
-    Task<List<TResult>> SelectToListAsync<TResult>(Expression<Func<T, TResult>> expression);
+    IQueryable<T> Where(Expression<Func<T, bool>> expression);
 }
 
 public class Repository<T> : IRepository<T> where T : class
@@ -157,7 +163,10 @@ public class Repository<T> : IRepository<T> where T : class
     }
 }
 
-public class EntityForTest
+/// <summary>
+/// 单元测试用实体
+/// </summary>
+public class TestEntity
 {
     [Key] [Column("id")] public int Id { get; set; }
 

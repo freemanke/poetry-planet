@@ -25,4 +25,11 @@
       <ProjectReference Include="..\PoetryPlanet.Web\PoetryPlanet.Web.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="app.json" />
+      <Content Include="appsettings.WrongDatabase.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

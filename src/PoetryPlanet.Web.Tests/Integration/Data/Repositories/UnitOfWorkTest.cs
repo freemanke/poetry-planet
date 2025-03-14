@@ -1,5 +1,5 @@
 
-namespace PoetryPlanet.Web.Tests.Integration.Data;
+namespace PoetryPlanet.Web.Tests.Integration.Data.Repositories;
 
 public class UnitOfWorkTest : IntegrationTestBase
 {
@@ -18,6 +18,28 @@ public class UnitOfWorkTest : IntegrationTestBase
     }
 
     [Test]
+    public async Task AddWithTransaction()
+    {
+        var transaction = await unit.BeginTransactionAsync();
+        Assert.That(transaction, Is.Not.EqualTo(null));
+
+        var name = Guid.NewGuid().ToString();
+        var dynasty = new Dynasty { Name = name };
+        unit.Dynasties.Add(dynasty);
+        var result = await unit.SaveChangeAsync();
+        if (result)
+        {
+            await transaction.CommitAsync();
+            var find = await unit.Dynasties.FirstOrDefaultAsync(a => a.Name == name);
+            Assert.That(find, Is.Not.Null);
+
+            unit.Dynasties.Remove(find);
+            await unit.SaveChangeAsync();
+        }
+        else await transaction.RollbackAsync();
+    }
+
+    [Test]
     public async Task ToListAsync()
     {
         var items = await unit.Dynasties.ToListAsync();
@@ -27,7 +49,7 @@ public class UnitOfWorkTest : IntegrationTestBase
     [Test]
     public async Task ToListAsyncOfEntityForTest()
     {
-        var items = await unit.EntityForTests.ToListAsync();
+        var items = await unit.TestTestEntities.ToListAsync();
         Assert.That(items, Is.Empty);
     }
 

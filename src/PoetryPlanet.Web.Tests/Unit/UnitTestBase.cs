@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace PoetryPlanet.Web.Tests.Unit;
 
 public class UnitTestBase : TestBase
@@ -14,7 +16,7 @@ public class UnitTestBase : TestBase
             options.IncludeScopes = true;
             options.TimestampFormat = "HH:mm:ss.sss ";
         });
-        
+
         Program.RegisterServices(builder);
         Program.RegisterDbInMemory(builder);
         ServiceProvider = builder.Services.BuildServiceProvider();
@@ -27,5 +29,21 @@ public class UnitTestBase : TestBase
     {
         var name = $"{typeof(UnitOfWork).Namespace}.*";
         Assert.That(name, Is.EqualTo("PoetryPlanet.Web.Data.Repositories.*"));
+    }
+
+    [Test]
+    public void ReturnNullable()
+    {
+        var method = typeof(Repository<Dynasty>).GetMethod(nameof(Repository<Dynasty>.FindAsync));
+        var finds = method!.ReturnTypeCustomAttributes.GetCustomAttributes(typeof(NullableAttribute), true);
+        Assert.That(finds, Has.Length.EqualTo(1));
+    }
+
+    [Test]
+    public void ReturnUnNullable()
+    {
+        var method = typeof(Repository<Dynasty>).GetMethod(nameof(Repository<Dynasty>.SelectToListAsync));
+        var finds = method!.ReturnTypeCustomAttributes.GetCustomAttributes(typeof(NullableAttribute), true);
+        Assert.That(finds, Is.Empty);
     }
 }
