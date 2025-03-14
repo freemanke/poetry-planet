@@ -107,6 +107,7 @@ public interface IRepository<T> where T : class
     void AddRange(IEnumerable<T> entities);
     void Remove(T entity);
     void RemoveRange(IEnumerable<T> entities);
+    IQueryable<T> OderBy(Expression<Func<T, bool>> expression);
     Task<List<TResult>> SelectToListAsync<TResult>(Expression<Func<T, TResult>> expression);
 }
 
@@ -119,6 +120,11 @@ public class Repository<T> : IRepository<T> where T : class
     {
         this.logger = logger;
         this.context = context;
+    }
+
+    public IQueryable<T> OderBy(Expression<Func<T, bool>> expression)
+    {
+        return context.Set<T>().OrderBy(expression);
     }
 
     public void Add(T entity)

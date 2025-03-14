@@ -7,6 +7,13 @@ public class UnitOfWorkTest : DbIntegrationTestBase
     }
 
     [Test]
+    public void OrderBy()
+    {
+        var unit = GetRequiredService<IUnitOfWork>();
+        var items = unit.Authors.OderBy(a => a.Id > 0);
+    }
+
+    [Test]
     public async Task CRUD()
     {
         var work = GetRequiredService<IUnitOfWork>();
