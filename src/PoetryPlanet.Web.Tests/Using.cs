@@ -9,3 +9,6 @@ global using PoetryPlanet.Web.Data.Models;
 global using PoetryPlanet.Web.Services;
 global using Microsoft.Extensions.Logging;
 global using PoetryPlanet.Web.Data.Repositories;
+global using PoetryPlanet.Web.Services;
+global using System.Runtime.CompilerServices;
+global using PoetryPlanet.Web.Data.Repositories;
