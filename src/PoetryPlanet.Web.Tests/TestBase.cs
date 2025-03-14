@@ -1,10 +1,11 @@
-﻿namespace PoetryPlanet.Web.Tests;
+﻿#pragma warning disable CS8618 
+namespace PoetryPlanet.Web.Tests;
 
-public class TestBase
+public abstract class TestBase
 {
-    public WebApplicationBuilder? Builder { get; set; }
+    protected ApplicationDbContext db { get; set; }
     protected IServiceProvider? ServiceProvider { get; set; }
-
+    
     protected T GetRequiredService<T>() where T : notnull
         => ServiceProvider!.GetRequiredService<T>();
 

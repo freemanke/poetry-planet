@@ -4,12 +4,12 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using PoetryPlanet.Web.Components;
 using PoetryPlanet.Web.Components.Account;
 using PoetryPlanet.Web.Data;
+using PoetryPlanet.Web.Data.Repositories;
 using PoetryPlanet.Web.Services;
 using Radzen;
 
@@ -22,7 +22,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         RegisterServices(builder);
         RegisterDbMysql(builder);
-       
+
         var app = builder.Build();
         app.UseExceptionHandler(Consts.RouterError);
         app.UseHsts();
@@ -61,7 +61,7 @@ public class Program
         services.AddScoped<IdentityUserAccessor>();
         services.AddScoped<IdentityRedirectManager>();
         services.AddScoped<WorkService>();
-        services.AddScoped<SettingService>();
+        services.AddScoped<DebugService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();

@@ -1,7 +1,7 @@
 ﻿@using FileInfo = System.IO.FileInfo
 @attribute [Route(Consts.RouterDebugTool)]
 
-@inject SettingService settingService
+@inject DebugService DebugService
 
 <PageTitle>调试工具</PageTitle>
 
@@ -48,6 +48,6 @@
     
     private void TriggerServiceException()
     {
-        settingService.TriggerException();
+        DebugService.ReturnVoid();
     }
 }

@@ -1,20 +1,20 @@
-using Microsoft.Build.Framework;
-using Microsoft.Extensions.Logging;
-using ILogger = Microsoft.Build.Framework.ILogger;
+using PoetryPlanet.Web.Tests.Integration.Data;
 
 #pragma warning disable CS8618
-namespace PoetryPlanet.Web.Tests.Integration.Data;
+namespace PoetryPlanet.Web.Tests.Integration;
 
-public abstract class DbIntegrationTestBase : TestBase
+public abstract class IntegrationTestBase : TestBase
 {
-    protected ApplicationDbContext db;
+    protected IntegrationTestBase(): this("Development")
+    {
+    }
 
-    protected DbIntegrationTestBase(string environmentName)
+    protected IntegrationTestBase(string environmentName)
     {
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions
             { EnvironmentName = environmentName });
         builder.Configuration.AddJsonFile($"appsettings.{environmentName}.json")
-            .AddUserSecrets<DbContextTestProduction>().Build();
+            .AddUserSecrets<ContextTestProduction>().Build();
         builder.Logging.ClearProviders();
         builder.Logging.AddSimpleConsole(options =>
         {

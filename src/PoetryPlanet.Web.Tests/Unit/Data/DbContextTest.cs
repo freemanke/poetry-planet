@@ -1,22 +1,10 @@
-
-namespace PoetryPlanet.Web.Tests.Unit;
+namespace PoetryPlanet.Web.Tests.Unit.Data;
 
 public class ApplicationDbContextTest : UnitTestBase
 {
-	private ApplicationDbContext db;
-
 	[OneTimeSetUp]
 	public void OneTimeSetUp()
 	{
-		var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-			{ EnvironmentName = Environments.Development });
-		builder.Configuration.AddJsonFile("appsettings.Development.json").Build();
-		Program.RegisterServices(builder);
-		Program.RegisterDbInMemory(builder);
-		ServiceProvider = builder.Services.BuildServiceProvider();
-
-		db = GetRequiredService<ApplicationDbContext>();
-		Assert.That(db.Database.ProviderName, Is.EqualTo("Microsoft.EntityFrameworkCore.InMemory"));
 		db.Database.EnsureDeleted();
 		db.Database.EnsureCreated();
 		Assert.That(db.Authors.Count(), Is.EqualTo(0));
