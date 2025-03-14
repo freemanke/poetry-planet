@@ -7,7 +7,9 @@
 
 <RadzenStack class="mb-2">
     <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.H6">@entity.Name</RadzenText>
-    <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.Body1">@entity.Dynasty · (@entity.BirthYear - @entity.DeathYear)</RadzenText>
+    <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.Body1">
+        @entity.Dynasty · (@entity.BirthYear - @entity.DeathYear)
+    </RadzenText>
     <RadzenTabs>
         <Tabs>
             <RadzenTabsItem Text="简介">
@@ -26,7 +28,7 @@
 @code
 {
     [Parameter] public int Id { get; set; }
-    private Author entity = new ();
+    private Author entity = new();
 
     protected override async Task OnInitializedAsync()
     {

@@ -11,14 +11,14 @@
 <RadzenRow>
     <RadzenColumn size="12">
         <RadzenButton @ref="button" Text="文体" Click="@(_ => popup!.ToggleAsync(button!.Element))" />
-        <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."></RadzenTextBox>
+        <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."/>
         <RadzenButton class="mb-2" Click="SearchAsync" Icon="search" Text=""></RadzenButton>
         <Popup Style="display: none;position: absolute;overflow: hidden; width: 600px" @ref="popup" Lazy="true" class="my-popup">
             <RadzenRow>
                 <RadzenCard class="rounded-2">
                     <RadzenStack>
                         <RadzenStack Orientation="Orientation.Horizontal">
-                            <RadzenCheckBox TValue="bool" @bind-Value="@isAllKinds" Change="ToggleSelectAllKindsAsync"></RadzenCheckBox>
+                            <RadzenCheckBox TValue="bool" @bind-Value="@isAllKinds" Change="ToggleSelectAllKindsAsync"/>
                             <RadzenLabel Text="@(isAllKinds ? "取消全选" : "全选")"></RadzenLabel>
                         </RadzenStack>
                         <RadzenStack>
@@ -40,13 +40,10 @@
 
 <RadzenRow class="mb-2">
     <RadzenColumn Size="12">
-        <RadzenDataGrid class="rounded-2"
-                        Data="@items" TItem="Collection"
-                        PagerPosition="@PagerPosition.Bottom"
-                        AllowPaging="true"
-                        AllowColumnResize="true"
-                        SelectionMode="DataGridSelectionMode.Single"
-                        AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
+        <RadzenDataGrid 
+            class="rounded-2" Data="@items" TItem="Collection"  PagerPosition="@PagerPosition.Bottom" 
+            AllowPaging="true" AllowColumnResize="true" SelectionMode="DataGridSelectionMode.Single" 
+            AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
             <Columns>
                 <RadzenDataGridColumn TItem="Collection" Property="Name" Title="名称" Width="170px" />
                 <RadzenDataGridColumn TItem="Collection" Property="Kind" Title="文体" Width="80px" TextAlign="TextAlign.Center" />
@@ -86,10 +83,11 @@
         selectedKinds = isAllKinds ? allCollectionKinds : [];
         await UpdateAsync();
     }
-    
+
     private async Task UpdateAsync()
     {
-        allCollectionKinds = (await Db.Collections.OrderBy(a=>a.Id).Select(a => a.Kind).ToListAsync()).Distinct().ToList();
+        allCollectionKinds = (await Db.Collections.OrderBy(a => a.Id)
+            .Select(a => a.Kind).ToListAsync()).Distinct().ToList();
         var query = Db.Collections.Where(a => a.Id > 0);
         if (!string.IsNullOrEmpty(keyword))
         {

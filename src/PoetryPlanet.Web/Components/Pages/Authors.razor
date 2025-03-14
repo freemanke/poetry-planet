@@ -11,25 +11,22 @@
 
 <RadzenRow>
     <RadzenColumn size="12">
-        <RadzenTextBox class=" mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."></RadzenTextBox>
+        <RadzenTextBox class=" mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..."/>
         <RadzenButton class=" mb-2" Click="SearchAsync" Icon="search" Text=""></RadzenButton>
     </RadzenColumn>
 </RadzenRow>
 
-<RadzenDataGrid class="rounded-2"
-    Data="@items" TItem="Author" 
-    PagerPosition="@PagerPosition.Bottom" 
-    AllowPaging="true" 
-    AllowColumnResize="true"
-    SelectionMode="DataGridSelectionMode.Single" 
-    AllowRowSelectOnRowClick="true" PageSize="20" AllowSorting="true" @bind-Value="@selected">
+<RadzenDataGrid 
+    class="rounded-2" Data="@items" TItem="Author" PagerPosition="@PagerPosition.Bottom" AllowPaging="true" 
+    AllowColumnResize="true" SelectionMode="DataGridSelectionMode.Single" AllowRowSelectOnRowClick="true" 
+    PageSize="20" AllowSorting="true" @bind-Value="@selected">
     <Columns>
         <RadzenDataGridColumn TItem="Author" Property="Name" Title="姓名" Width="100px">
             <Template Context="data">
                 <a style="font-weight: bold; text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => ShowAuthorDetailAsync(data.Id))">@data.Name</a>
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="Author" Property="Dynasty" Title="朝代" Width="80px" TextAlign="TextAlign.Center"  />
+        <RadzenDataGridColumn TItem="Author" Property="Dynasty" Title="朝代" Width="80px" TextAlign="TextAlign.Center"/>
         <RadzenDataGridColumn TItem="Author" Property="BirthYear" Title="生于" Width="90px" />
         <RadzenDataGridColumn TItem="Author" Property="DeathYear" Title="死于" Width="90px"/>
         <RadzenDataGridColumn TItem="Author" Property="Intro" Title="简介" />

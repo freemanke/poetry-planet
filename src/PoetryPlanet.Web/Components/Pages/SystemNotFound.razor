@@ -7,24 +7,5 @@
 <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Center">
     <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.H6" Text="页面未找到"></RadzenText>
     <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.Body1" Text="您所请求的页面未找到，请检查请求地址是否正确"/>
-    <RadzenButton Text="回到主页" Click="@(()=>navigationManager.NavigateTo("/", true))"></RadzenButton>
-
+    <RadzenButton Text="回到主页" Click="@(()=>navigationManager.NavigateTo(Consts.RouterHome, true))"></RadzenButton>
 </RadzenStack>
-
-@if (ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@RequestId</code>
-    </p>
-}
-
-@code{
-    [CascadingParameter] private HttpContext? HttpContext { get; set; }
-
-    private string? RequestId { get; set; }
-    private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
-    protected override void OnInitialized() =>
-        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
-
-}

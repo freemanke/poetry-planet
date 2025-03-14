@@ -1,4 +1,5 @@
-﻿@attribute [Route(Consts.RouterDebugTool)]
+﻿@using FileInfo = System.IO.FileInfo
+@attribute [Route(Consts.RouterDebugTool)]
 
 @inject SettingService settingService
 
@@ -35,7 +36,7 @@
         buildInfo = await Task.Run(() =>
         {
             var filePath = GetType().Assembly.Location;
-            var file = new System.IO.FileInfo(filePath);
+            var file = new FileInfo(filePath);
             return $"Build at {file.LastWriteTime:yyyy-MM-dd HH:mm:ss} Powered by Blazor + dotnet 9.0 + Radzen.Blazor";
         });
     }

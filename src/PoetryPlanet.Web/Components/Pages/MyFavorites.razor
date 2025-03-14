@@ -73,6 +73,8 @@
         isLoading = false;
     }
 
-    private async Task UpdateFavoritesAsync() =>
+    private async Task UpdateFavoritesAsync()
+    {
         userFavoriteWorks = await db.UserFavoriteWorks.Where(a => a.Username == G.Username).ToListAsync();
+    }
 }
