@@ -2,37 +2,47 @@
 
 ## 诗词星球网站
 
-通过 Blazor + dotnet 9.0 + Radzen.Blazor 构建的古诗词在线网站
+通过 Blazor + dotnet 9.0 + Radzen.Blazor 构建的古诗词在线网站，实现以下开发最佳实践
+1. 全栈一体化开发 Blazor 技术栈
+2. 依赖注入
+3. 基于 EntityFramework 的 ORM 实现，实现数据库的自动迁移
+4. 支持 linux/arm64, linux/amd64 对平台同时构建和发布
+5. 自动化单元和集成测试
+6. 自动化一键发布和部署
+7. Unit Of Work 数据访问模式的实现
 
+### 开发测试和构建
 
-### 构建镜像
-构建并推送镜像前，需要在开发服务器上登录 `harbor`，登录完成后执行命令构建
+通过 Rider 进行开发
 
 ```bash
-docker login home.freemanke.com:60012 -u 'admin' -p 'password'
+# 构建基础镜像
+docker login home.freemanke.com:60012 -u 'freemanke' -p '***'
 ./images/dotnetsdk/build.sh
+
+# 本地运行项目，可选参数 [Staging | Production]
+./run.sh Development 
+
+# 运行单元和集成测试
+./test.sh
+
+# 构建并推送 Staging 镜像
 ./build_image.sh
 
-```
-
-### 部署生产环境
-
-通过执行命令部署到生产环境
-
-```bash
-./deploy_producction.sh
+# 部署到 Staging 环境
+./deploy_Staging.sh
 ```
 
 ### 数据库密码存储
 
-通过 `dotnet user-secrets` 存储敏感信息，防止敏感信息通过源代码暴露
+通过 `dotnet user-secrets` 本机存储敏感信息，防止敏感信息通过源代码暴露
 
 ```bash
 cd ./src/PoetryPlanet.Web
-dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "真实数据库密码"
+dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "***"
 
 cd ./src/PoetryPlanet.Web.Tests
-dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "真实数据库密码"
+dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "***"
 ```
 
 ## 诗词星球客户端
@@ -48,6 +58,5 @@ dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "真实数据库密码"
 
 ## 常见问题
 
-### 如何处理全局未处理异常，确保页面可响应
-
+### Blazor 项目中如何处理全局未处理异常
 [参考文档](https://www.telerik.com/blogs/work-unhandled-exceptions-gracefully-blazor-server-dotnet-6-error-boundaries)

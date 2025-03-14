@@ -4,7 +4,7 @@ using PoetryPlanet.Web.Data.Models;
 
 namespace PoetryPlanet.Web.Services;
 
-public class WorkService(ILogger<WorkService> logger, ApplicationDbContext db)
+public class WorkService(ILogger<WorkService> logger, IUnitOfWork unit, ApplicationDbContext db)
 {
     public async Task<string[]> GetAllDynastyNamesAsync()
     {
@@ -16,8 +16,7 @@ public class WorkService(ILogger<WorkService> logger, ApplicationDbContext db)
 
     public async Task<string[]> GetAllAuthorNamesAsync()
     {
-        return (await db.Authors.Select(a => a.Name)
-            .ToArrayAsync()).Distinct().ToArray();
+        return (await unit.Authors.SelectToListAsync(a => a.Name)).Distinct().ToArray();
     }
 
     public IQueryable<Work> GetWorks(string keyword, IList<string> dynastyNames, IList<string> authorNames)

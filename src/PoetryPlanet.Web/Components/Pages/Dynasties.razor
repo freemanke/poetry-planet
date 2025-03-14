@@ -81,8 +81,8 @@
 
     private async Task UpdateAsync()
     {
-        allDynasties = await unit.Dynasty.ToListAsync();
-        var query = unit.Dynasty.Where(a => a.Id > 0);
+        allDynasties = await unit.Dynasties.ToListAsync();
+        var query = unit.Dynasties.Where(a => a.Id > 0);
         if (!string.IsNullOrEmpty(keyword))
         {
             query = query.Where(a =>
