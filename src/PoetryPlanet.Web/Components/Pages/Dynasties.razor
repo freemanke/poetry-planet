@@ -1,4 +1,5 @@
-﻿@attribute [Route(Consts.RouterDynasties)]
+﻿@using PoetryPlanet.Web.Data.Repositories
+@attribute [Route(Consts.RouterDynasties)]
 
 @inject IUnitOfWork unit
 
@@ -79,19 +80,12 @@
         return UpdateAsync();
     }
 
-    private async Task UpdateAsync()
+    public async Task UpdateAsync()
     {
         allDynasties = await unit.Dynasties.ToListAsync();
-        var query = unit.Dynasties.Where(a => a.Id > 0);
-        if (!string.IsNullOrEmpty(keyword))
-        {
-            query = query.Where(a =>
-                a.Name.Contains(keyword)
-                || a.Intro.Contains(keyword)
-                || a.NameTr.Contains(keyword));
-        }
-
-        items = query.OrderBy(a => a.StartYear).AsQueryable();
-        await Task.CompletedTask;
+        keyword = string.IsNullOrEmpty(keyword) ? "" : keyword;
+        var query = await unit.Dynasties.ToListAsync(a =>
+            a.Name.Contains(keyword) || a.Intro.Contains(keyword) || a.NameTr.Contains(keyword));
+        items = query.AsQueryable();
     }
 }

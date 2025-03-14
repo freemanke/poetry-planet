@@ -1,14 +1,7 @@
-using Microsoft.Extensions.Logging;
-using PoetryPlanet.Web.Data.Models;
-
 namespace PoetryPlanet.Web.Tests.Integration.Data;
 
-public class DbContextDevelopmentTest : DbIntegrationTestBase
+public class ContextDevelopmentTest : IntegrationTestBase
 {
-    public DbContextDevelopmentTest() : base("Development")
-    {
-    }
-
     [OneTimeTearDown]
     public void OneTimeTearDown()
     {

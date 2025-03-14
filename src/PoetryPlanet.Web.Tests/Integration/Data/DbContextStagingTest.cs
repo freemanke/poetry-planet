@@ -1,11 +1,7 @@
 namespace PoetryPlanet.Web.Tests.Integration.Data;
 
-public class DbContextStagingTest : DbIntegrationTestBase
+public class ContextStagingTest() : IntegrationTestBase("Staging")
 {
-    public DbContextStagingTest() : base("Staging")
-    {
-    }
-    
     [OneTimeTearDown]
     public void OneTimeTearDown()
     {
