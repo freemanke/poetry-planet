@@ -1,0 +1,84 @@
+﻿@using System.Text.Json
+@using DeepSeek.Core
+@using DeepSeek.Core.Models
+@attribute [Route(Consts.RouterChat)]
+
+@inject ChatService chatService
+@inject ILogger<Chat> logger
+
+<PageTitle>DeepSeek 聊天</PageTitle>
+
+<RadzenStack AlignItems="AlignItems.End" Orientation="Orientation.Horizontal">
+    <RadzenText TextStyle="TextStyle.H6" Text="DeepSeek 聊天"></RadzenText>
+</RadzenStack>
+
+<RadzenRow>
+    <RadzenColumn Size="12">
+        <RadzenTextBox class="mb-1" Style="width: 80%" Disabled="isSendDisabled" @bind-Value="message"></RadzenTextBox>
+        <RadzenButton class="mb-1" Disabled="isSendDisabled" Click="@ChatStreamAsync" Icon="send" Text=""></RadzenButton>
+    </RadzenColumn>
+</RadzenRow>
+<RadzenRow>
+    <RadzenColumn Size="12">
+        <RadzenTextArea class="mb-1" Style="width: 100%" Rows="22" @bind-Value="@answer"></RadzenTextArea>
+        <RadzenDropDown
+            class="mb-1" Name="ModelDropDown" TValue="string" Value="@model"
+            ValueChanged="@ChangeThemeAsync" Data="@models"
+            TextProperty="@nameof(ModelInfo.Name)" ValueProperty="@nameof(ModelInfo.Name)"/>
+    </RadzenColumn>
+</RadzenRow>
+@code 
+{
+    private bool isSendDisabled;
+    private string model = "";
+    private List<ModelInfo> models = [];
+    private string message = "你好";
+    private string answer = "等待回答...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        models = await chatService.GetModelsAsync();
+        model = models.First().Name;
+    }
+
+    private async Task ChatStreamAsync()
+    {
+        isSendDisabled = true;
+        answer = "正在思考...";
+        StateHasChanged();
+
+        var request = new ChatRequest
+        {
+            Messages =
+            [
+                Message.NewSystemMessage(""),
+                Message.NewUserMessage(message)
+            ],
+            Model = DeepSeekModels.ChatModel
+        };
+
+        logger.LogInformation($"发送消息 {message}");
+        var choices = chatService.client.ChatStreamAsync(request, CancellationToken.None);
+        if (choices is not null)
+        {
+            answer = "";
+            await foreach (var choice in choices)
+            {
+                if (choice.Delta is not null)
+                {
+                    var content = choice.Delta.Content;
+                    answer += content;
+                    StateHasChanged();
+                }
+            }
+        }
+
+        isSendDisabled = false;
+        StateHasChanged();
+    }
+
+    private void ChangeThemeAsync()
+    {
+    }
+}

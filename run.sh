@@ -5,6 +5,6 @@
 ENVIRONMENT_NAME=Development
 if [ "$1" ]; then ENVIRONMENT_NAME=$1; fi
 
-dotnet run \
+dotnet watch run \
 --environment "${ENVIRONMENT_NAME}" \
 --project src/PoetryPlanet.Web/PoetryPlanet.Web.csproj

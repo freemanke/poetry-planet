@@ -65,6 +65,7 @@ public class Program
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+        services.AddSingleton<ChatService>();
     }
 
     public static void RegisterDbMysql(WebApplicationBuilder builder, bool isTest = false)
