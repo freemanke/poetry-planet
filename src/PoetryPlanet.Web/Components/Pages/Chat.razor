@@ -14,7 +14,7 @@
 
 <RadzenRow>
     <RadzenColumn Size="12">
-        <RadzenTextBox class="mb-1" Style="width: 80%" Disabled="isSendDisabled" @bind-Value="message"></RadzenTextBox>
+        <RadzenTextBox class="mb-1" Style="width: 80%" Disabled="isSendDisabled" @onkeydown="HandleKeyDown" @bind-Value="message"></RadzenTextBox>
         <RadzenButton class="mb-1" Disabled="isSendDisabled" Click="@ChatStreamAsync" Icon="send" Text=""></RadzenButton>
     </RadzenColumn>
 </RadzenRow>
@@ -80,5 +80,13 @@
 
     private void ChangeThemeAsync()
     {
+    }
+    
+    private async Task HandleKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await ChatStreamAsync();
+        }
     }
 }

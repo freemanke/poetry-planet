@@ -78,11 +78,6 @@ public class Program
         cb.Password = passwordFromUserSecrets;
         var pwdFromContainerEnv = Environment.GetEnvironmentVariable(Consts.MYSQL_ROOT_PASSWORD);
         if (string.IsNullOrEmpty(cb.Password)) cb.Password = pwdFromContainerEnv;
-
-        // 如果是非 Development 环境且不是集成测试且是容器化运行时使用容器名称作为数据库服务器地址
-        if (!builder.Environment.IsDevelopment() && !isTest && !string.IsNullOrEmpty(pwdFromContainerEnv)) 
-            cb.Server = Consts.MYSQL_CONTAINER_NAME;
-        
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseMySql(cb.ConnectionString, serverVersion);
