@@ -14,17 +14,18 @@
 
 <RadzenRow>
     <RadzenColumn Size="12">
-        <RadzenTextBox class="mb-1" Style="width: 80%" Disabled="isSendDisabled" @onkeydown="HandleKeyDown" @bind-Value="message"></RadzenTextBox>
+        <RadzenDropDown
+            class="mb-1" Name="ModelDropDown" TValue="string" Value="@model"
+            ValueChanged="@ChangeThemeAsync" Data="@models"
+            TextProperty="@nameof(ModelInfo.Name)" ValueProperty="@nameof(ModelInfo.Name)">
+        </RadzenDropDown>
+        <RadzenTextBox class="mb-1" Style="width: 70%" Disabled="isSendDisabled" @onkeydown="HandleKeyDown" @bind-Value="message"></RadzenTextBox>
         <RadzenButton class="mb-1" Disabled="isSendDisabled" Click="@ChatStreamAsync" Icon="send" Text=""></RadzenButton>
     </RadzenColumn>
 </RadzenRow>
 <RadzenRow>
     <RadzenColumn Size="12">
         <RadzenTextArea class="mb-1" Style="width: 100%" Rows="22" @bind-Value="@answer"></RadzenTextArea>
-        <RadzenDropDown
-            class="mb-1" Name="ModelDropDown" TValue="string" Value="@model"
-            ValueChanged="@ChangeThemeAsync" Data="@models"
-            TextProperty="@nameof(ModelInfo.Name)" ValueProperty="@nameof(ModelInfo.Name)"/>
     </RadzenColumn>
 </RadzenRow>
 @code 
