@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: poetry-planet
+  namespace: poetry-planet
+  labels:
+    app: poetry-planet
+spec:
+  ports:
+    - name: http-5255
+      protocol: TCP
+      port: 5255
+      targetPort: 5255
+      nodePort: 32753
+  selector:
+    app: poetry-planet
+  clusterIP: 10.233.36.53
+  clusterIPs:
+    - 10.233.36.53
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster

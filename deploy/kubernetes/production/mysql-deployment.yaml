@@ -1,0 +1,46 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mysql
+  namespace: poetry-planet
+  labels:
+    app: mysql
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mysql
+        version: v1
+    spec:
+      volumes:
+        - name: volume-mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data
+      containers:
+        - name: container
+          image: 'home.freemanke.com:60012/freemanke/mysql:5.7'
+          args:
+            - '--ignore-db-dir=lost+found'
+            - '--lower_case_table_names=1'
+          ports:
+            - name: tcp-3306
+              containerPort: 3306
+              protocol: TCP
+            - name: tcp-33060
+              containerPort: 33060
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: '***'
+          resources: {}
+          volumeMounts:
+            - name: volume-mysql-data
+              mountPath: /var/lib/mysql
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
