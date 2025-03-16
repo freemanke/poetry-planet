@@ -17,24 +17,28 @@
             <RadzenColumn Size="6">
                 <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
                     <RadzenSidebarToggle Click="@(() => isSidebarExpanded = !isSidebarExpanded)"/>
-                    <RadzenLabel Style="font-weight: bold;font-size: 16px">诗词星球 <small>1.0.0</small></RadzenLabel>
+                    <RadzenLabel Style="font-weight: bold;font-size: 16px">诗词星球</RadzenLabel>
                 </RadzenStack>
             </RadzenColumn>
             <RadzenColumn Size="6" Style="padding-right: 24px">
                 <RadzenStack
                     Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
                     JustifyContent="JustifyContent.End" Gap="2">
-                    <RadzenAppearanceToggle/>
-                    <RadzenDropDown
-                        Style="width: 150px" Name="ThemeDropDown" TValue="string" Value="ThemeService.Theme"
-                        ValueChanged="@ChangeThemeAsync" Data="@Themes.Free.ToArray()"
-                        TextProperty="@nameof(Theme.Text)" ValueProperty="@nameof(Theme.Value)"/>
                     <RadzenMenu>
-                        <RadzenMenuItem Text="Freeman Ke" Icon="account_circle">
+                        <RadzenMenuItem Text="@GlobalConfig.Username" Icon="account_box">
                             <RadzenMenuItem Text="修改密码" Click="ChangePassword" Icon="edit"></RadzenMenuItem>
                             <RadzenMenuItem Text="退出登录" Icon="exit_to_app"></RadzenMenuItem>
+                            <RadzenStack Style="padding: 8px">
+                                <RadzenDropDown
+                                    Name="ThemeDropDown" TValue="string" Value="ThemeService.Theme"
+                                    ValueChanged="@ChangeThemeAsync" Data="@Themes.Free.ToArray()"
+                                    TextProperty="@nameof(Theme.Text)" ValueProperty="@nameof(Theme.Value)">
+                                </RadzenDropDown>
+                            </RadzenStack>
                         </RadzenMenuItem>
                     </RadzenMenu>
+                    <RadzenAppearanceToggle/>
+                    
                 </RadzenStack>
             </RadzenColumn>
         </RadzenRow>

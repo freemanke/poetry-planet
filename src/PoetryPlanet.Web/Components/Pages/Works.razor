@@ -15,15 +15,15 @@
 <RadzenRow>
     <RadzenColumn Size="12">
         <RadzenDropDown
-            class="mb-2" Style="width: 140px" TValue="List<string>" Name="Dynasties" Multiple="true"
+            class="mb-1" Style="width: 140px" TValue="List<string>" Name="Dynasties" Multiple="true"
             FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Placeholder="选择朝代"
             AllowFiltering="true" @bind-Value="@selectedDynastyNames" Data="@allDynastyNames" Change="UpdateAsync"/>
         <RadzenDropDown
-            class="mb-2" Style="width: 140px" TValue="List<string>" Name="Authors" Multiple="true"
+            class="mb-1" Style="width: 140px" TValue="List<string>" Name="Authors" Multiple="true"
             FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true"
             @bind-Value="@selectedAuthorNames" Data="@allAuthorNames" Change="UpdateAsync" Placeholder="选择诗人"/>
-        <RadzenTextBox class="mb-2" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..." />
-        <RadzenButton class="mb-2" Click="SearchAsync" Icon="search" Text="" />
+        <RadzenTextBox class="mb-1" @bind-Value="@keyword" Change="@UpdateAsync" Placeholder="搜索关键字..." />
+        <RadzenButton class="mb-1" Click="SearchAsync" Icon="search" Text="" />
     </RadzenColumn>
 </RadzenRow>
 <RadzenRow>
