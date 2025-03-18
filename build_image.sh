@@ -9,7 +9,7 @@ TAG_NAME="latest"
 ASPNETCORE_ENVIRONMENT="Staging"
 if [ "$1" ]; then TAG_NAME=$1; fi
 if [ "$2" ]; then ASPNETCORE_ENVIRONMENT=$2; fi
-IMAGE="home.freemanke.com:60012/freemanke/poetry-planet:$TAG_NAME"
+IMAGE="home.freemanke.com:60012/poetry-planet/poetry-planet:$TAG_NAME"
 
 echo -e "${GREEN}=================================================${NC}"
 echo -e "${GREEN}开始构建 ${ASPNETCORE_ENVIRONMENT} 镜像 ${IMAGE}...${NC}"

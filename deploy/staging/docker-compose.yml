@@ -4,7 +4,7 @@
 version: '2.3'
 services:
   poetry-planet:
-    image: home.freemanke.com:60012/freemanke/poetry-planet:latest
+    image: home.freemanke.com:60012/poetry-planet/poetry-planet:latest
     network_mode: host
     container_name: poetry-planet
     restart: always
@@ -16,7 +16,7 @@ services:
     volumes:
       - ./data/poetry-planet:/app/data
   poetry-planet-mysql:
-    image: home.freemanke.com:60012/freemanke/mysql:5.7
+    image: home.freemanke.com:60012/library/mysql:5.7
     container_name: poetry-planet-mysql
     restart: always
     environment:
