@@ -1,0 +1,47 @@
+#####################################################################
+# 定义每个阶段的先后顺序
+stages:
+  - build
+  - unit-test
+  - publish
+  - deploy
+  - integration-test
+  - endtoend-test
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  CI_REGISTRY: 'hub.infervision.com'
+  CI_REGISTRY_DEVELOP_IMAGE: 'hub.infervision.com/quality/quality.license.server:latest'
+  CI_REGISTRY_RELEASE_IMAGE: 'hub.infervision.com/quality/quality.license.server:$CI_COMMIT_TAG'
+  CI_REGISTRY_USER: 'quality-robot'
+  CI_REGISTRY_TOKEN: 'Tuixiang2021'
+  OBJECTS_DIRECTORY: 'obj'
+  NUGET_PACKAGES_DIRECTORY: '.nuget'
+  SOURCE_CODE_PATH: '*/*/'
+
+cache:
+  key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+  paths:
+    - '$SOURCE_CODE_PATH$OBJECTS_DIRECTORY/project.assets.json'
+    - '$SOURCE_CODE_PATH$OBJECTS_DIRECTORY/*.csproj.nuget.*'
+    - '$NUGET_PACKAGES_DIRECTORY'
+  policy: pull-push
+
+#####################################################################
+# 每个任务脚本之前执行
+before_script:
+  - cat /etc/issue
+  - set -e
+
+#####################################################################
+# 构建并单元测试
+unit-test:
+  stage: unit-test
+  image: home.freemanke.com:60012/poetry-planet/dotnetsdk:9.0
+  script:
+    - './nuget.sh'
+    - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
+    - 'dotnet build --no-restore src/*.sln'
+    - './test.sh'
+  only:
+    - branches
