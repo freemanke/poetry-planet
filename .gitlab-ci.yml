@@ -9,6 +9,7 @@ stages:
   - endtoend-test
 
 variables:
+  HTTP_PROXY: 'http://192.168.3.29:7890'
   IMAGE_DOTNET: 'home.freemanke.com:60012/poetry-planet/dotnetsdk:9.0'
   GIT_SUBMODULE_STRATEGY: recursive
   CI_REGISTRY: 'home.freemanke.com:60012'
@@ -39,8 +40,11 @@ before_script:
 unit-test:
   stage: unit-test
   image: ${IMAGE_DOTNET}
+  variables:
+    http_proxy: "$HTTP_PROXY"
+    https_proxy: "$HTTP_PROXY"
   script:
-  #  - './nuget.sh'
+    - './nuget.sh'
     - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
     - 'dotnet build --no-restore src/*.sln'
     - './test.sh'
