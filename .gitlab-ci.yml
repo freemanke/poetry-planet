@@ -40,7 +40,7 @@ unit-test:
   stage: unit-test
   image: ${IMAGE_DOTNET}
   script:
-    - './nuget.sh'
+  #  - './nuget.sh'
     - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
     - 'dotnet build --no-restore src/*.sln'
     - './test.sh'
