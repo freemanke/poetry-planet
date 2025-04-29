@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using PoetryPlanet.Web.Data;
+using PoetryPlanet.Data;
 
 namespace PoetryPlanet.Web.Components.Account;
 

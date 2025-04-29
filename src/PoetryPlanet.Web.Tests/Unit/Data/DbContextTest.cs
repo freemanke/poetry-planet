@@ -1,3 +1,5 @@
+using PoetryPlanet.Data.Models;
+
 namespace PoetryPlanet.Web.Tests.Unit.Data;
 
 public class ApplicationDbContextTest : UnitTestBase

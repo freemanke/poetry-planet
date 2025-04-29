@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Logging;
+using PoetryPlanet.Data;
+using PoetryPlanet.Data.Models;
 using PoetryPlanet.Web.Tests.Integration.Data;
 
 #pragma warning disable CS8618

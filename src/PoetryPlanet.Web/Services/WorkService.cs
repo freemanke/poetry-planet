@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using PoetryPlanet;
+using PoetryPlanet.Data;
+using PoetryPlanet.Data.Models;
+using PoetryPlanet.Data.Repositories;
 using PoetryPlanet.Web;
-using PoetryPlanet.Web.Data;
-using PoetryPlanet.Web.Data.Models;
-using PoetryPlanet.Web.Data.Repositories;
 
 [assembly: ExceptionInterceptor(AttributeTargetTypes = $"{nameof(PoetryPlanet.Web.Services.DebugService)}", AspectPriority = 10)]
 

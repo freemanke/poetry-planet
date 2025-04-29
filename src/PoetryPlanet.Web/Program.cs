@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using PoetryPlanet.Data;
+using PoetryPlanet.Data.Repositories;
 using PoetryPlanet.Web.Components;
 using PoetryPlanet.Web.Components.Account;
-using PoetryPlanet.Web.Data;
-using PoetryPlanet.Web.Data.Repositories;
 using PoetryPlanet.Web.Services;
 using Radzen;
 

@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using PoetryPlanet.Data;
 using PoetryPlanet.Web.Components.Account.Pages;
 using PoetryPlanet.Web.Components.Account.Pages.Manage;
-using PoetryPlanet.Web.Data;
 
 namespace Microsoft.AspNetCore.Routing;
 

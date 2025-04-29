@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using PoetryPlanet.Web.Data;
+using PoetryPlanet.Data;
 
 namespace PoetryPlanet.Web.Components.Account;
 

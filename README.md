@@ -1,5 +1,9 @@
 # 诗词星球
 
+## 诗词星球客户端
+
+使用 [Avalonia](https://docs.avaloniaui.net/) + [SukiUI](https://github.com/kikipoulet/SukiUI) 实现
+
 ## 诗词星球网站
 
 通过 Blazor + dotnet 9.0 + Radzen.Blazor 构建的古诗词在线网站，实现以下开发最佳实践

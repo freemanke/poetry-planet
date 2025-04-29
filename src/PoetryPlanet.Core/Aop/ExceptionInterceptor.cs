@@ -5,7 +5,7 @@ using PostSharp.Aspects;
 using PostSharp.Extensibility;
 using PostSharp.Serialization;
 
-namespace PoetryPlanet.Web;
+namespace PoetryPlanet;
 
 /// <summary>
 /// 实现对方法的 AOP 异常统一处理，

@@ -22,7 +22,6 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0" />
-        <PackageReference Include="PostSharp" Version="2025.0.6" />
         <PackageReference Include="radzen.blazor" Version="6.2.3" />
     </ItemGroup>
 
@@ -32,6 +31,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\PoetryPlanet.Core\PoetryPlanet.Core.csproj" />
+      <ProjectReference Include="..\PoetryPlanet.Data\PoetryPlanet.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -43,6 +43,15 @@
       <_ContentIncludedByDefault Remove="wwwroot\images\carousel-2.jpg" />
       <_ContentIncludedByDefault Remove="wwwroot\images\carousel-3.jpg" />
       <_ContentIncludedByDefault Remove="wwwroot\images\carousel-4.jpg" />
+      <_ContentIncludedByDefault Remove="Data\json\authors.json" />
+      <_ContentIncludedByDefault Remove="Data\json\collections.json" />
+      <_ContentIncludedByDefault Remove="Data\json\collection_kinds.json" />
+      <_ContentIncludedByDefault Remove="Data\json\collection_quotes.json" />
+      <_ContentIncludedByDefault Remove="Data\json\collection_works.json" />
+      <_ContentIncludedByDefault Remove="Data\json\dynasties.json" />
+      <_ContentIncludedByDefault Remove="Data\json\quotes.json" />
+      <_ContentIncludedByDefault Remove="Data\json\version.json" />
+      <_ContentIncludedByDefault Remove="Data\json\works.json" />
     </ItemGroup>
 
 </Project>

@@ -1,3 +1,7 @@
+using PoetryPlanet.Data;
+using PoetryPlanet.Data.Models;
+using PoetryPlanet.Data.Repositories;
+
 namespace PoetryPlanet.Web.Tests.Unit;
 
 public class UnitTestBase : TestBase

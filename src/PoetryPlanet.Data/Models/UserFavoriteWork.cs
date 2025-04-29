@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PoetryPlanet.Web.Data.Models;
+namespace PoetryPlanet.Data.Models;
 
 public class UserFavoriteWork
 {

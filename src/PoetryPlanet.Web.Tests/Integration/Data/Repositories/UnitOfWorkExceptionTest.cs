@@ -1,3 +1,6 @@
+using PoetryPlanet.Data.Models;
+using PoetryPlanet.Data.Repositories;
+
 namespace PoetryPlanet.Web.Tests.Integration.Data.Repositories;
 
 /// <summary>

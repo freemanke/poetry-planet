@@ -1,14 +1,10 @@
 global using AutoMapper;
 global using Microsoft.EntityFrameworkCore;
-global using PoetryPlanet.Web.Data;
+global using PoetryPlanet.Data;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Hosting;
-global using PoetryPlanet.Web.Data.Models;
 global using PoetryPlanet.Web.Services;
 global using Microsoft.Extensions.Logging;
-global using PoetryPlanet.Web.Data.Repositories;
-global using PoetryPlanet.Web.Services;
 global using System.Runtime.CompilerServices;
-global using PoetryPlanet.Web.Data.Repositories;

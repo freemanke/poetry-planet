@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace PoetryPlanet.Web.Data.Models;
+namespace PoetryPlanet.Data.Models;
 
 public static class Extensions
 {

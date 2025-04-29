@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace PoetryPlanet.Web.Data.ModelDtos;
+namespace PoetryPlanet.Data.ModelDtos;
 
 public class AuthorList
 {

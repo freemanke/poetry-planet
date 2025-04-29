@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using PoetryPlanet.Web;
-using PoetryPlanet.Web.Data.Models;
+using Microsoft.Extensions.Logging;
+using PoetryPlanet;
+using PoetryPlanet.Data.Models;
 
-[assembly: ExceptionInterceptor(AttributeTargetTypes = "PoetryPlanet.Web.Data.Repositories.*")]
+[assembly: ExceptionInterceptor(AttributeTargetTypes = "PoetryPlanet.Data.Repositories.*")]
 
-namespace PoetryPlanet.Web.Data.Repositories;
+namespace PoetryPlanet.Data.Repositories;
 
 public interface IDynastyRepository : IRepository<Dynasty>;
 public interface IWorkRepository : IRepository<Work>;

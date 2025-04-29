@@ -1,18 +1,19 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PoetryPlanet.Web.Data.ModelDtos;
-using PoetryPlanet.Web.Data.Models;
-using Author = PoetryPlanet.Web.Data.Models.Author;
-using Collection = PoetryPlanet.Web.Data.Models.Collection;
-using CollectionKind = PoetryPlanet.Web.Data.Models.CollectionKind;
-using CollectionQuote = PoetryPlanet.Web.Data.Models.CollectionQuote;
-using CollectionWork = PoetryPlanet.Web.Data.Models.CollectionWork;
-using Dynasty = PoetryPlanet.Web.Data.Models.Dynasty;
-using Quote = PoetryPlanet.Web.Data.Models.Quote;
-using Work = PoetryPlanet.Web.Data.Models.Work;
+using Microsoft.Extensions.Logging;
+using PoetryPlanet.Data.ModelDtos;
+using PoetryPlanet.Data.Models;
+using Author = PoetryPlanet.Data.Models.Author;
+using Collection = PoetryPlanet.Data.Models.Collection;
+using CollectionKind = PoetryPlanet.Data.Models.CollectionKind;
+using CollectionQuote = PoetryPlanet.Data.Models.CollectionQuote;
+using CollectionWork = PoetryPlanet.Data.Models.CollectionWork;
+using Dynasty = PoetryPlanet.Data.Models.Dynasty;
+using Quote = PoetryPlanet.Data.Models.Quote;
+using Work = PoetryPlanet.Data.Models.Work;
 
-namespace PoetryPlanet.Web.Data;
+namespace PoetryPlanet.Data;
 
 public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options)
     : IdentityDbContext<ApplicationUser>(options)

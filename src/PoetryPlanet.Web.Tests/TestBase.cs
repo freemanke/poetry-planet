@@ -1,4 +1,6 @@
-﻿#pragma warning disable CS8618 
+﻿using PoetryPlanet.Data;
+
+#pragma warning disable CS8618 
 namespace PoetryPlanet.Web.Tests;
 
 public abstract class TestBase
