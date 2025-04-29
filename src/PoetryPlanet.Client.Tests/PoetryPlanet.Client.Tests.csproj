@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Headless.NUnit" Version="11.2.5" />
+        <PackageReference Include="Avalonia.Headless.NUnit" Version="11.2.8" />
         <PackageReference Include="coverlet.collector" Version="6.0.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
         <PackageReference Include="NUnit" Version="4.2.2" />
@@ -32,6 +32,10 @@
 
     <ItemGroup>
       <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageVersion Update="Avalonia.Headless.NUnit" Version="11.2.8" />
     </ItemGroup>
 
 </Project>
