@@ -9,12 +9,13 @@ stages:
   - endtoend-test
 
 variables:
+  IMAGE_DOTNET: 'home.freemanke.com:60012/poetry-planet/dotnetsdk:9.0'
   GIT_SUBMODULE_STRATEGY: recursive
-  CI_REGISTRY: 'hub.infervision.com'
-  CI_REGISTRY_DEVELOP_IMAGE: 'hub.infervision.com/quality/quality.license.server:latest'
-  CI_REGISTRY_RELEASE_IMAGE: 'hub.infervision.com/quality/quality.license.server:$CI_COMMIT_TAG'
-  CI_REGISTRY_USER: 'quality-robot'
-  CI_REGISTRY_TOKEN: 'Tuixiang2021'
+  CI_REGISTRY: 'home.freemanke.com:60012'
+  CI_REGISTRY_DEVELOP_IMAGE: 'home.freemanke.com:60012/poetry-planet/poetry-planet:latest'
+  CI_REGISTRY_RELEASE_IMAGE: 'home.freemanke.com:60012/poetry-planet/poetry-planet:$CI_COMMIT_TAG'
+  CI_REGISTRY_USER: 'robot$hub-robot'
+  CI_REGISTRY_TOKEN: '7tj2RohTgCaeLT2U9fSDsigcUZxds4nJ'
   OBJECTS_DIRECTORY: 'obj'
   NUGET_PACKAGES_DIRECTORY: '.nuget'
   SOURCE_CODE_PATH: '*/*/'
@@ -37,7 +38,7 @@ before_script:
 # 构建并单元测试
 unit-test:
   stage: unit-test
-  image: home.freemanke.com:60012/poetry-planet/dotnetsdk:9.0
+  image: ${IMAGE_DOTNET}
   script:
     - './nuget.sh'
     - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
@@ -45,3 +46,97 @@ unit-test:
     - './test.sh'
   only:
     - branches
+
+#####################################################################
+# 日常开发每日构建并推送镜像
+publish-staging-image:
+  stage: publish
+  image: hub.infervision.com/quality/docker:18.09
+  script:
+    - docker version
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_DEVELOP_IMAGE --build-arg ASPNETCORE_ENVIRONMENT=Staging --build-arg DESCRIPTION=Staging@$CI_COMMIT_SHA -f ./Dockerfile .
+    - docker push $CI_REGISTRY_DEVELOP_IMAGE
+  only:
+    - branches
+
+#####################################################################
+# 生产发布按分支和标签构建并推送镜像
+publish-production-image:
+  stage: publish
+  image: hub.infervision.com/quality/docker:18.09
+  extends: .dingtalk
+  script:
+    - docker version
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_RELEASE_IMAGE --build-arg ASPNETCORE_ENVIRONMENT=Production --build-arg DESCRIPTION=$CI_COMMIT_TAG@$CI_COMMIT_SHA -f ./Dockerfile .
+    - docker push $CI_REGISTRY_RELEASE_IMAGE
+  only:
+    - tags
+
+#####################################################################
+# 部署到测试环境
+deploy-staging:
+  image: hub.infervision.com/quality/kubectl
+  stage: deploy
+  script:
+    - mkdir -p ~/.kube/ && echo ${KUBE_CONFIG} |base64 -d --ignore-garbage> ~/.kube/config
+    - cd deploy/staging
+    - kubectl delete -f ./
+    - kubectl apply -f ./
+    - kubectl get po,svc,ing -l app=licenseserver-staging -n quality-license
+  only:
+    - branches
+
+#####################################################################
+# 集成测试
+integration-test:
+  stage: integration-test
+  image: ${IMAGE_DOTNET}
+  script:
+    - './nuget.sh'
+    - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
+    - 'dotnet build --no-restore src/*.sln'
+    - './test_integration.sh'
+  only:
+    - branches
+
+#####################################################################
+# 测试环境端到端测试
+endtoend-test-staging:
+  stage: endtoend-test
+  image: ${IMAGE_DOTNET}
+  script:
+    - './nuget.sh'
+    - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
+    - 'dotnet build --no-restore src/*.sln'
+    - './test_endtoend.sh'
+  only:
+    - branches
+
+#####################################################################
+# 部署到生产环境
+deploy-production:
+  image: hub.infervision.com/quality/kubectl
+  stage: deploy
+  script:
+    - mkdir -p ~/.kube/ && echo ${KUBE_CONFIG} |base64 -d --ignore-garbage> ~/.kube/config
+    - cd deploy/production
+    - sed -i "s@__IMAGE__@${CI_REGISTRY_RELEASE_IMAGE}@" licenseserver-deployment.yaml
+    - kubectl apply -f licenseserver-deployment.yaml
+    - kubectl get po,svc,ing -l app=licenseserver -n quality-license
+  only:
+    - tags
+      
+#####################################################################
+# 生产环境端到端测试
+endtoend-test-production:
+  stage: endtoend-test
+  image: ${IMAGE_DOTNET}
+  script:
+    - './nuget.sh'
+    - 'dotnet restore src/*.sln --packages $NUGET_PACKAGES_DIRECTORY'
+    - 'dotnet build --no-restore src/*.sln'
+    - './test_endtoend_production.sh'
+  only:
+    - tags
