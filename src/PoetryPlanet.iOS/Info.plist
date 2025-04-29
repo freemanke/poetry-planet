@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Poetry Planet</string>
+	<string>诗词星球</string>
 	<key>CFBundleIdentifier</key>
-	<string>companyName.PoetryPlanet</string>
+	<string>稻城亚丁诗词星球</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
