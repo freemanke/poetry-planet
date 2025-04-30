@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
+             xmlns:glassMorphism="clr-namespace:CherylUI.Controls.GlassMorphism;assembly=CherylUI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -16,8 +17,130 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
-                        <TextBlock Classes="Tab" Text="诗词" />
+                        <PathIcon Classes="Tab" HorizontalAlignment="Center" Data="{StaticResource home_regular}" />
+                        <TextBlock Classes="Tab" TextAlignment="Center" Text="诗词" />
+                    </StackPanel>
+                </TabItem.Header>
+                <ScrollViewer>
+                    <StackPanel>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                        <glassMorphism:GlassCard Margin="{Binding Margin}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="滕王阁诗" TextAlignment="Center"></TextBlock>
+                                <TextBlock Text="王勃" TextAlignment="Center"></TextBlock>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    滕王高阁临江渚，佩玉鸣鸾罢歌舞。
+                                    画栋朝飞南浦云，珠帘暮卷西山雨。
+                                    闲云潭影日悠悠，物换星移几度秋。
+                                    阁中帝子今何在？槛外长江空自流。
+                                </TextBlock>
+                            </StackPanel>
+                        </glassMorphism:GlassCard>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource clock_alarm_regular}" />
+                        <TextBlock Classes="Tab" TextAlignment="Center" Text="收藏" />
                     </StackPanel>
                 </TabItem.Header>
                 <controls:SliverPageLong Header="Settings">
@@ -27,30 +150,26 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
-                        <TextBlock Classes="Tab" Text="收藏" />
+                        <PathIcon Classes="Tab" HorizontalAlignment="Center" Data="{StaticResource settings_regular}" />
+                        <TextBlock Classes="Tab" TextAlignment="Center" Text="设置" />
                     </StackPanel>
                 </TabItem.Header>
-                <controls:SliverPageLong Header="Settings">
-       
-                </controls:SliverPageLong>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource chevron_right_regular}" />
-                        <TextBlock Classes="Tab" Text="设置" />
-                    </StackPanel>
-                </TabItem.Header>
-                <controls:SliverPageLong Header="Settings">
-       
-                </controls:SliverPageLong>
+                <controls:SliverPage Header="Settings">
+                    <glassMorphism:GlassCard>
+                        <StackPanel>
+                            <TextBlock Margin="5,0,0,0" Text="Username" />
+                            <TextBox Watermark="Bob" />
+                            <ToggleButton Classes="Switch" />
+                            <ToggleButton Classes="Switch" />
+                        </StackPanel>
+                    </glassMorphism:GlassCard>
+                </controls:SliverPage>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
-                        <TextBlock Classes="Tab" Text="我的" />
+                        <TextBlock Classes="Tab" TextAlignment="Center" Text="我的" />
                     </StackPanel>
                 </TabItem.Header>
                 <controls:SliverPageLong Header="Settings">
