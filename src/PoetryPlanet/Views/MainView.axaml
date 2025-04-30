@@ -12,7 +12,6 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-    <controls:InteractiveContainer>
         <TabControl>
             <TabItem>
                 <TabItem.Header>
@@ -57,7 +56,7 @@
                 <controls:SliverPageLong Header="Settings">
        
                 </controls:SliverPageLong>
+                
             </TabItem>
         </TabControl>
-    </controls:InteractiveContainer>
 </UserControl>
