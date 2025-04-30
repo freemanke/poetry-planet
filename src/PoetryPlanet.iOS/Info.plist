@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleDisplayName</key>
 	<string>诗词星球</string>
 	<key>CFBundleIdentifier</key>
@@ -12,6 +14,8 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>CFBundleIconFile</key>
+	<string>Assets.xcassets/AppIcon.png</string>
 	<key>MinimumOSVersion</key>
 	<string>13.0</string>
 	<key>UIDeviceFamily</key>

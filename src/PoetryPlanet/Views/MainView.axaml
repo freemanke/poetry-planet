@@ -5,6 +5,11 @@
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
              xmlns:glassMorphism="clr-namespace:CherylUI.Controls.GlassMorphism;assembly=CherylUI"
+             xmlns:formFields="clr-namespace:CherylUI.Controls.FormFields;assembly=CherylUI"
+             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
+             xmlns:mobilePicker="clr-namespace:CherylUI.Controls.MobilePicker;assembly=CherylUI"
+             xmlns:objectModel="clr-namespace:System.Collections.ObjectModel;assembly=System.ObjectModel"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -17,11 +22,22 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>
+                        <PathIcon Classes="Tab" HorizontalAlignment="Center" Data="{StaticResource weather_sunny_regular}" />
+                        <TextBlock Classes="Tab" TextAlignment="Center" Text="对话" />
+                    </StackPanel>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding Poetry}" Padding="10"></TextBlock>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
                         <PathIcon Classes="Tab" HorizontalAlignment="Center" Data="{StaticResource home_regular}" />
                         <TextBlock Classes="Tab" TextAlignment="Center" Text="诗词" />
                     </StackPanel>
                 </TabItem.Header>
-                <ScrollViewer>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
                     <StackPanel>
                         <glassMorphism:GlassCard Margin="{Binding Margin}">
                             <StackPanel Orientation="Vertical">
@@ -154,15 +170,50 @@
                         <TextBlock Classes="Tab" TextAlignment="Center" Text="设置" />
                     </StackPanel>
                 </TabItem.Header>
-                <controls:SliverPage Header="Settings">
-                    <glassMorphism:GlassCard>
-                        <StackPanel>
-                            <TextBlock Margin="5,0,0,0" Text="Username" />
-                            <TextBox Watermark="Bob" />
-                            <ToggleButton Classes="Switch" />
-                            <ToggleButton Classes="Switch" />
-                        </StackPanel>
-                    </glassMorphism:GlassCard>
+                <controls:SliverPage Header="设置" Margin="0,0,0, 50">
+                    <StackPanel Orientation="Vertical" Spacing="6">
+                        <controls:GroupBox Header="视图控制">
+                            <StackPanel>
+                                <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldAction Title="Eye Comfort" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                            </StackPanel>
+                        </controls:GroupBox>
+                        <controls:GroupBox Header="影像控制">
+                            <StackPanel>
+                                <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldAction Title="Eye Comfort" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                            </StackPanel>
+                        </controls:GroupBox>
+                        <controls:GroupBox Header="其他设置">
+                            <StackPanel>
+                                <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldAction Title="Eye Comfort" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                                <cherylUi:HorizontalSeparator />
+                                <formFields:FormFieldNumberPicker Value="10" />
+                            </StackPanel>
+                        </controls:GroupBox>
+                    </StackPanel>
                 </controls:SliverPage>
             </TabItem>
             <TabItem>
@@ -172,10 +223,6 @@
                         <TextBlock Classes="Tab" TextAlignment="Center" Text="我的" />
                     </StackPanel>
                 </TabItem.Header>
-                <controls:SliverPageLong Header="Settings">
-       
-                </controls:SliverPageLong>
-                
             </TabItem>
         </TabControl>
 </UserControl>
