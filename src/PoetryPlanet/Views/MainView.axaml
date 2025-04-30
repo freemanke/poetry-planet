@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -11,8 +12,52 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center">欢迎使用</Button>
-    </StackPanel>
+    <controls:InteractiveContainer>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
+                        <TextBlock Classes="Tab" Text="诗词" />
+                    </StackPanel>
+                </TabItem.Header>
+                <controls:SliverPageLong Header="Settings">
+       
+                </controls:SliverPageLong>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
+                        <TextBlock Classes="Tab" Text="收藏" />
+                    </StackPanel>
+                </TabItem.Header>
+                <controls:SliverPageLong Header="Settings">
+       
+                </controls:SliverPageLong>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource chevron_right_regular}" />
+                        <TextBlock Classes="Tab" Text="设置" />
+                    </StackPanel>
+                </TabItem.Header>
+                <controls:SliverPageLong Header="Settings">
+       
+                </controls:SliverPageLong>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
+                        <TextBlock Classes="Tab" Text="我的" />
+                    </StackPanel>
+                </TabItem.Header>
+                <controls:SliverPageLong Header="Settings">
+       
+                </controls:SliverPageLong>
+            </TabItem>
+        </TabControl>
+    </controls:InteractiveContainer>
 </UserControl>

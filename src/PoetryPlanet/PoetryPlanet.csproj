@@ -20,6 +20,14 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Material.Avalonia" />
+    <PackageReference Include="Material.Icons.Avalonia" />
     <PackageReference Include="semi.avalonia" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CherylUI">
+      <HintPath>..\CherylUI\bin\Debug\netstandard2.0\CherylUI.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
