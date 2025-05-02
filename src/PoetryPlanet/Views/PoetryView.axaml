@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:MainViewModel"
+             x:Class="PoetryPlanet.Views.PoetryView">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="滕王阁序" Margin="10"></TextBlock>
+            <TextBlock FontSize="18" FontWeight="Bold" TextAlignment="Center" Text="王勃 (唐代)" Margin="10"></TextBlock>
+            <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Poetry}" Margin="10"></TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

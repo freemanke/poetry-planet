@@ -3,6 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+    <PackageVersion>1.4.0</PackageVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
   
@@ -11,23 +12,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" />
-    <PackageReference Include="Avalonia.Themes.Fluent" />
-    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="Avalonia" Version="11.2.8"/>
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.8"/>
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.8"/>
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Diagnostics">
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.8">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm" />
-    <PackageReference Include="Material.Avalonia" />
-    <PackageReference Include="Material.Icons.Avalonia" />
-    <PackageReference Include="semi.avalonia" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Material.Avalonia" Version="3.11.0" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
+    <PackageReference Include="semi.avalonia" Version="11.2.1.7" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="CherylUI">
-      <HintPath>..\CherylUI\bin\Debug\netstandard2.0\CherylUI.dll</HintPath>
+      <HintPath>..\..\..\CherylUI\CherylUI\bin\Debug\netstandard2.0\CherylUI.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\FavoriteView.axaml.cs">
+      <DependentUpon>FavoriteView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\MineView.axaml.cs">
+      <DependentUpon>MineView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

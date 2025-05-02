@@ -1,12 +1,12 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace CherylUI;
+namespace PoetryPlanet.Views;
 
-public partial class HorizontalSeparator : UserControl
+public partial class FavoriteView : UserControl
 {
-    public HorizontalSeparator()
+    public FavoriteView()
     {
         InitializeComponent();
     }

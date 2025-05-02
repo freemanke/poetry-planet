@@ -1,12 +1,12 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace CherylUI.Controls;
+namespace PoetryPlanet.Views;
 
-public partial class Loading : UserControl
+public partial class PoetryView : UserControl
 {
-    public Loading()
+    public PoetryView()
     {
         InitializeComponent();
     }

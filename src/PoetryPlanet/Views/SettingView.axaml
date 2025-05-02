@@ -2,7 +2,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
+             xmlns:formFields="clr-namespace:CherylUI.Controls.FormFields;assembly=CherylUI"
+             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
+             xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.SettingView">
-    Welcome to Avalonia!
+     <controls:SliverPage Header="设置" Margin="0, 0, 0, 50">
+        <StackPanel Orientation="Vertical" Spacing="6">
+            <controls:GroupBox Header="视图控制">
+                <StackPanel>
+                    <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldAction Title="Eye Comfort" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                </StackPanel>
+            </controls:GroupBox>
+            <controls:GroupBox Header="影像控制">
+                <StackPanel>
+                    <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldAction Title="Eye Comfort" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                </StackPanel>
+            </controls:GroupBox>
+            <controls:GroupBox Header="其他设置">
+                <StackPanel>
+                    <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldAction Title="Eye Comfort" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                    <cherylUi:HorizontalSeparator />
+                    <formFields:FormFieldNumberPicker Value="10" />
+                </StackPanel>
+            </controls:GroupBox>
+        </StackPanel>
+    </controls:SliverPage>
 </UserControl>
