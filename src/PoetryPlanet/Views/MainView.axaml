@@ -10,53 +10,5 @@
   <Design.DataContext>
     <vm:MainViewModel />
   </Design.DataContext>
-        <TabControl>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
-                        <TextBlock Classes="Tab" Text="对话" />
-                    </StackPanel>
-                </TabItem.Header>
-                <StackPanel>
-                    <Button>点击</Button>
-                </StackPanel>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
-                        <TextBlock Classes="Tab" Text="诗词" />
-                    </StackPanel>
-                </TabItem.Header>
-                <views:PoetryView></views:PoetryView>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource clock_alarm_regular}" />
-                        <TextBlock Classes="Tab" Text="收藏" />
-                    </StackPanel>
-                </TabItem.Header>
-                <views:FavoriteView></views:FavoriteView>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
-                        <TextBlock Classes="Tab" Text="设置" />
-                    </StackPanel>
-                </TabItem.Header>
-                <views:SettingView></views:SettingView>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
-                        <TextBlock Classes="Tab" Text="我的" />
-                    </StackPanel>
-                </TabItem.Header>
-                <views:MineView></views:MineView>
-            </TabItem>
-        </TabControl>
+        <views:NavigationView></views:NavigationView>
 </UserControl>

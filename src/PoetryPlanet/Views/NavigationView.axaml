@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PoetryPlanet.Views.NavigationView"
+             x:DataType="vm:MainViewModel">
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
+                        <TextBlock Classes="Tab" Text="对话" />
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel>
+                    <Button Padding="5">点击</Button>
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
+                        <TextBlock Classes="Tab" Text="诗词" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:PoetryView></views:PoetryView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource clock_alarm_regular}" />
+                        <TextBlock Classes="Tab" Text="收藏" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:FavoriteView></views:FavoriteView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
+                        <TextBlock Classes="Tab" Text="设置" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:SettingView></views:SettingView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
+                        <TextBlock Classes="Tab" Text="我的" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:MineView></views:MineView>
+            </TabItem>
+        </TabControl>
+</UserControl>
