@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia;
 using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,12 +16,9 @@ public partial class GuideFirstViewModel : ViewModelBase
     [ObservableProperty]
     private string _title = "导出向导：第一步";
 
-    [RelayCommand(CanExecute = nameof(CanAddItem))]
-    public async Task Next()
+    public ICommand NextCommand { get; } = new RelayCommand(() =>
     {
         MobileNavigation.Push(new GuideSecondView());
-        await Task.CompletedTask;
-    }
-
-    private bool CanAddItem() => true;
+        Console.WriteLine("next");
+    });
 }

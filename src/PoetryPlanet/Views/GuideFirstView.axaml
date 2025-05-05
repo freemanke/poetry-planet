@@ -13,7 +13,7 @@
             VerticalAlignment="Center" />
         <Button
             Margin="20"
-            Command="{Binding NextCommand}"
+            Click="Button_OnClick"
             VerticalAlignment="Bottom">
             <TextBlock Text="打开第二视图" />
         </Button>
