@@ -23,6 +23,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Material.Avalonia" Version="3.11.0" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
+    <PackageReference Include="ReactiveUI" Version="20.2.45" />
     <PackageReference Include="semi.avalonia" Version="11.2.1.7" />
   </ItemGroup>
 
@@ -43,6 +44,10 @@
     </Compile>
     <Compile Update="Views\NavigationView.axaml.cs">
       <DependentUpon>NavigationView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\GuideSecondView.axaml.cs">
+      <DependentUpon>SecondView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

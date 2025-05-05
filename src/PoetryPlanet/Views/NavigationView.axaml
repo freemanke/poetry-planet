@@ -16,7 +16,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <StackPanel>
-                    <Button Padding="5">点击</Button>
+                    <Button Padding="5" Click="Button_OnClick">点击</Button>
                 </StackPanel>
             </TabItem>
             <TabItem>

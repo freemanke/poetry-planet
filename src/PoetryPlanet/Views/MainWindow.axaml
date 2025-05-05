@@ -7,5 +7,5 @@
         x:Class="PoetryPlanet.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="诗词星球">
-        <views:LoggedView></views:LoggedView>
+        <views:MainView></views:MainView>
 </Window>

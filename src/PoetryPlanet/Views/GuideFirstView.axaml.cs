@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -5,9 +6,9 @@ using CherylUI.Controls;
 
 namespace PoetryPlanet.Views;
 
-public partial class NavigationView : UserControl
+public partial class GuideFirstView : UserControl
 {
-    public NavigationView()
+    public GuideFirstView()
     {
         InitializeComponent();
     }
@@ -19,6 +20,6 @@ public partial class NavigationView : UserControl
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        MobileNavigation.Push(new GuideFirstView());
+        MobileNavigation.Pop();
     }
 }

@@ -6,9 +6,9 @@ using CherylUI.Controls;
 
 namespace PoetryPlanet.Views;
 
-public partial class LoggedView : UserControl
+public partial class GuideSecondView : UserControl
 {
-    public LoggedView()
+    public GuideSecondView()
     {
         InitializeComponent();
     }
@@ -20,6 +20,5 @@ public partial class LoggedView : UserControl
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        MobileNavigation.Pop();
     }
 }

@@ -20,6 +20,6 @@ public partial class MineView : UserControl
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
-        MobileNavigation.Push(new LoggedView());
+        MobileNavigation.Push(new GuideFirstView());
     }
 }
