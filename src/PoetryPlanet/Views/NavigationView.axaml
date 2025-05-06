@@ -11,22 +11,11 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
-                        <TextBlock Classes="Tab" Text="对话" />
-                    </StackPanel>
-                </TabItem.Header>
-                <StackPanel>
-                    <Button Padding="5" Command="{Binding OpenFirstViewCommand}">打开第一视图</Button>
-                </StackPanel>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel>
                         <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
                         <TextBlock Classes="Tab" Text="诗词" />
                     </StackPanel>
                 </TabItem.Header>
-                <views:WorkView></views:WorkView>
+                <views:WorksView></views:WorksView>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

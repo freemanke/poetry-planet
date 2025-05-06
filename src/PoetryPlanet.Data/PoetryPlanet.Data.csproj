@@ -18,4 +18,47 @@
       <ProjectReference Include="..\PoetryPlanet.Core\PoetryPlanet.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="json\authors.json" />
+      <Content Include="json\authors.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\collection_kinds.json" />
+      <Content Include="json\collection_kinds.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\collection_quotes.json" />
+      <Content Include="json\collection_quotes.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\collection_works.json" />
+      <Content Include="json\collection_works.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\collections.json" />
+      <Content Include="json\collections.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\dynasties.json" />
+      <Content Include="json\dynasties.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\online_data.txt" />
+      <Content Include="json\online_data.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\quotes.json" />
+      <Content Include="json\quotes.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\version.json" />
+      <Content Include="json\version.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="json\works.json" />
+      <Content Include="json\works.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

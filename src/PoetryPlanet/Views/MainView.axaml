@@ -12,6 +12,6 @@
     <vm:MainViewModel />
   </Design.DataContext>
     <controls:InteractiveContainer>
-        <views:GuideFirstView></views:GuideFirstView>
+        <views:NavigationView></views:NavigationView>
     </controls:InteractiveContainer>
 </UserControl>

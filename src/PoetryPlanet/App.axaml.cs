@@ -1,15 +1,18 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PoetryPlanet.Data;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
 
 namespace PoetryPlanet;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {

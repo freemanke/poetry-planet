@@ -8,11 +8,11 @@
              x:DataType="viewModels:MainViewModel"
              x:Class="PoetryPlanet.Views.MineView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
-        <StackPanel>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="我的" Margin="10"></TextBlock>
             <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
-            <TextBlock Text="我的信息..."></TextBlock>
-            <Button Click="Button_OnClick"></Button>
+            <TextBlock Text="个人信息"></TextBlock>
+            <Button Padding="5" Command="{Binding OpenFirstViewCommand}">打开第一视图</Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

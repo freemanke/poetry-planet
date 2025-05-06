@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Avalonia" Version="11.2.8"/>
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.8"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.8"/>
@@ -23,6 +24,10 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Material.Avalonia" Version="3.11.0" />
     <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ReactiveUI" Version="20.2.45" />
     <PackageReference Include="semi.avalonia" Version="11.2.1.7" />
   </ItemGroup>
@@ -31,6 +36,7 @@
     <Reference Include="CherylUI">
       <HintPath>..\..\..\CherylUI\CherylUI\bin\Debug\netstandard2.0\CherylUI.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Identity" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,5 +60,20 @@
       <DependentUpon>PoetriesView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PoetryPlanet.Data\PoetryPlanet.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="poetry-planet.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="works.json" />
+    <Content Include="works.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

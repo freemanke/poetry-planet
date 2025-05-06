@@ -4,15 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:MainViewModel"
              x:Class="PoetryPlanet.Views.WorksView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
         <StackPanel>
-            <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="滕王阁序" Margin="10"></TextBlock>
-            <TextBlock FontSize="18" FontWeight="Bold" TextAlignment="Center" Text="王勃 (唐代)" Margin="10"></TextBlock>
-            <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
-            <TextBlock TextWrapping="Wrap" Text="{Binding Poetry}" Margin="10"></TextBlock>
+            <ItemsControl ItemsSource="{Binding Works}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="viewModels:WorkViewModel">
+                       <views:WorkView></views:WorkView>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
