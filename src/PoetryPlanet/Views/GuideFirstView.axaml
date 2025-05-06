@@ -2,20 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="viewModels:GuideFirstViewModel"
+             x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.GuideFirstView">
-    <Grid Background="{DynamicResource Background}">
+    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
         <TextBlock
             HorizontalAlignment="Center"
-            Text="{Binding Title}"
+            Text="{Binding FirstTitle}"
             VerticalAlignment="Center" />
         <Button
             Margin="20"
-            Click="Button_OnClick"
+            Command="{Binding NextCommand}"
             VerticalAlignment="Bottom">
             <TextBlock Text="打开第二视图" />
         </Button>
-    </Grid>
+        <Button
+            Margin="20"
+            Command="{Binding OpenNavigatorCommand}"
+            VerticalAlignment="Bottom">
+            <TextBlock Text="打开导航视图" />
+        </Button>
+    </StackPanel>
 </UserControl>

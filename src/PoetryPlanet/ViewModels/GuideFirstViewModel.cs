@@ -13,12 +13,5 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class GuideFirstViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private string _title = "导出向导：第一步";
-
-    public ICommand NextCommand { get; } = new RelayCommand(() =>
-    {
-        MobileNavigation.Push(new GuideSecondView());
-        Console.WriteLine("next");
-    });
+  
 }

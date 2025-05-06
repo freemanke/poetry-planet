@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:GuideSecondViewModel"
+             x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.GuideSecondView">
     <Grid Background="{DynamicResource Background}">
         <TextBlock
             HorizontalAlignment="Center"
-            Text="第二视图"
+            Text="{Binding SecondTitle}"
             VerticalAlignment="Center" />
         <Button
             Command="{Binding PreviousCommand}"

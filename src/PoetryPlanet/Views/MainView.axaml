@@ -12,6 +12,8 @@
     <vm:MainViewModel />
   </Design.DataContext>
     <controls:InteractiveContainer>
-        <views:GuideFirstView></views:GuideFirstView>
+        <StackPanel>
+            <views:GuideFirstView></views:GuideFirstView>
+        </StackPanel>
         </controls:InteractiveContainer>
 </UserControl>

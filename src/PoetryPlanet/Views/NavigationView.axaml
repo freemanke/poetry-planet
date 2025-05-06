@@ -16,7 +16,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <StackPanel>
-                    <Button Padding="5" Click="Button_OnClick">点击</Button>
+                    <Button Padding="5" Command="{Binding OpenFirstPageCommand}">打开第一视图</Button>
                 </StackPanel>
             </TabItem>
             <TabItem>
