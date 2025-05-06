@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace PoetryPlanet.Views;
 
-public partial class PoetryView : UserControl
+public partial class WorkView : UserControl
 {
-    public PoetryView()
+    public WorkView()
     {
         InitializeComponent();
     }

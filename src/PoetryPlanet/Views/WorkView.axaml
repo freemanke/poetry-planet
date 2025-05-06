@@ -6,7 +6,7 @@
              xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:MainViewModel"
-             x:Class="PoetryPlanet.Views.PoetryView">
+             x:Class="PoetryPlanet.Views.WorkView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
         <StackPanel>
             <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="滕王阁序" Margin="10"></TextBlock>

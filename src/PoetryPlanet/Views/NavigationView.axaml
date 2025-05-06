@@ -26,7 +26,7 @@
                         <TextBlock Classes="Tab" Text="诗词" />
                     </StackPanel>
                 </TabItem.Header>
-                <views:PoetryView></views:PoetryView>
+                <views:WorkView></views:WorkView>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

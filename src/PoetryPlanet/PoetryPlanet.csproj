@@ -50,5 +50,9 @@
       <DependentUpon>SecondView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\WorksView.axaml.cs">
+      <DependentUpon>PoetriesView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
