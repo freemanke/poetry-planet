@@ -12,10 +12,10 @@
             Text="{Binding SecondTitle}"
             VerticalAlignment="Center" />
         <Button
-            Command="{Binding PreviousCommand}"
+            Command="{Binding BackToFirstViewCommand}"
             Margin="20"
             VerticalAlignment="Bottom">
-            <TextBlock Text="回到第一视图" />
+            <TextBlock Text="打开第一视图" />
         </Button>
     </Grid>
 </UserControl>

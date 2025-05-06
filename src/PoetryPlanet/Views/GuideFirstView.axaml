@@ -6,21 +6,18 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.GuideFirstView">
-    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+    <StackPanel Spacing="5" Orientation="Vertical" Background="{DynamicResource Background}">
         <TextBlock
             HorizontalAlignment="Center"
-            Text="{Binding FirstTitle}"
-            VerticalAlignment="Center" />
+            Text="{Binding FirstTitle}" />
         <Button
-            Margin="20"
-            Command="{Binding NextCommand}"
-            VerticalAlignment="Bottom">
+            Command="{Binding OpenNextViewCommand}"
+            Margin="20">
             <TextBlock Text="打开第二视图" />
-        </Button>
+        </Button> 
         <Button
-            Margin="20"
-            Command="{Binding OpenNavigatorCommand}"
-            VerticalAlignment="Bottom">
+            Command="{Binding OpenNavigationViewCommand}"
+            Margin="20">
             <TextBlock Text="打开导航视图" />
         </Button>
     </StackPanel>

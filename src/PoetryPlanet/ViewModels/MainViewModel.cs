@@ -15,38 +15,35 @@ public partial class MainViewModel : ViewModelBase
     private string _greeting = "第一个跨平台应用";
     
     [ObservableProperty]
-    private string _firstTitle = "导出向导：第一步";
+    private string _firstTitle = "第一视图";
     
     [ObservableProperty]
-    private string _secondTitle = "导出向导：第二步";
+    private string _secondTitle = "第二视图";
 
     [RelayCommand]
-    private async Task Next()
+    private async Task OpenNextView()
     {
         MobileNavigation.Push(new GuideSecondView());
-        Console.WriteLine("next");
         await Task.CompletedTask;
     }
     
     [RelayCommand]
-    private async Task OpenFirstPage()
+    private async Task OpenFirstView()
     {
         MobileNavigation.Push(new GuideFirstView());
-        Console.WriteLine("next");
         await Task.CompletedTask;
     }
 
     
     [RelayCommand]
-    private async Task OpenNavigator()
+    private async Task OpenNavigationView()
     {
         MobileNavigation.Push(new NavigationView());
-        Console.WriteLine("next");
         await Task.CompletedTask;
     }
 
     [RelayCommand]
-    private async Task Previous()
+    private async Task BackToFirstView()
     {
         MobileNavigation.Pop();
         await Task.CompletedTask;
