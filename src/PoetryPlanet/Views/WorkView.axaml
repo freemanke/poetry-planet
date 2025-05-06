@@ -2,15 +2,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:glassMorphism="clr-namespace:CherylUI.Controls.GlassMorphism;assembly=CherylUI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:WorkViewModel"
              x:Class="PoetryPlanet.Views.WorkView">
-    <StackPanel>
-        <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="{Binding Title}" Margin="10"></TextBlock>
-        <TextBlock TextWrapping="Wrap" FontSize="18" FontWeight="Bold" TextAlignment="Center" Text="{Binding Author}" Margin="10"></TextBlock>
-        <TextBlock TextWrapping="Wrap" Text="{Binding Content}" HorizontalAlignment="Center" Margin="10"></TextBlock>
-        <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
-    </StackPanel>
+    <glassMorphism:GlassCard Padding="5">
+        <StackPanel>
+            <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="{Binding Title}" Margin="10"></TextBlock>
+            <TextBlock TextWrapping="Wrap" FontSize="18" FontWeight="Bold" TextAlignment="Center" Text="{Binding Author}" Margin="10"></TextBlock>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Content}" HorizontalAlignment="Center" Margin="10"></TextBlock>
+        </StackPanel>
+    </glassMorphism:GlassCard>
 </UserControl>

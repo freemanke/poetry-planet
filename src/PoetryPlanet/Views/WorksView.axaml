@@ -18,7 +18,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="viewModels:WorkViewModel">
-                       <views:WorkView></views:WorkView>
+                       <views:WorkView Margin="5,5,5,0"></views:WorkView>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
