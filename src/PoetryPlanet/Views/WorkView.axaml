@@ -7,11 +7,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:WorkViewModel"
              x:Class="PoetryPlanet.Views.WorkView">
-    <glassMorphism:GlassCard Padding="5">
+    <glassMorphism:GlassCard>
         <StackPanel>
             <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="{Binding Title}" Margin="10"></TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="18" FontWeight="Bold" TextAlignment="Center" Text="{Binding Author}" Margin="10"></TextBlock>
             <TextBlock TextWrapping="Wrap" Text="{Binding Content}" HorizontalAlignment="Center" Margin="10"></TextBlock>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Intro}" HorizontalAlignment="Center" Margin="10"></TextBlock>
         </StackPanel>
     </glassMorphism:GlassCard>
 </UserControl>

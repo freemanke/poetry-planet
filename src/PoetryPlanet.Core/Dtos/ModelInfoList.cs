@@ -1,51 +1,52 @@
-using System.Text.Json.Serialization;
+
+using Newtonsoft.Json;
 
 namespace PoetryPlanet.Dtos;
 
 public class AuthorList
 {
-    [JsonPropertyName("authors")]
+    [JsonProperty("authors")]
     public List<AuthorInfo> Items { get; set; } = [];
 }
 
 public class CollectionKindList
 {
-    [JsonPropertyName("collection_kinds")]
+    [JsonProperty("collection_kinds")]
     public List<CollectionKindInfo> Items { get; set; } = [];
 }
 
 public class CollectionQuoteList
 {
-    [JsonPropertyName("collection_quotes")]
+    [JsonProperty("collection_quotes")]
     public List<CollectionQuoteInfo> Items { get; set; } = [];
 }
 
 public class CollectionWorkList
 {
-    [JsonPropertyName("collection_works")]
+    [JsonProperty("collection_works")]
     public List<CollectionWorkInfo> Items { get; set; } = [];
 }
 
 public class CollectionList
 {
-    [JsonPropertyName("collections")]
+    [JsonProperty("collections")]
     public List<CollectionInfo> Items { get; set; } = [];
 }
 
 public class DynastyList
 {
-    [JsonPropertyName("dynasties")]
+    [JsonProperty("dynasties")]
     public List<DynastyInfo> Items { get; set; } = [];
 }
 
 public class QuoteList
 {
-    [JsonPropertyName("quotes")]
+    [JsonProperty("quotes")]
     public List<QuoteInfo> Items { get; set; } = [];
 }
 
 public class WorkList
 {
-    [JsonPropertyName("works")]
+    [JsonProperty("works")]
     public List<WorkInfo> Items { get; set; } = [];
 }

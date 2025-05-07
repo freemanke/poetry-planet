@@ -4,53 +4,33 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Runtime.InteropServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls.Platform;
 using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 using PoetryPlanet.Dtos;
 using PoetryPlanet.Views;
-using JsonConverter = Newtonsoft.Json.JsonConverter;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace PoetryPlanet.ViewModels;
 
 public partial class WorkViewModel : ViewModelBase
 {
-    [ObservableProperty] private string title = "";
-    [ObservableProperty] private string author = "";
-    [ObservableProperty] private string content = "";
-
+    [ObservableProperty] private int id;
+    [ObservableProperty] private string? title;
+    [ObservableProperty] private string? author;
+    [ObservableProperty] private string? content;
+    [ObservableProperty] private string? intro;
 }
 
 public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty] private ObservableCollection<WorkViewModel> _works = [];
-
+    [ObservableProperty] 
+    private ObservableCollection<WorkViewModel> works = [];
+    
     public MainViewModel()
     {
-        var docRoot = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri("https://home.freemanke.com:60011");
-        var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/works?count=5");
-        var response = httpClient.SendAsync(request).Result;
-        var json = response.Content.ReadAsStringAsync().Result;
-        var getWorkResponse = JsonConvert.DeserializeObject<GetWorkResponse>(json);
-        _works.Clear();
-        foreach (var item in getWorkResponse!.Works)
-        {
-            _works.Add(new WorkViewModel
-            {
-                Title = item.Title,
-                Author = item.Author,
-                Content = item.Content
-            });
-        }
+        LoadWorks();
     }
 
     [ObservableProperty]
@@ -75,13 +55,41 @@ public partial class MainViewModel : ViewModelBase
         MobileNavigation.Push(new GuideFirstView());
         await Task.CompletedTask;
     }
-
     
     [RelayCommand]
     private async Task OpenNavigationView()
     {
         MobileNavigation.Push(new NavigationView());
         await Task.CompletedTask;
+    }
+
+    public void LoadWorks()
+    {
+        var docRoot = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri("https://home.freemanke.com:60011");
+        var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/works?count=1");
+        var response = httpClient.SendAsync(request).Result;
+        var info = new[] { new WorkInfo { Id = 10, Author = "我", Content = "一首诗", Intro = "intro"} };
+        var json = response.Content.ReadAsStringAsync().Result; // System.Text.Json.JsonSerializer.Serialize(info);
+        var infos = response.Content.ReadFromJsonAsync<List<WorkInfo>>().Result;
+        File.WriteAllText(Path.Combine(docRoot, "works.json"), json);
+        Thread.Sleep(100);
+        json = File.ReadAllText(Path.Combine(docRoot, "works.json"));
+        var workInfos = System.Text.Json.JsonSerializer.Deserialize<List<WorkInfo>>(json);
+        Thread.Sleep(100);
+        Works.Clear();
+        foreach (var item in workInfos!)
+        {
+            Works.Add(new WorkViewModel
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Author = item.Author,
+                Content = item.Content,
+                Intro = item.Intro
+            });
+        }
     }
 
     [RelayCommand]

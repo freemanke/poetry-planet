@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace PoetryPlanet.Dtos;
 
@@ -7,33 +7,22 @@ namespace PoetryPlanet.Dtos;
 /// </summary>
 public class BaseResponse
 {
-    [JsonConstructor]
-    public BaseResponse()
-    {
-        
-    }
-    
     /// <summary>
     /// 是否成功，
     /// 如果不成功请查看消息中的描述
     /// </summary>
-    [JsonPropertyName("success")]
+    [JsonProperty("success")]
     public bool Success { get; set; }
 
     /// <summary>
     /// 描述消息
     /// </summary>
-    [JsonPropertyName("message")] 
+    [JsonProperty("message")] 
     public string Message { get; set; } = "";
 }
 
 public class GetWorkResponse : BaseResponse
 {
-    [JsonConstructor]
-    public GetWorkResponse()
-    {
-    }
-
-    [JsonIgnore]
+    [JsonProperty("works")]
     public List<WorkInfo> Works { get; set; } = [];
 }
