@@ -1,13 +1,6 @@
 using AutoMapper;
-using Dtos=PoetryPlanet.Data.ModelDtos;
-using Author = PoetryPlanet.Data.ModelDtos.Author;
-using Collection = PoetryPlanet.Data.ModelDtos.Collection;
-using CollectionKind = PoetryPlanet.Data.ModelDtos.CollectionKind;
-using CollectionQuote = PoetryPlanet.Data.ModelDtos.CollectionQuote;
-using CollectionWork = PoetryPlanet.Data.ModelDtos.CollectionWork;
-using Dynasty = PoetryPlanet.Data.ModelDtos.Dynasty;
-using Quote = PoetryPlanet.Data.ModelDtos.Quote;
-using Work = PoetryPlanet.Data.ModelDtos.Work;
+using PoetryPlanet.Data.Models;
+using PoetryPlanet.Dtos;
 
 namespace PoetryPlanet.Web
 {
@@ -15,23 +8,23 @@ namespace PoetryPlanet.Web
     {
         public AutoMapperProfile()
         {
-            CreateMap<Author, Author>();
-            CreateMap<CollectionKind, CollectionKind>();
-            CreateMap<CollectionQuote, CollectionQuote>();
-            CreateMap<CollectionWork, CollectionWork>();
-            CreateMap<Collection, Collection>();
-            CreateMap<Dynasty, Dynasty>();
-            CreateMap<Quote, Quote>();
-            CreateMap<Work, Work>();
+            CreateMap<AuthorInfo, Author>();
+            CreateMap<CollectionKindInfo, CollectionKind>();
+            CreateMap<CollectionQuoteInfo, CollectionQuote>();
+            CreateMap<CollectionWorkInfo, CollectionWork>();
+            CreateMap<CollectionInfo, Collection>();
+            CreateMap<DynastyInfo, Dynasty>();
+            CreateMap<QuoteInfo, Quote>();
+            CreateMap<WorkInfo, Work>();
             
-            CreateMap<Author, Author>();
-            CreateMap<CollectionKind, CollectionKind>();
-            CreateMap<CollectionQuote, CollectionQuote>();
-            CreateMap<CollectionWork, CollectionWork>();
-            CreateMap<Collection, Collection>();
-            CreateMap<Dynasty, Dynasty>();
-            CreateMap<Quote, Quote>();
-            CreateMap<Work, Work>();
+            CreateMap<Author, AuthorInfo>();
+            CreateMap<CollectionKind, CollectionKindInfo>();
+            CreateMap<CollectionQuote, CollectionQuoteInfo>();
+            CreateMap<CollectionWork, CollectionWorkInfo>();
+            CreateMap<Collection, CollectionInfo>();
+            CreateMap<Dynasty, DynastyInfo>();
+            CreateMap<Quote, QuoteInfo>();
+            CreateMap<Work, WorkInfo>();
         }
     }
 }

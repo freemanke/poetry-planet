@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -11,7 +13,7 @@ using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
-using PoetryPlanet.Data.Models;
+using PoetryPlanet.Dtos;
 using PoetryPlanet.Views;
 using JsonConverter = Newtonsoft.Json.JsonConverter;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
@@ -32,12 +34,15 @@ public partial class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        var rootPath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)!,
-            OperatingSystem.IsIOS() ? "PoetryPlanet.iOS.app" : "");
-        var items = JsonConvert.DeserializeObject<List<WorkViewModel>>(File.ReadAllText(Path.Combine(rootPath, "works.json")));
-
+        var docRoot = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri("https://home.freemanke.com:60011");
+        var request = new HttpRequestMessage(HttpMethod.Get, "/api/v1/works?count=5");
+        var response = httpClient.SendAsync(request).Result;
+        var json = response.Content.ReadAsStringAsync().Result;
+        var getWorkResponse = JsonConvert.DeserializeObject<GetWorkResponse>(json);
         _works.Clear();
-        foreach (var item in items!)
+        foreach (var item in getWorkResponse!.Works)
         {
             _works.Add(new WorkViewModel
             {

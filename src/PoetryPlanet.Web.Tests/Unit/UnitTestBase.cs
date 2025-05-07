@@ -30,7 +30,7 @@ public class UnitTestBase : TestBase
     public void NameOf()
     {
         var name = $"{typeof(UnitOfWork).Namespace}.*";
-        Assert.That(name, Is.EqualTo("PoetryPlanet.Web.Data.Repositories.*"));
+        Assert.That(name, Is.EqualTo("PoetryPlanet.Data.Repositories.*"));
     }
 
     [Test]

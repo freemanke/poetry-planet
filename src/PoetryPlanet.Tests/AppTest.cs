@@ -1,6 +1,3 @@
-using AutoMapper;
-using PoetryPlanet.Data;
-
 namespace PoetryPlanet.Tests;
 
 public class AppTest

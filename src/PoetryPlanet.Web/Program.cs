@@ -26,6 +26,7 @@ public class Program
         var app = builder.Build();
         app.UseExceptionHandler(Consts.RouterError);
         app.UseHsts();
+        app.MapControllers();
         app.UseAntiforgery();
         app.MapStaticAssets();
         app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
@@ -50,6 +51,7 @@ public class Program
         services.AddBlazoredLocalStorage();
         services.AddRazorComponents().AddInteractiveServerComponents();
         services.AddRadzenComponents();
+        services.AddControllers();
         services.AddCascadingAuthenticationState();
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddAuthentication(options =>

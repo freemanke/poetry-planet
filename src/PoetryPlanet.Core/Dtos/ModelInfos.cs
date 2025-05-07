@@ -1,19 +1,13 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-// ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
-
-namespace PoetryPlanet.Data.ModelDtos
+namespace PoetryPlanet.Dtos
 {
-    [Table("authors")]
-    public class Author
+    public class AuthorInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }= "";
 
@@ -69,14 +63,13 @@ namespace PoetryPlanet.Data.ModelDtos
         public string IntroTr { get; set; }= "";
     }
     
-    [Table("dynasties")]
-    public class Dynasty
+    public class DynastyInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("name")] public string Name { get; set; } = "";
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = "";
 
         [JsonPropertyName("intro")]
         public string Intro { get; set; }= "";
@@ -94,17 +87,14 @@ namespace PoetryPlanet.Data.ModelDtos
         public string IntroTr { get; set; }= "";
     }
 
-    [Table("collection_kinds")]
-    public class CollectionKind
+    public class CollectionKindInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [JsonPropertyName("show_order")]
         public int ShowOrder { get; set; }
 
-        [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }= "";
 
@@ -116,9 +106,8 @@ namespace PoetryPlanet.Data.ModelDtos
     }
 
     [Table("collections")]
-    public class Collection
+    public class CollectionInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
@@ -128,7 +117,6 @@ namespace PoetryPlanet.Data.ModelDtos
         [JsonPropertyName("works_count")]
         public int WorksCount { get; set; }
 
-        [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }= "";
 
@@ -166,10 +154,8 @@ namespace PoetryPlanet.Data.ModelDtos
         public string KindTr { get; set; }= "";
     }
 
-    [Table("collection_quotes")]
-    public class CollectionQuote
+    public class CollectionQuoteInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
@@ -207,10 +193,8 @@ namespace PoetryPlanet.Data.ModelDtos
         public string QuoteWorkTr { get; set; }= "";
     }
 
-    [Table("collection_works")]
-    public class CollectionWork
+    public class CollectionWorkInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
@@ -263,14 +247,13 @@ namespace PoetryPlanet.Data.ModelDtos
         public string CollectionTr { get; set; }= "";
     }
 
-    [Table("quotes")]
-    public class Quote
+    public class QuoteInfo
     {
-        [Key]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("quote")] public string QuoteText { get; set; } = "";
+        [JsonPropertyName("quote")] 
+        public string QuoteText { get; set; } = "";
 
         [JsonPropertyName("dynasty")]
         public string Dynasty { get; set; }= "";
@@ -306,17 +289,18 @@ namespace PoetryPlanet.Data.ModelDtos
         public string WorkTitleTr { get; set; }= "";
     }
 
-    [Table("works")]
-    public class Work
+    public class WorkInfo
     {
-        [Key]
+        [JsonConstructor]
+        public WorkInfo(){}
+        
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [Required]
         [JsonPropertyName("title")]
         public string Title { get; set; }= "";
 
+        [JsonPropertyName("show_order")]
         public int ShowOrder { get; set; }
 
         [JsonPropertyName("posts_count")]

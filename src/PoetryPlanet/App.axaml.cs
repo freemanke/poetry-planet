@@ -6,7 +6,6 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PoetryPlanet.Data;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
 
