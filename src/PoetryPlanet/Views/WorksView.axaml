@@ -5,7 +5,7 @@
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="viewModels:MainViewModel"
+             x:DataType="viewModels:WorksViewModel"
              x:Class="PoetryPlanet.Views.WorksView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
         <StackPanel>
@@ -21,6 +21,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <Button Content="加载数据" Command="{Binding LoadWorksCommand}"></Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

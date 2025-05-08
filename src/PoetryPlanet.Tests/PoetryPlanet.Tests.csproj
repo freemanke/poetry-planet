@@ -21,4 +21,11 @@
       <ProjectReference Include="..\PoetryPlanet\PoetryPlanet.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="data\works.json" />
+      <Content Include="data\works.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
