@@ -9,13 +9,15 @@
     <Design.DataContext>
         <viewModels:WorkViewModel></viewModels:WorkViewModel>
     </Design.DataContext>
+    <Grid Background="{DynamicResource Background}">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="{Binding Title}" Margin="10"></TextBlock>
             <TextBlock TextWrapping="Wrap" FontSize="18" FontWeight="Bold" TextAlignment="Center" Text="{Binding Author}" Margin="10"></TextBlock>
             <TextBlock TextWrapping="Wrap" Text="{Binding Content}" HorizontalAlignment="Center" Margin="10"></TextBlock>
             <TextBlock TextWrapping="Wrap" Text="{Binding Intro}" HorizontalAlignment="Center" Margin="10"></TextBlock>
-            <Button Content="返回" Command="{Binding GoBackCommand}"></Button>
         </StackPanel>
     </ScrollViewer>
+    <Button Margin="5" Content="返回" VerticalAlignment="Bottom" Command="{Binding GoBackCommand}"></Button>
+    </Grid>
 </UserControl>
