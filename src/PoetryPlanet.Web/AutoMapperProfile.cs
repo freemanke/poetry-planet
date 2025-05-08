@@ -16,6 +16,7 @@ namespace PoetryPlanet.Web
             CreateMap<DynastyInfo, Dynasty>();
             CreateMap<QuoteInfo, Quote>();
             CreateMap<WorkInfo, Work>();
+            CreateMap<WorkListItemInfo, Work>();
             
             CreateMap<Author, AuthorInfo>();
             CreateMap<CollectionKind, CollectionKindInfo>();
@@ -25,6 +26,7 @@ namespace PoetryPlanet.Web
             CreateMap<Dynasty, DynastyInfo>();
             CreateMap<Quote, QuoteInfo>();
             CreateMap<Work, WorkInfo>();
+            CreateMap<Work, WorkListItemInfo>();
         }
     }
 }

@@ -1,16 +1,17 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
 
-public partial class WorksView : UserControl
+public partial class WorkListView : UserControl
 {
-    public WorksView()
+    public WorkListView()
     {
         InitializeComponent();
-        DataContext = new WorksViewModel();
+        var vm = new WorkListViewModel();
+        DataContext = vm;
+       vm.DoLoadWorks();
     }
 
     private void InitializeComponent()

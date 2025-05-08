@@ -23,6 +23,7 @@ public class UnitTestBase : TestBase
         Program.RegisterDbInMemory(builder);
         ServiceProvider = builder.Services.BuildServiceProvider();
         db = GetRequiredService<ApplicationDbContext>();
+        db.EnsuredInitialize(GetRequiredService<IMapper>());
         Assert.That(db.Database.ProviderName, Is.EqualTo("Microsoft.EntityFrameworkCore.InMemory"));
     }
 

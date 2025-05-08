@@ -54,8 +54,12 @@
       <DependentUpon>SecondView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\WorksView.axaml.cs">
+    <Compile Update="Views\WorkListView.axaml.cs">
       <DependentUpon>PoetriesView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\WorkView.axaml.cs">
+      <DependentUpon>WorkView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

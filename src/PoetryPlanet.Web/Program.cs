@@ -10,6 +10,7 @@ using PoetryPlanet.Data;
 using PoetryPlanet.Data.Repositories;
 using PoetryPlanet.Web.Components;
 using PoetryPlanet.Web.Components.Account;
+using PoetryPlanet.Web.Controllers;
 using PoetryPlanet.Web.Services;
 using Radzen;
 
@@ -52,6 +53,8 @@ public class Program
         services.AddRazorComponents().AddInteractiveServerComponents();
         services.AddRadzenComponents();
         services.AddControllers();
+        services.AddScoped<WorkController>();
+        services.AddScoped<WorkListController>();
         services.AddCascadingAuthenticationState();
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddAuthentication(options =>

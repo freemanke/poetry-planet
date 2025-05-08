@@ -11,10 +11,9 @@ public class WorkController(ApplicationDbContext db, IMapper mapper) : Controlle
 {
     [HttpGet]
     [Route("")]
-    public async Task<List<WorkInfo>> GetAsync(int count)
+    public async Task<WorkInfo?> GetWorkAsync(int id)
     {
-        count = count <= 0 ? 100 : count;
-        var items = await db.Works.Take(count).Select(a => mapper.Map<WorkInfo>(a)).ToListAsync();
-        return items;
+        var find = await db.Works.FirstOrDefaultAsync(a => a.Id == id);
+        return find == null ? null : mapper.Map<WorkInfo>(find);
     }
 }

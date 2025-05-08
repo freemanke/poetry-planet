@@ -5,8 +5,8 @@
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="viewModels:WorksViewModel"
-             x:Class="PoetryPlanet.Views.WorksView">
+             x:DataType="viewModels:WorkListViewModel"
+             x:Class="PoetryPlanet.Views.WorkListView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
         <StackPanel>
             <ItemsControl ItemsSource="{Binding Works}">
@@ -16,8 +16,8 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="viewModels:WorkViewModel">
-                       <views:WorkView Margin="5,5,5,0"></views:WorkView>
+                    <DataTemplate DataType="viewModels:WorkListItemViewModel">
+                       <views:WorkListItemView Margin="5,5,5,0"></views:WorkListItemView>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
