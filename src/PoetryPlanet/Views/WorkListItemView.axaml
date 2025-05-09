@@ -37,12 +37,9 @@
                 <Grid>
                     <TextBlock 
                         Text="{Binding Content}" 
-                        Padding="4,2,0,4"
-                        FontSize="14" 
-                        FontWeight="Light"
+                        Padding="4,2,0,4" FontSize="14" FontWeight="Light" TextWrapping="NoWrap"
                         Foreground="DimGray"
-                        TextWrapping="NoWrap"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Left" 
                         VerticalAlignment="Center"/>
                 </Grid>
             </StackPanel>
