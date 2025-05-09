@@ -12,6 +12,7 @@ public partial class WorkViewModel : ViewModelBase
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
     [ObservableProperty] private string? author = "苏轼";
     [ObservableProperty] private string? dynasty = "宋";
+    [ObservableProperty] private string? translation = "译文";
 
     [ObservableProperty] private string? content =
         "夜饮东坡醒复醉，归来仿佛三更。" +

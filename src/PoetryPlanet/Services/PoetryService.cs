@@ -27,14 +27,22 @@ public class PoetryService
     public PoetryService(bool useCache = false)
     {
         this.useCache = useCache;
-        rootPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        rootPath = OperatingSystem.IsAndroid()
+            ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+            : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);cmsg
         workListFilePath = Path.Combine(rootPath, "work_list.json");
         worksFilePath = Path.Combine(rootPath, "works.json");
-        httpClient.BaseAddress = new Uri("https://home.freemanke.com:60011");
+        Console.WriteLine($"文件存储目录：{rootPath}");
+        
+        var handler = new HttpClientHandler();
+        handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+        handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+        httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://home.freemanke.com:60011") };
+        
 
         // 在IOS环境下，反序列化对象前，需要创建一个对象，否则会反序列化报错
         var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容",};
-        var work = new WorkInfo { Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false};
+        var work = new WorkInfo { Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false, Translation = ""};
     }
 
     public void Favorite(int id, bool isFavorite)

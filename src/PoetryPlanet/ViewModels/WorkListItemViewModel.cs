@@ -31,6 +31,7 @@ public partial class WorkListItemViewModel : ViewModelBase
             Content = work.Content,
             Dynasty = work.Dynasty,
             Intro = work.Intro,
+            Translation = work.Translation,
         };
         IsFavorite = work.IsFavorite;
         return vm;

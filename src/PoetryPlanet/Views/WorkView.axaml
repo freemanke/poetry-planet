@@ -12,7 +12,7 @@
     <Grid Background="{DynamicResource Background}">
         <ScrollViewer 
             VerticalScrollBarVisibility="Hidden" 
-            Margin="0,0,0,40" Padding="5">
+            Margin="10,10,10,40" Padding="5">
             <ScrollViewer.GestureRecognizers>
                 <ScrollGestureRecognizer 
                     CanHorizontallyScroll="True"
@@ -26,13 +26,24 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     />
-                <SelectableTextBlock 
-                    Text="{Binding Author}"
-                    TextWrapping="Wrap" FontSize="20" FontWeight="Bold" 
-                    TextAlignment="Center"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Margin="10"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock 
+                        Text="{Binding Dynasty}"
+                        TextWrapping="Wrap" FontSize="20" FontWeight="Bold" 
+                        TextAlignment="Center"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock 
+                        FontSize="20" Text="·" VerticalAlignment="Center"/>
+                    <TextBlock 
+                        Text="{Binding Author}"
+                        TextWrapping="Wrap" FontSize="20" FontWeight="Bold" 
+                        TextAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0,10"
+                        VerticalAlignment="Center">
+                    </TextBlock>
+                </StackPanel>
                 <TextBlock 
                     Text="{Binding Content}" 
                     FontSize="18" FontWeight="Medium" TextWrapping="Wrap" 
@@ -41,11 +52,20 @@
                     VerticalAlignment="Center"
                     Margin="10"/>
                 <TextBlock 
+                    Text="简介" Foreground="Chocolate" FontSize="16" FontWeight="DemiBold" Margin="0,10"/>
+                <TextBlock 
                     Text="{Binding Intro}" 
-                    FontSize="16" TextWrapping="Wrap" TextAlignment="Center"
-                    HorizontalAlignment="Center" 
+                    FontSize="16" TextWrapping="Wrap"
+                    HorizontalAlignment="Left" 
                     VerticalAlignment="Center"
-                    Margin="10"/>
+                    />
+                <TextBlock 
+                    Text="译文" Foreground="Chocolate" FontSize="16" FontWeight="DemiBold" Margin="0,10"/>
+                <TextBlock 
+                    Text="{Binding Translation}" 
+                    FontSize="16" TextWrapping="Wrap"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center"/>
             </StackPanel>
         </ScrollViewer>
         <Button 
