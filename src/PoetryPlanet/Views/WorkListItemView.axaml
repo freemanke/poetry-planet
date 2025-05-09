@@ -10,29 +10,31 @@
     <Design.DataContext>
         <viewModels:WorkListItemViewModel />
     </Design.DataContext>
-        <StackPanel Tapped="InputElement_OnTapped">
-            <Grid Background="{DynamicResource Background}">
-                <SelectableTextBlock Padding="4"
-                    FontSize="16" 
-                    FontWeight="Bold" 
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left" 
-                    Text="{Binding Title}" />
-                <SelectableTextBlock Padding="4"
-                    Text="{Binding AuthorAndDynasty}" 
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right" />
-            </Grid>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock 
-                    Padding="2"
-                    FontSize="14" 
-                    FontWeight="Light" 
-                    TextWrapping="NoWrap"
-                    Text="{Binding Content}" 
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"/>
-            </StackPanel>
-            <cherylUi:HorizontalSeparator />
-        </StackPanel>
+    <StackPanel Tapped="InputElement_OnTapped" Background="White">
+        <Grid>
+                   <TextBlock 
+                       Text="{Binding Title}" 
+                       Padding="4"
+                       FontSize="16" 
+                       FontWeight="Bold" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left" />
+                   <TextBlock 
+                       Text="{Binding AuthorAndDynasty}" 
+                       Padding="4"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right" />
+               </Grid>
+        <Grid>
+           <TextBlock 
+               Padding="2"
+               FontSize="14" 
+               FontWeight="Light" 
+               TextWrapping="NoWrap"
+               Text="{Binding Content}" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"/>
+       </Grid>
+       <cherylUi:HorizontalSeparator />
+    </StackPanel>
 </UserControl>

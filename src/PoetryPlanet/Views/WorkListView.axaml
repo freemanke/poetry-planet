@@ -30,7 +30,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="viewModels:WorkListItemViewModel">
-                            <views:WorkListItemView Margin="5,5,5,0"></views:WorkListItemView>
+                            <views:WorkListItemView Tapped="InputElement_OnTapped" Margin="5,5,5,0"></views:WorkListItemView>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

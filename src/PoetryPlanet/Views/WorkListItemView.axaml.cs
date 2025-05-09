@@ -23,9 +23,14 @@ public partial class WorkListItemView : UserControl
 
     private void InputElement_OnTapped(object? sender, TappedEventArgs e)
     {
-        Console.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-        var vm = DataContext as WorkListItemViewModel;
-        var workViewModel = Task.Run(() => vm?.CreateModelAsync()).Result;
+        Console.WriteLine($"Tapped on Thread: {Thread.CurrentThread.ManagedThreadId}");
+        var wlivm = DataContext as WorkListItemViewModel;
+        var workViewModel = Task.Run(() => wlivm?.CreateModelAsync()).Result;
         MobileNavigation.Push(new WorkView{DataContext = workViewModel});
+    }
+
+    private void InputElement_OnPointerExited(object? sender, PointerEventArgs e)
+    {
+        Console.WriteLine($"pointerexited");
     }
 }

@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:WorkViewModel"
              x:Class="PoetryPlanet.Views.WorkView">
@@ -10,7 +11,15 @@
         <viewModels:WorkViewModel></viewModels:WorkViewModel>
     </Design.DataContext>
     <Grid Background="{DynamicResource Background}">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40" Padding="5">
+        <ScrollViewer 
+            VerticalScrollBarVisibility="Hidden" 
+            Margin="0,0,0,40"
+            Padding="5">
+            <ScrollViewer.GestureRecognizers>
+                <ScrollGestureRecognizer 
+                    CanHorizontallyScroll="True"
+                    CanVerticallyScroll="True"/>
+            </ScrollViewer.GestureRecognizers>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <SelectableTextBlock 
                     Text="{Binding Title}" 
@@ -19,7 +28,7 @@
                     TextAlignment="Center" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Margin="10"/>
+                    />
                 <SelectableTextBlock 
                     Text="{Binding Author}"
                     TextWrapping="Wrap" 
@@ -29,7 +38,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     Margin="10"/>
-                <SelectableTextBlock 
+                <TextBlock 
                     Text="{Binding Content}" 
                     FontSize="18" 
                     FontWeight="Medium"
@@ -38,8 +47,9 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     Margin="10"/>
-                <SelectableTextBlock 
+                <TextBlock 
                     Text="{Binding Intro}" 
+                    FontSize="16"
                     TextWrapping="Wrap" 
                     TextAlignment="Center"
                     HorizontalAlignment="Center" 

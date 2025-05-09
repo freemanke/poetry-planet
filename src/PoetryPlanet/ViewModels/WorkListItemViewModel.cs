@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using PoetryPlanet.Services;
 using PoetryPlanet.Views;
 
@@ -30,5 +31,11 @@ public partial class WorkListItemViewModel : ViewModelBase
         };
         
         return vm;
+    }
+
+    [RelayCommand]
+    private void Favorite()
+    {
+        Console.WriteLine($"Favorite");
     }
 }
