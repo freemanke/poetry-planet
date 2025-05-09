@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:FavoriteWorksViewModel"
+             x:Class="PoetryPlanet.Views.FavoriteWorksView">
+    <Design.DataContext>
+        <viewModels:FavoriteWorksViewModel></viewModels:FavoriteWorksViewModel>
+    </Design.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,46" GotFocus="InputElement_OnGotFocus">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="我的收藏" Margin="10"></TextBlock>
+            <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
+            <ItemsControl ItemsSource="{Binding Works}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="viewModels:FavoriteWorkViewModel">
+                        <views:FavoriteWorkView Margin="5,5,5,0"></views:FavoriteWorkView>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

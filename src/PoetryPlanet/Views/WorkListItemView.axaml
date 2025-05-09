@@ -10,31 +10,43 @@
     <Design.DataContext>
         <viewModels:WorkListItemViewModel />
     </Design.DataContext>
-    <StackPanel Tapped="InputElement_OnTapped" Background="White">
+    <StackPanel>
         <Grid>
-                   <TextBlock 
-                       Text="{Binding Title}" 
-                       Padding="4"
-                       FontSize="16" 
-                       FontWeight="Bold" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left" />
-                   <TextBlock 
-                       Text="{Binding AuthorAndDynasty}" 
-                       Padding="4"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Right" />
-               </Grid>
-        <Grid>
-           <TextBlock 
-               Padding="2"
-               FontSize="14" 
-               FontWeight="Light" 
-               TextWrapping="NoWrap"
-               Text="{Binding Content}" 
-               HorizontalAlignment="Left"
-               VerticalAlignment="Center"/>
-       </Grid>
-       <cherylUi:HorizontalSeparator />
+            <Button 
+                BorderThickness="0" 
+                Background="{Binding FavoriteBrush}" 
+                Command="{Binding FavoriteCommand}" 
+                Margin="2" Width="45" Height="45" 
+                HorizontalAlignment="Left">
+                <PathIcon Data="{StaticResource favorite}"></PathIcon>
+            </Button>
+            <!--如果要触碰 StackPanel 整个区域都触发 Tapped 事件，该布局空间的背景不能设置为透明，否则空白区域无法触发事件-->
+            <StackPanel Margin="48,0,0,0" Tapped="WorkListItemTapped" Background="White">
+                <Grid>
+                    <TextBlock 
+                        Text="{Binding Title}" 
+                        Padding="4,4,4,0" FontSize="16" FontWeight="Bold" 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left" />
+                    <TextBlock 
+                        Text="{Binding AuthorAndDynasty}" 
+                        Padding="4,4,4,0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right" />
+                </Grid>
+                <Grid>
+                    <TextBlock 
+                        Text="{Binding Content}" 
+                        Padding="4,2,0,4"
+                        FontSize="14" 
+                        FontWeight="Light"
+                        Foreground="DimGray"
+                        TextWrapping="NoWrap"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <cherylUi:HorizontalSeparator />
     </StackPanel>
 </UserControl>

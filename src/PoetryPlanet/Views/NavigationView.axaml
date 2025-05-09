@@ -17,14 +17,14 @@
                 </TabItem.Header>
                 <views:WorkListView></views:WorkListView>
             </TabItem>
-            <TabItem>
+            <TabItem Tapped="TabTapped">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource clock_alarm_regular}" />
+                        <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
                         <TextBlock Classes="Tab" Text="收藏" />
                     </StackPanel>
                 </TabItem.Header>
-                <views:FavoriteView></views:FavoriteView>
+                <views:FavoriteWorksView></views:FavoriteWorksView>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Media;
 using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,11 +16,13 @@ public partial class WorkListItemViewModel : ViewModelBase
     [ObservableProperty] private string? title = "江城子 密州出猎";
     [ObservableProperty] private string? authorAndDynasty = "苏轼 · 宋";
     [ObservableProperty] private string? content = "老夫聊发少年狂，左迁龙右擒苍";
+    [ObservableProperty] private bool isFavorite;
+    [ObservableProperty] private IBrush favoriteBrush = new SolidColorBrush(Colors.LightGray);
 
-    public async Task<WorkViewModel> CreateModelAsync()
+    public WorkViewModel CreateViewModel()
     {
-        Console.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId}");
-        var work = await Task.Run(() => PoetryService.Instance.GetWork(Id));
+        Console.WriteLine($"当前线程：{Environment.CurrentManagedThreadId}");
+        var work = PoetryService.Instance.GetWork(Id);
         var vm = new WorkViewModel
         {
             Id = work.Id,
@@ -29,13 +32,16 @@ public partial class WorkListItemViewModel : ViewModelBase
             Dynasty = work.Dynasty,
             Intro = work.Intro,
         };
-        
+        IsFavorite = work.IsFavorite;
         return vm;
     }
 
     [RelayCommand]
     private void Favorite()
     {
-        Console.WriteLine($"Favorite");
+        Console.WriteLine($"{(IsFavorite?"取消收藏":"收藏")}作品：{Title}");
+        IsFavorite = !IsFavorite;
+        PoetryService.Instance.Favorite(Id, IsFavorite);
+        FavoriteBrush = IsFavorite ? new SolidColorBrush(Colors.LawnGreen) : new SolidColorBrush(Colors.LightGray);
     }
 }

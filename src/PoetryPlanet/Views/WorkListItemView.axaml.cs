@@ -21,16 +21,11 @@ public partial class WorkListItemView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void InputElement_OnTapped(object? sender, TappedEventArgs e)
+    private void WorkListItemTapped(object? sender, TappedEventArgs e)
     {
-        Console.WriteLine($"Tapped on Thread: {Thread.CurrentThread.ManagedThreadId}");
-        var wlivm = DataContext as WorkListItemViewModel;
-        var workViewModel = Task.Run(() => wlivm?.CreateModelAsync()).Result;
+        Console.WriteLine($"当前线程 {Environment.CurrentManagedThreadId}");
+        var vm = DataContext as WorkListItemViewModel;
+        var workViewModel = vm?.CreateViewModel();
         MobileNavigation.Push(new WorkView{DataContext = workViewModel});
-    }
-
-    private void InputElement_OnPointerExited(object? sender, PointerEventArgs e)
-    {
-        Console.WriteLine($"pointerexited");
     }
 }

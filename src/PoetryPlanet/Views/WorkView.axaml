@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
-             xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:WorkViewModel"
              x:Class="PoetryPlanet.Views.WorkView">
@@ -58,9 +57,10 @@
             </StackPanel>
         </ScrollViewer>
         <Button 
+            Margin="2"
             Content="返回" 
             VerticalAlignment="Bottom"
-            Classes="Small Secondary"
+            Classes="Secondary"
             Command="{Binding GoBackCommand}"/>
     </Grid>
 </UserControl>

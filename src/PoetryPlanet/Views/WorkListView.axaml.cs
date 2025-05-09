@@ -13,6 +13,7 @@ namespace PoetryPlanet.Views;
 public partial class WorkListView : UserControl
 {
     private WorkListViewModel vm;
+   
     public WorkListView()
     {
         InitializeComponent();
@@ -27,13 +28,8 @@ public partial class WorkListView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void TextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private void KeywordTextChanged(object? sender, TextChangedEventArgs e)
     {
         vm.DoGetWorkList();
-    }
-
-    private void InputElement_OnTapped(object? sender, TappedEventArgs e)
-    {
-       Console.WriteLine($"tapped");
     }
 }

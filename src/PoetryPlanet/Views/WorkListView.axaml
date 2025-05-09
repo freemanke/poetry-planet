@@ -14,14 +14,14 @@
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBox 
                 Text="{Binding Keyword, Mode=TwoWay}" 
-                Margin="2"
-                TextChanged="TextBox_OnTextChanged"
+                Margin="2" 
+                TextChanged="KeywordTextChanged"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 MinWidth="400"
                 Watermark="请输入诗人、作品、年代或内容关键字进行搜索..."/>
         </StackPanel>
-        <ScrollViewer Margin="0,50,0,0" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
                 <ItemsControl ItemsSource="{Binding WorkList}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -30,7 +30,8 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="viewModels:WorkListItemViewModel">
-                            <views:WorkListItemView Tapped="InputElement_OnTapped" Margin="5,5,5,0"></views:WorkListItemView>
+                            <views:WorkListItemView Margin="5,5,5,0">
+                            </views:WorkListItemView>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

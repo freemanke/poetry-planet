@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace PoetryPlanet.ViewModels;
 
-public partial class WorkViewModel : ViewModelBase
+public partial class FavoriteWorkViewModel : ViewModelBase
 {
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
@@ -25,10 +25,4 @@ public partial class WorkViewModel : ViewModelBase
         "写作者深秋之夜在东坡雪堂开怀畅饮，" +
         "醉後返归临皋住所的情景，" +
         "表达了词人退避社会的生活态度和希望彻底解脱的出世意念。";
-
-    [RelayCommand]
-    public void GoBack()
-    {
-        MobileNavigation.Pop();
-    }
 }

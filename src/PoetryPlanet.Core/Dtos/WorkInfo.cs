@@ -4,6 +4,9 @@ namespace PoetryPlanet.Dtos;
 
 public class WorkInfo
 {
+    [JsonPropertyName("is_favorite")]
+    public bool IsFavorite { get; set; }
+    
     [JsonPropertyName("id")]
     public int Id { get; set; }
 

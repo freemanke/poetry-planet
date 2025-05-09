@@ -1,7 +1,11 @@
+using System;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
 using CherylUI.Controls;
+using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
 
@@ -20,5 +24,16 @@ public partial class NavigationView : UserControl
     private void Button_OnClick(object? sender, RoutedEventArgs e)
     {
         MobileNavigation.Push(new GuideFirstView());
+    }
+
+    private void TabTapped(object? sender, TappedEventArgs e)
+    {
+        var view = this.FindDescendantOfType<FavoriteWorksView>();
+        if (view != null)
+        {
+            var vm = view.DataContext as FavoriteWorksViewModel;
+            vm?.DoGetFavoriteWorks();
+        }
+
     }
 }

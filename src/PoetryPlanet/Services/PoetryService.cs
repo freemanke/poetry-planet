@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using PoetryPlanet.Dtos;
+using ReactiveUI;
 
 namespace PoetryPlanet.Services;
 
@@ -32,19 +33,45 @@ public class PoetryService
         httpClient.BaseAddress = new Uri("https://home.freemanke.com:60011");
 
         // 在IOS环境下，反序列化对象前，需要创建一个对象，否则会反序列化报错
-        var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容"};
-        var work = new WorkInfo { Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = ""};
+        var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容",};
+        var work = new WorkInfo { Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false};
     }
 
-    public void GetWorks()
+    public void Favorite(int id, bool isFavorite)
     {
-        if(workCache.Count != 0) return;
+        var find = workCache.FirstOrDefault(a => a.Id == id);
+        if (find != null) find.IsFavorite = isFavorite;
+    }
+
+    public List<WorkInfo> GetFavoriteWorks()
+    {
+        var items = workCache.Where(a => a.IsFavorite).ToList();
+        Console.WriteLine($"获取到收藏作品：{string.Join(",", items.Select(a=>a.Title))}");
+        return items;
+    }
+
+    public List<WorkInfo> GetWorks()
+    {
+        if(workCache.Count != 0) return workCache;
         try
         {
+            string json;
+            List<WorkInfo>? infos;
+            if (File.Exists(worksFilePath))
+            {
+                json = File.ReadAllText(worksFilePath);
+                infos = JsonSerializer.Deserialize<List<WorkInfo>>(json);
+                if (infos != null && infos.Count != 0)
+                {
+                    workCache = infos;
+                    return infos;
+                }
+            }
+            
             var request = new HttpRequestMessage(HttpMethod.Get, worksRoute);
             var response = httpClient.SendAsync(request).Result;
-            var json = response.Content.ReadAsStringAsync().Result;
-            var infos = JsonSerializer.Deserialize<List<WorkInfo>>(json);
+            json = response.Content.ReadAsStringAsync().Result;
+            infos = JsonSerializer.Deserialize<List<WorkInfo>>(json);
 
             File.WriteAllText(worksFilePath, json);
             Console.WriteLine($"文件已保存到：{worksFilePath}");
@@ -54,6 +81,8 @@ public class PoetryService
         {
             Console.WriteLine(e.Message);
         }
+
+        return workCache;
     }
 
     public List<WorkListItemInfo> GetWorkList()

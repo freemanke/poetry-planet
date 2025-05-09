@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\FavoriteView.axaml.cs">
+    <Compile Update="Views\FavoriteWorksView.axaml.cs">
       <DependentUpon>FavoriteView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -60,6 +60,10 @@
     </Compile>
     <Compile Update="Views\WorkView.axaml.cs">
       <DependentUpon>WorkView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\FavoriteWorkView.axaml.cs">
+      <DependentUpon>FavoriteWorkView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

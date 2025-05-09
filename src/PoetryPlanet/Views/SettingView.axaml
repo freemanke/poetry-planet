@@ -9,47 +9,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.SettingView">
-     <controls:SliverPage Header="设置" Margin="0, 0, 0, 50">
+    <controls:SliverPage Header="设置">
         <StackPanel Orientation="Vertical" Spacing="6">
             <controls:GroupBox Header="视图控制">
                 <StackPanel>
-                    <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
+                    <formFields:FormFieldSwitch Title="黑暗背景模式" IsChecked="False" />
                     <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldAction Title="Eye Comfort" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                </StackPanel>
-            </controls:GroupBox>
-            <controls:GroupBox Header="影像控制">
-                <StackPanel>
-                    <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldAction Title="Eye Comfort" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                </StackPanel>
-            </controls:GroupBox>
-            <controls:GroupBox Header="其他设置">
-                <StackPanel>
-                    <formFields:FormFieldSwitch Title="Dark Mode" IsChecked="True" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldAction Title="Eye Comfort" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Value="10" />
+                    <formFields:FormFieldNumberPicker Content="字体大小" Value="10" Margin="5" />
                 </StackPanel>
             </controls:GroupBox>
         </StackPanel>

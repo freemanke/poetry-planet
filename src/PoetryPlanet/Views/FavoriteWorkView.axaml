@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:glassMorphism="clr-namespace:CherylUI.Controls.GlassMorphism;assembly=CherylUI"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="viewModels:FavoriteWorkViewModel"
+             x:Class="PoetryPlanet.Views.FavoriteWorkView">
+    <Design.DataContext>
+        <viewModels:FavoriteWorksViewModel></viewModels:FavoriteWorksViewModel>
+    </Design.DataContext>
+    <glassMorphism:GlassCard Background="{DynamicResource Background}" Margin="2">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock 
+                Text="{Binding Title}" 
+                FontSize="24" 
+                FontWeight="Bold" 
+                TextAlignment="Center" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+            />
+            <TextBlock 
+                Text="{Binding Author}"
+                TextWrapping="Wrap" 
+                FontSize="20" 
+                FontWeight="Bold" 
+                TextAlignment="Center"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Margin="10"/>
+            <TextBlock 
+                Text="{Binding Content}" 
+                FontSize="18" 
+                FontWeight="Medium"
+                TextWrapping="Wrap" 
+                TextAlignment="Center"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Margin="10"/>
+            <TextBlock 
+                Text="{Binding Intro}" 
+                FontSize="16"
+                TextWrapping="Wrap" 
+                TextAlignment="Center"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Margin="10"/>
+        </StackPanel>
+    </glassMorphism:GlassCard>
+</UserControl>
