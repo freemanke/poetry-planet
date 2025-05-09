@@ -1,6 +1,10 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using CherylUI.Controls;
 using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
@@ -19,8 +23,9 @@ public partial class WorkListItemView : UserControl
 
     private void InputElement_OnTapped(object? sender, TappedEventArgs e)
     {
+        Console.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId}");
         var vm = DataContext as WorkListItemViewModel;
-        vm?.OpenWorkView();
-
+        var workViewModel = Task.Run(() => vm?.CreateModelAsync()).Result;
+        MobileNavigation.Push(new WorkView{DataContext = workViewModel});
     }
 }

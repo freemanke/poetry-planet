@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PoetryPlanet.Services;
@@ -9,13 +12,13 @@ public partial class WorkListItemViewModel : ViewModelBase
 {
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "江城子 密州出猎";
-    [ObservableProperty] private string? author = "苏轼";
-    [ObservableProperty] private string? dynasty = "宋";
-    [ObservableProperty] private string? content = "老夫聊发少年狂";
+    [ObservableProperty] private string? authorAndDynasty = "苏轼 · 宋";
+    [ObservableProperty] private string? content = "老夫聊发少年狂，左迁龙右擒苍";
 
-    public void OpenWorkView()
+    public async Task<WorkViewModel> CreateModelAsync()
     {
-        var work = new PoetryService().GetWork(Id);
+        Console.WriteLine($"Thread: {Thread.CurrentThread.ManagedThreadId}");
+        var work = await Task.Run(() => PoetryService.Instance.GetWork(Id));
         var vm = new WorkViewModel
         {
             Id = work.Id,
@@ -26,6 +29,6 @@ public partial class WorkListItemViewModel : ViewModelBase
             Intro = work.Intro,
         };
         
-        MobileNavigation.Push(new WorkView{DataContext = vm});
+        return vm;
     }
 }

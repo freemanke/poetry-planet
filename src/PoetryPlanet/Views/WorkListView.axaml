@@ -7,21 +7,33 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:WorkListViewModel"
              x:Class="PoetryPlanet.Views.WorkListView">
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
-        <StackPanel>
-            <ItemsControl ItemsSource="{Binding Works}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="viewModels:WorkListItemViewModel">
-                       <views:WorkListItemView Margin="5,5,5,0"></views:WorkListItemView>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <Button Content="加载数据" Command="{Binding LoadWorksCommand}"></Button>
+    <Design.DataContext>
+        <viewModels:WorkListViewModel></viewModels:WorkListViewModel>
+    </Design.DataContext>
+    <Grid Background="{DynamicResource Background}" Margin="0,0,0,40">
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBox 
+                Text="{Binding Keyword, Mode=TwoWay}" 
+                Margin="2"
+                TextChanged="TextBox_OnTextChanged"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                MinWidth="400"
+                Watermark="请输入诗人、作品、年代或内容关键字进行搜索..."/>
         </StackPanel>
-    </ScrollViewer>
+        <ScrollViewer Margin="0,50,0,0" VerticalScrollBarVisibility="Hidden">
+                <ItemsControl ItemsSource="{Binding WorkList}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="viewModels:WorkListItemViewModel">
+                            <views:WorkListItemView Margin="5,5,5,0"></views:WorkListItemView>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

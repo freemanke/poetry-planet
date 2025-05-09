@@ -3,14 +3,14 @@ using PoetryPlanet.Web.Controllers;
 
 namespace PoetryPlanet.Web.Tests.Unit.Service;
 
-public class WorkControllerTest : UnitTestBase
+public class WorkListControllerTest : UnitTestBase
 {
     [Test]
-    public async Task GetWorkAsync()
+    public async Task GetWorkListAsync()
     {
-        var controller = GetRequiredService<WorkController>();
-        var find = await controller.GetWorkAsync(10001);
-        Console.WriteLine(JsonSerializer.Serialize(find));
-        Assert.That(find!.Id, Is.EqualTo(10001));
+        var controller = GetRequiredService<WorkListController>();
+        var result = await controller.GetWorkListAsync();
+        Console.WriteLine(JsonSerializer.Serialize(result));
+        Assert.That(result, Has.Count.GreaterThan(1));
     }
 }

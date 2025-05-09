@@ -3,27 +3,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
-             xmlns:glassMorphism="clr-namespace:CherylUI.Controls.GlassMorphism;assembly=CherylUI"
+             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:WorkListItemViewModel"
              x:Class="PoetryPlanet.Views.WorkListItemView">
     <Design.DataContext>
         <viewModels:WorkListItemViewModel />
     </Design.DataContext>
-    <glassMorphism:GlassCard Tapped="InputElement_OnTapped">
-        <StackPanel>
+        <StackPanel Tapped="InputElement_OnTapped">
+            <Grid Background="{DynamicResource Background}">
+                <SelectableTextBlock Padding="4"
+                    FontSize="16" 
+                    FontWeight="Bold" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left" 
+                    Text="{Binding Title}" />
+                <SelectableTextBlock Padding="4"
+                    Text="{Binding AuthorAndDynasty}" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right" />
+            </Grid>
             <StackPanel Orientation="Horizontal">
-                <StackPanel HorizontalAlignment="Left" Width="200">
-                    <SelectableTextBlock FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Title}"></SelectableTextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <SelectableTextBlock Text="{Binding Author}" VerticalAlignment="Center"></SelectableTextBlock>
-                    <SelectableTextBlock Text="{Binding Dynasty}" VerticalAlignment="Center"></SelectableTextBlock>
-                </StackPanel>
+                <TextBlock 
+                    Padding="2"
+                    FontSize="14" 
+                    FontWeight="Light" 
+                    TextWrapping="NoWrap"
+                    Text="{Binding Content}" 
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Content}" HorizontalAlignment="Left"></TextBlock>
-            </StackPanel>
+            <cherylUi:HorizontalSeparator />
         </StackPanel>
-    </glassMorphism:GlassCard>
 </UserControl>

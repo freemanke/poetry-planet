@@ -15,9 +15,6 @@ public class WorkListItemInfo
 
     [JsonPropertyName("author_id")]
     public int AuthorId { get; set; }
-
-    [JsonPropertyName("author_remote_id")]
-    public string? AuthorRemoteId { get; set; }
     
     [JsonPropertyName("dynasty")]
     public string? Dynasty { get; set; }
