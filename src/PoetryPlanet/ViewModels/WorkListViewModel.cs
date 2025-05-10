@@ -15,13 +15,11 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkListViewModel : ViewModelBase
 {
-    private readonly PoetryService poetryService;
     [ObservableProperty] private ObservableCollection<WorkListItemViewModel> workList = [];
     [ObservableProperty] private string keyword = "";
 
-    public WorkListViewModel(PoetryService poetryService)
+    public WorkListViewModel()
     {
-        this.poetryService = poetryService;
         CreateDefault();
     }
 
@@ -48,7 +46,7 @@ public partial class WorkListViewModel : ViewModelBase
                 || a.Content!.Contains(Keyword)
                 || a.Author!.Contains(Keyword))
             .Select(item =>
-                new WorkListItemViewModel(poetryService)
+                new WorkListItemViewModel
                 {
                     Id = item.Id, Title = item.Title,
                     AuthorAndDynasty = $"{item.Author} · {item.Dynasty}",
@@ -62,14 +60,14 @@ public partial class WorkListViewModel : ViewModelBase
     private void CreateDefault()
     {
         WorkList.Clear();
-        WorkList.Add(new WorkListItemViewModel(poetryService)
+        WorkList.Add(new WorkListItemViewModel
         {
             Id = 1,
             Title = "江城子 · 密州出猎",
             AuthorAndDynasty = "苏轼 · 宋",
             Content = "老夫聊发少年狂，左迁龙右擒苍"
         });
-        WorkList.Add(new WorkListItemViewModel(poetryService)
+        WorkList.Add(new WorkListItemViewModel
         {
             Id = 1,
             Title = "观书有感",

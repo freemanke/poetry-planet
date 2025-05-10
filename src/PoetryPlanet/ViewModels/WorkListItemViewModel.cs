@@ -13,7 +13,6 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkListItemViewModel : ViewModelBase
 {
-    private readonly PoetryService poetryService;
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "江城子 密州出猎";
     [ObservableProperty] private string? authorAndDynasty = "苏轼 · 宋";
@@ -21,11 +20,6 @@ public partial class WorkListItemViewModel : ViewModelBase
     [ObservableProperty] private bool isFavorite;
     [ObservableProperty] private IBrush favoriteBrush = new SolidColorBrush(Colors.LightGray);
 
-    public WorkListItemViewModel(PoetryService poetryService)
-    {
-        this.poetryService = poetryService;
-    }
-    
     public WorkViewModel CreateViewModel()
     {
         logger.LogInformation($"当前线程：{Environment.CurrentManagedThreadId}");
