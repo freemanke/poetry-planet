@@ -9,9 +9,6 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty] private string firstTitle = "向导试图一";
-    [ObservableProperty] private string secondTitle = "向导试图二";
-
     public MainViewModel()
     {
         logger.LogInformation("创建主视图模型");
