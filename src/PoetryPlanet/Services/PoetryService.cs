@@ -18,7 +18,7 @@ public class PoetryService
     private readonly string rootPath;
     private readonly string workListFilePath;
     private readonly string worksFilePath;
-    private readonly HttpClient httpClient = new();
+    private readonly HttpClient httpClient;
     private static PoetryService instance = new(true);
     private List<WorkInfo> workCache = [];
 
@@ -29,20 +29,24 @@ public class PoetryService
         this.useCache = useCache;
         rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-            : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);cmsg
+            : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         workListFilePath = Path.Combine(rootPath, "work_list.json");
         worksFilePath = Path.Combine(rootPath, "works.json");
         Console.WriteLine($"文件存储目录：{rootPath}");
-        
+
         var handler = new HttpClientHandler();
         handler.ClientCertificateOptions = ClientCertificateOption.Manual;
         handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://home.freemanke.com:60011") };
-        
+
 
         // 在IOS环境下，反序列化对象前，需要创建一个对象，否则会反序列化报错
-        var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容",};
-        var work = new WorkInfo { Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false, Translation = ""};
+        var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容", };
+        var work = new WorkInfo
+        {
+            Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false,
+            Translation = ""
+        };
     }
 
     public void Favorite(int id, bool isFavorite)
@@ -54,13 +58,13 @@ public class PoetryService
     public List<WorkInfo> GetFavoriteWorks()
     {
         var items = workCache.Where(a => a.IsFavorite).ToList();
-        Console.WriteLine($"获取到收藏作品：{string.Join(",", items.Select(a=>a.Title))}");
+        Console.WriteLine($"获取到收藏作品：{string.Join(",", items.Select(a => a.Title))}");
         return items;
     }
 
     public List<WorkInfo> GetWorks()
     {
-        if(workCache.Count != 0) return workCache;
+        if (workCache.Count != 0) return workCache;
         try
         {
             string json;
@@ -75,7 +79,7 @@ public class PoetryService
                     return infos;
                 }
             }
-            
+
             var request = new HttpRequestMessage(HttpMethod.Get, worksRoute);
             var response = httpClient.SendAsync(request).Result;
             json = response.Content.ReadAsStringAsync().Result;
@@ -96,7 +100,7 @@ public class PoetryService
     public List<WorkListItemInfo> GetWorkList()
     {
         var works = new List<WorkListItemInfo>();
-        if (useCache 
+        if (useCache
             && TryGet<List<WorkListItemInfo>>(workListFilePath, out var workList)
             && workList != null) return workList;
 
@@ -123,9 +127,9 @@ public class PoetryService
     {
         var first = workCache.FirstOrDefault(a => a.Id == id);
         if (first != null) return first;
-        
+
         var filePath = Path.Combine(rootPath, $"{id}.json");
-        if (useCache 
+        if (useCache
             && TryGet<WorkInfo>(filePath, out var value)
             && value != null) return value;
 
@@ -146,23 +150,21 @@ public class PoetryService
 
         return new WorkInfo();
     }
-    
+
     private bool TryGet<T>(string jsonFilePath, out T? value) where T : class
     {
         value = null;
-        if (File.Exists(jsonFilePath))
+        if (!File.Exists(jsonFilePath)) return false;
+        try
         {
-            try
-            {
-                var json = File.ReadAllText(jsonFilePath);
-                var find = JsonSerializer.Deserialize<T>(json);
-                value = find;
-                return find != null;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            var json = File.ReadAllText(jsonFilePath);
+            var find = JsonSerializer.Deserialize<T>(json);
+            value = find;
+            return find != null;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
 
         return false;
