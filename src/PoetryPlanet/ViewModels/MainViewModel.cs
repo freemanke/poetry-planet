@@ -9,11 +9,6 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    public MainViewModel()
-    {
-        logger.LogInformation("创建主视图模型");
-    }
-
     [RelayCommand]
     private void OpenNavigationView()
     {

@@ -32,13 +32,12 @@ public class PoetryService
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         workListFilePath = Path.Combine(rootPath, "work_list.json");
         worksFilePath = Path.Combine(rootPath, "works.json");
-        logger.LogInformation($"文件存储目录：{rootPath}");
+        logger.LogInformation($"当前数据文件存储根目录：{rootPath}");
 
         var handler = new HttpClientHandler();
         handler.ClientCertificateOptions = ClientCertificateOption.Manual;
         handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://home.freemanke.com:60011") };
-
 
         // 在IOS环境下，反序列化对象前，需要创建一个对象，否则会反序列化报错
         var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容", };
@@ -58,7 +57,7 @@ public class PoetryService
     public List<WorkInfo> GetFavoriteWorks()
     {
         var items = workCache.Where(a => a.IsFavorite).ToList();
-        logger.LogInformation($"获取到收藏作品：{string.Join(",", items.Select(a => a.Title))}");
+        logger.LogInformation($"获取到收藏作品：\"{string.Join(",", items.Select(a => a.Title))}\"");
         return items;
     }
 
@@ -102,7 +101,11 @@ public class PoetryService
         var works = new List<WorkListItemInfo>();
         if (useCache
             && TryGet<List<WorkListItemInfo>>(workListFilePath, out var workList)
-            && workList != null) return workList;
+            && workList != null)
+        {
+            logger.LogInformation($"从缓存文件中获取到作品列表 {workList.Count}");
+            return workList;
+        }
 
         try
         {
@@ -112,12 +115,15 @@ public class PoetryService
             var infos = JsonSerializer.Deserialize<List<WorkListItemInfo>>(json);
 
             File.WriteAllText(workListFilePath, json);
-            logger.LogInformation($"文件已保存到：{workListFilePath}");
-            if (infos != null) works.AddRange(infos);
+            if (infos != null)
+            {
+                logger.LogInformation($"通过接口获取到作品列表 {infos.Count} 文件已保存到 {workListFilePath}");
+                works.AddRange(infos);
+            }
         }
         catch (Exception e)
         {
-            logger.LogError(e.Message);
+            logger.LogError($"获取作品列表出错，{e.Message}");
         }
 
         return works;
