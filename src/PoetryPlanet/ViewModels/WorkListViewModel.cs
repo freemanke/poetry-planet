@@ -46,14 +46,7 @@ public partial class WorkListViewModel : ViewModelBase
                 || a.Content!.Contains(Keyword)
                 || a.Dynasty!.Contains(Keyword)
                 || a.Author!.Contains(Keyword))
-            .Select(item =>
-                new WorkListItemViewModel
-                {
-                    Id = item.Id, Title = item.Title,
-                    AuthorAndDynasty = $"{item.Author} · {item.Dynasty}",
-                    Content = item.Content
-                }).ToList();
-
+            .Select(item => WorkListItemViewModel.Create(item)).ToList();
         WorkList.Clear();
         WorkList.AddRange(items);
     }

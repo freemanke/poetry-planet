@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
              x:DataType="viewModels:WorkListItemViewModel"
              x:Class="PoetryPlanet.Views.WorkListItemView">
     <Design.DataContext>
@@ -33,6 +33,7 @@
                         Padding="4,4,4,0"
                         Foreground="DimGray"
                         VerticalAlignment="Center"
+                        TextWrapping="WrapWithOverflow"
                         HorizontalAlignment="Right" />
                 </Grid>
                 <Grid>
@@ -40,6 +41,8 @@
                         Text="{Binding Content}" 
                         Padding="4,2,0,4" FontSize="14" FontWeight="Light" TextWrapping="NoWrap"
                         Foreground="DimGray"
+                        MaxWidth="300"
+                        TextTrimming="CharacterEllipsis"
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Center"/>
                 </Grid>

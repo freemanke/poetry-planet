@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
              xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>

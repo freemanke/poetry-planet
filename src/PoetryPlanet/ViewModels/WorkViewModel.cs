@@ -13,7 +13,12 @@ public partial class WorkViewModel : ViewModelBase
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
     [ObservableProperty] private string? author = "苏轼";
     [ObservableProperty] private string? dynasty = "宋";
-    [ObservableProperty] private string? translation = "译文";
+    [ObservableProperty] private string? translation = 
+        "这首词作于神宗元豐五年，" +
+        "即东坡黄州之贬的第三年，" +
+        "写作者深秋之夜在东坡雪堂开怀畅饮，" +
+        "醉後返归临皋住所的情景，" +
+        "表达了词人退避社会的生活态度和希望彻底解脱的出世意念。";
 
     [ObservableProperty] private string? content =
         "夜饮东坡醒复醉，归来仿佛三更。" +

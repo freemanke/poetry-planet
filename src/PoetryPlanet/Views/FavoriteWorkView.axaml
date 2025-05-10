@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
              x:DataType="viewModels:FavoriteWorkViewModel"
              x:Class="PoetryPlanet.Views.FavoriteWorkView">
     <Design.DataContext>

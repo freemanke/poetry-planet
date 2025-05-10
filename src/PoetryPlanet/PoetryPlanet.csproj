@@ -33,12 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CherylUI">
-      <HintPath>..\..\..\CherylUI\CherylUI\bin\Debug\netstandard2.0\CherylUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\FavoriteWorksView.axaml.cs">
       <DependentUpon>FavoriteView.axaml</DependentUpon>
       <SubType>Code</SubType>
@@ -66,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CherylUI\CherylUI\CherylUI.csproj" />
     <ProjectReference Include="..\PoetryPlanet.Core\PoetryPlanet.Core.csproj" />
   </ItemGroup>
 </Project>
