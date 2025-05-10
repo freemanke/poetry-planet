@@ -44,6 +44,7 @@ public partial class WorkListViewModel : ViewModelBase
         var items = workInfos.Where(a =>
                 a.Title!.Contains(Keyword)
                 || a.Content!.Contains(Keyword)
+                || a.Dynasty!.Contains(Keyword)
                 || a.Author!.Contains(Keyword))
             .Select(item =>
                 new WorkListItemViewModel

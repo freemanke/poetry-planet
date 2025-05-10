@@ -14,5 +14,7 @@ public abstract class ViewModelBase : ObservableObject
     {
         logger = App.GetRequiredService<ILoggerFactory>().CreateLogger(GetType().FullName!);
         poetryService = App.GetRequiredService<PoetryService>();
+        if (GetType().Name != nameof(WorkListItemViewModel))
+            logger.LogInformation($"创建视图模型 {GetType().Name}");
     }
 }

@@ -69,7 +69,7 @@
             </StackPanel>
         </ScrollViewer>
         <Button 
-            Command="{Binding GoBackCommand}"
+            Command="{Binding PreviousViewCommand}"
             Margin="2" Content="返回" 
             VerticalAlignment="Bottom" Classes="Secondary"/>
     </Grid>

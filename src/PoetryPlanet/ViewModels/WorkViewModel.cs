@@ -29,7 +29,7 @@ public partial class WorkViewModel : ViewModelBase
         "表达了词人退避社会的生活态度和希望彻底解脱的出世意念。";
 
     [RelayCommand]
-    public void GoBack()
+    public void PreviousView()
     {
         MobileNavigation.Pop();
     }
