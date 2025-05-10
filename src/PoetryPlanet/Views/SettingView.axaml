@@ -6,9 +6,12 @@
              xmlns:formFields="clr-namespace:CherylUI.Controls.FormFields;assembly=CherylUI"
              xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.SettingView">
+    <Design.DataContext>
+        <vm:SettingViewModel />
+    </Design.DataContext>
     <controls:SliverPage Header="设置">
         <StackPanel Orientation="Vertical" Spacing="6">
             <controls:GroupBox Header="视图控制">

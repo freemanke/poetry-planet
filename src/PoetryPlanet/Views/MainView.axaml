@@ -5,13 +5,50 @@
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
              xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
-             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
     <vm:MainViewModel />
   </Design.DataContext>
     <controls:InteractiveContainer>
-        <views:NavigationView></views:NavigationView>
+        <TabControl Background="White">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
+                        <TextBlock Classes="Tab" Text="诗词" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:WorkListView></views:WorkListView>
+            </TabItem>
+            <TabItem Tapped="TabFavoriteTapped">
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
+                        <TextBlock Classes="Tab" Text="收藏" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:FavoriteWorksView></views:FavoriteWorksView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
+                        <TextBlock Classes="Tab" Text="设置" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:SettingView></views:SettingView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
+                        <TextBlock Classes="Tab" Text="我的" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:MineView></views:MineView>
+            </TabItem>
+        </TabControl>
     </controls:InteractiveContainer>
 </UserControl>

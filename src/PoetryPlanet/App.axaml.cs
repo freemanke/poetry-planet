@@ -22,8 +22,7 @@ public class App : Application
     public static T GetRequiredService<T>() where T : class
     {
         if(serviceProvider == null) ConfigServices();
-        var t = serviceProvider?.GetRequiredService<T>()!;
-        return t;
+        return serviceProvider?.GetRequiredService<T>()!;
     }
     
     public static Control? GetRequiredService(Type type)
@@ -62,7 +61,6 @@ public class App : Application
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:
-                
                 DisableAvaloniaDataAnnotationValidation();
                 desktop.MainWindow = new MainWindow { DataContext = mainViewModel };
                 break;

@@ -7,12 +7,4 @@ using PoetryPlanet.Views;
 
 namespace PoetryPlanet.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
-{
-    [RelayCommand]
-    private void OpenNavigationView()
-    {
-        logger.LogInformation("打开导航视图");
-        MobileNavigation.Push(new NavigationView());
-    }
-}
+public partial class MainViewModel : ViewModelBase;

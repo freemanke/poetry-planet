@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
-             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:DataType="viewModels:MainViewModel"
              x:Class="PoetryPlanet.Views.MineView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">

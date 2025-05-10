@@ -8,6 +8,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Height = 600;
-        Width = 400;
+        Width = Design.IsDesignMode ? 400 : 1920;
     }
 }
