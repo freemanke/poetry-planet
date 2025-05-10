@@ -19,8 +19,7 @@
                     FontSize="24" FontWeight="Bold" 
                     TextAlignment="Center" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    />
+                    VerticalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock 
                         Text="{Binding Dynasty}"
@@ -61,6 +60,7 @@
                     FontSize="16" TextWrapping="Wrap"
                     HorizontalAlignment="Left" 
                     VerticalAlignment="Center"/>
+                <TextBlock Text=" "></TextBlock>
             </StackPanel>
         </ScrollViewer>
         <Button 
