@@ -12,20 +12,6 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private string secondTitle = "向导试图二";
 
     [RelayCommand]
-    private async Task OpenNextView()
-    {
-        MobileNavigation.Push(new GuideSecondView());
-        await Task.CompletedTask;
-    }
-
-    [RelayCommand]
-    private async Task OpenFirstView()
-    {
-        MobileNavigation.Push(new GuideFirstView());
-        await Task.CompletedTask;
-    }
-
-    [RelayCommand]
     private async Task OpenNavigationView()
     {
         MobileNavigation.Push(new NavigationView());

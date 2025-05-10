@@ -50,10 +50,6 @@
       <DependentUpon>NavigationView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\GuideSecondView.axaml.cs">
-      <DependentUpon>SecondView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\WorkListView.axaml.cs">
       <DependentUpon>PoetriesView.axaml</DependentUpon>
       <SubType>Code</SubType>

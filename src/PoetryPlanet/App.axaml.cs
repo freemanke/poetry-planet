@@ -21,7 +21,7 @@ public class App : Application
     }
 
     /// <summary>
-    /// 注册服务
+    /// 依赖注册服务
     /// </summary>
     private static ServiceProvider ConfigServices()
     {

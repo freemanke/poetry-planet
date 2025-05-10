@@ -21,11 +21,6 @@ public partial class NavigationView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        MobileNavigation.Push(new GuideFirstView());
-    }
-
     private void TabTapped(object? sender, TappedEventArgs e)
     {
         var view = this.FindDescendantOfType<FavoriteWorksView>();

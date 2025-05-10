@@ -12,7 +12,6 @@
             <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="我的" Margin="10"></TextBlock>
             <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
             <TextBlock Text="个人信息"></TextBlock>
-            <Button Padding="5" Command="{Binding OpenFirstViewCommand}">打开第一视图</Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

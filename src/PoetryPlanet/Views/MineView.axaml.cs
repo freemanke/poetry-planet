@@ -17,9 +17,4 @@ public partial class MineView : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
-
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        MobileNavigation.Push(new GuideFirstView());
-    }
 }
