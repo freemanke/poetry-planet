@@ -14,8 +14,8 @@ public partial class FavoriteWorksView : UserControl
     public FavoriteWorksView()
     {
         InitializeComponent();
-        
-        vm = new FavoriteWorksViewModel();
+
+        vm = App.GetRequiredService<FavoriteWorksViewModel>();
         DataContext = vm;
         Task.Run(() => vm.DoGetFavoriteWorks());
     }

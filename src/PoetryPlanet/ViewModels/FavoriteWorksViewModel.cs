@@ -14,11 +14,13 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class FavoriteWorksViewModel : ViewModelBase
 {
+    private readonly PoetryService poetryService;
     [ObservableProperty] private ObservableCollection<FavoriteWorkViewModel> works = [];
     [ObservableProperty] private string keyword = "";
 
-    public FavoriteWorksViewModel()
+    public FavoriteWorksViewModel(PoetryService poetryService)
     {
+        this.poetryService = poetryService;
         CreateDefault();
     }
 
@@ -27,7 +29,7 @@ public partial class FavoriteWorksViewModel : ViewModelBase
 
     public void DoGetFavoriteWorks()
     {
-        var items = PoetryService.Instance.GetFavoriteWorks().Select(a => new FavoriteWorkViewModel
+        var items = poetryService.GetFavoriteWorks().Select(a => new FavoriteWorkViewModel
         {
             Id = a.Id,
             Title = a.Title,

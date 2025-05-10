@@ -4,10 +4,12 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PoetryPlanet.Services;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
 
@@ -15,18 +17,30 @@ namespace PoetryPlanet;
 
 public class App : Application
 {
-    public override void Initialize()
+    private static ServiceProvider? serviceProvider;
+    
+    public static T GetRequiredService<T>() where T : class
     {
-        AvaloniaXamlLoader.Load(this);
+        if(serviceProvider == null) ConfigServices();
+        var t = serviceProvider?.GetRequiredService<T>()!;
+        return t;
+    }
+    
+    public static Control? GetRequiredService(Type type)
+    {
+        if(serviceProvider == null) ConfigServices();
+        return serviceProvider?.GetRequiredService(type) as Control;
     }
 
     /// <summary>
     /// 依赖注册服务
     /// </summary>
-    private static ServiceProvider ConfigServices()
+    private static void ConfigServices()
     {
         var services = new ServiceCollection();
-        services.AddSingleton<LoggerFactory>();
+        services.AddSingleton(LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Information).AddConsole()));
+        services.AddLogging();
+        services.AddSingleton<PoetryService>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<WorkViewModel>();
         services.AddSingleton<WorkListViewModel>();
@@ -34,14 +48,17 @@ public class App : Application
         services.AddSingleton<FavoriteWorksViewModel>();
         services.AddSingleton<FavoriteWorkViewModel>();
 
-        return services.BuildServiceProvider();
+        serviceProvider = services.BuildServiceProvider();
+    }
+    
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var services = ConfigServices();
-        var mainViewModel = services.GetRequiredService<MainViewModel>();
-
+        var mainViewModel = GetRequiredService<MainViewModel>();
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:

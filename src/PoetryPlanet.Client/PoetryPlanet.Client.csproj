@@ -36,10 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PoetryPlanet.Core\PoetryPlanet.Core.csproj" />
   </ItemGroup>
 

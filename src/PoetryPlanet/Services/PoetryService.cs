@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using PoetryPlanet.Dtos;
 using ReactiveUI;
 
@@ -12,6 +13,7 @@ namespace PoetryPlanet.Services;
 
 public class PoetryService
 {
+    private readonly ILogger<PoetryService> logger;
     private readonly bool useCache;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
@@ -19,20 +21,18 @@ public class PoetryService
     private readonly string workListFilePath;
     private readonly string worksFilePath;
     private readonly HttpClient httpClient;
-    private static PoetryService instance = new(true);
     private List<WorkInfo> workCache = [];
 
-    public static PoetryService Instance { get; } = instance;
-
-    public PoetryService(bool useCache = false)
+    public PoetryService(ILogger<PoetryService> logger, bool useCache = true)
     {
+        this.logger = logger;
         this.useCache = useCache;
         rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         workListFilePath = Path.Combine(rootPath, "work_list.json");
         worksFilePath = Path.Combine(rootPath, "works.json");
-        Console.WriteLine($"文件存储目录：{rootPath}");
+        logger.LogInformation($"文件存储目录：{rootPath}");
 
         var handler = new HttpClientHandler();
         handler.ClientCertificateOptions = ClientCertificateOption.Manual;
@@ -58,7 +58,7 @@ public class PoetryService
     public List<WorkInfo> GetFavoriteWorks()
     {
         var items = workCache.Where(a => a.IsFavorite).ToList();
-        Console.WriteLine($"获取到收藏作品：{string.Join(",", items.Select(a => a.Title))}");
+        logger.LogInformation($"获取到收藏作品：{string.Join(",", items.Select(a => a.Title))}");
         return items;
     }
 
@@ -86,12 +86,12 @@ public class PoetryService
             infos = JsonSerializer.Deserialize<List<WorkInfo>>(json);
 
             File.WriteAllText(worksFilePath, json);
-            Console.WriteLine($"文件已保存到：{worksFilePath}");
+            logger.LogInformation($"文件已保存到：{worksFilePath}");
             if (infos != null) workCache = infos;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            logger.LogError(e.Message);
         }
 
         return workCache;
@@ -112,12 +112,12 @@ public class PoetryService
             var infos = JsonSerializer.Deserialize<List<WorkListItemInfo>>(json);
 
             File.WriteAllText(workListFilePath, json);
-            Console.WriteLine($"文件已保存到：{workListFilePath}");
+            logger.LogInformation($"文件已保存到：{workListFilePath}");
             if (infos != null) works.AddRange(infos);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            logger.LogError(e.Message);
         }
 
         return works;
@@ -140,12 +140,12 @@ public class PoetryService
             var json = response.Content.ReadAsStringAsync().Result;
             var find = response.Content.ReadFromJsonAsync<WorkInfo>().Result;
             File.WriteAllText(filePath, json);
-            Console.WriteLine($"文件已保存到：{filePath}");
+            logger.LogInformation($"文件已保存到：{filePath}");
             if (find != null) return find;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            logger.LogError(e.Message);
         }
 
         return new WorkInfo();
@@ -164,7 +164,7 @@ public class PoetryService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            logger.LogError(e.Message);
         }
 
         return false;

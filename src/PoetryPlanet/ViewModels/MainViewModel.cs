@@ -2,6 +2,7 @@
 using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using PoetryPlanet.Views;
 
 namespace PoetryPlanet.ViewModels;
@@ -11,17 +12,15 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] private string firstTitle = "向导试图一";
     [ObservableProperty] private string secondTitle = "向导试图二";
 
-    [RelayCommand]
-    private async Task OpenNavigationView()
+    public MainViewModel()
     {
-        MobileNavigation.Push(new NavigationView());
-        await Task.CompletedTask;
+        logger.LogInformation("创建主视图模型");
     }
 
     [RelayCommand]
-    private async Task BackToFirstView()
+    private void OpenNavigationView()
     {
-        MobileNavigation.Pop();
-        await Task.CompletedTask;
+        logger.LogInformation("打开导航视图");
+        MobileNavigation.Push(new NavigationView());
     }
 }

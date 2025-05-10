@@ -17,7 +17,7 @@ public partial class WorkListView : UserControl
     public WorkListView()
     {
         InitializeComponent();
-        vm = new WorkListViewModel();
+        vm = App.GetRequiredService<WorkListViewModel>();
         DataContext = vm;
         Task.Run(() => vm.DoGetWorks());
         Task.Run(() => vm.DoGetWorkList());

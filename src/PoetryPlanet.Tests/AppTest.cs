@@ -1,13 +1,16 @@
 using System.Text.Json;
 using PoetryPlanet.Dtos;
+using PoetryPlanet.Views;
 
 namespace PoetryPlanet.Tests;
 
 public class AppTest
 {
-    [SetUp]
-    public void Setup()
+    [Test]
+    public void GetRequiredService()
     {
+        var mainView = App.GetRequiredService<MainView>();
+        Assert.That(mainView, Is.Not.Null);
     }
 
     [Test]

@@ -7,6 +7,7 @@ using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using Microsoft.Extensions.Logging;
 using PoetryPlanet.Dtos;
 using PoetryPlanet.Services;
 
@@ -14,11 +15,13 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkListViewModel : ViewModelBase
 {
+    private readonly PoetryService poetryService;
     [ObservableProperty] private ObservableCollection<WorkListItemViewModel> workList = [];
     [ObservableProperty] private string keyword = "";
 
-    public WorkListViewModel()
+    public WorkListViewModel(PoetryService poetryService)
     {
+        this.poetryService = poetryService;
         CreateDefault();
     }
 
@@ -33,19 +36,19 @@ public partial class WorkListViewModel : ViewModelBase
 
     public void DoGetWorks()
     {
-        Task.Run(() => PoetryService.Instance.GetWorks());
+        Task.Run(() => poetryService.GetWorks());
     }
 
     public void DoGetWorkList()
     {
-        Console.WriteLine($"开始获取作品列表，关键字：\"{Keyword}\"");
-        var workInfos = PoetryService.Instance.GetWorkList();
+        logger.LogInformation($"开始获取作品列表，关键字：\"{Keyword}\"");
+        var workInfos = poetryService.GetWorkList();
         var items = workInfos.Where(a =>
                 a.Title!.Contains(Keyword)
                 || a.Content!.Contains(Keyword)
                 || a.Author!.Contains(Keyword))
             .Select(item =>
-                new WorkListItemViewModel
+                new WorkListItemViewModel(poetryService)
                 {
                     Id = item.Id, Title = item.Title,
                     AuthorAndDynasty = $"{item.Author} · {item.Dynasty}",
@@ -59,14 +62,14 @@ public partial class WorkListViewModel : ViewModelBase
     private void CreateDefault()
     {
         WorkList.Clear();
-        WorkList.Add(new WorkListItemViewModel
+        WorkList.Add(new WorkListItemViewModel(poetryService)
         {
             Id = 1,
             Title = "江城子 · 密州出猎",
             AuthorAndDynasty = "苏轼 · 宋",
             Content = "老夫聊发少年狂，左迁龙右擒苍"
         });
-        WorkList.Add(new WorkListItemViewModel
+        WorkList.Add(new WorkListItemViewModel(poetryService)
         {
             Id = 1,
             Title = "观书有感",
