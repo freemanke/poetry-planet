@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
-             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:DataType="viewModels:WorkListItemViewModel"
              x:Class="PoetryPlanet.Views.WorkListItemView">
@@ -13,10 +13,10 @@
     <StackPanel>
         <Grid>
             <Button 
-                BorderThickness="0" 
+                Classes="Tertiary"
                 Background="{Binding FavoriteBrush}" 
                 Command="{Binding FavoriteCommand}" 
-                Margin="2" Width="45" Height="45" 
+                Margin="2" Width="45" Height="45" BorderThickness="0"
                 HorizontalAlignment="Left">
                 <PathIcon Data="{StaticResource favorite}"></PathIcon>
             </Button>
@@ -25,29 +25,25 @@
                 <Grid>
                     <TextBlock 
                         Text="{Binding Title}" 
-                        Padding="4,4,4,0" FontSize="16" FontWeight="Bold" 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left" />
+                        Padding="4,4,4,0" FontSize="16" FontWeight="Medium" 
+                        VerticalAlignment="Center" HorizontalAlignment="Left" />
                     <TextBlock 
                         Text="{Binding AuthorAndDynasty}" 
+                        TextWrapping="WrapWithOverflow"
                         Padding="4,4,4,0"
                         Foreground="DimGray"
-                        VerticalAlignment="Center"
-                        TextWrapping="WrapWithOverflow"
-                        HorizontalAlignment="Right" />
+                        HorizontalAlignment="Right" VerticalAlignment="Center" />
                 </Grid>
                 <Grid>
                     <TextBlock 
                         Text="{Binding Content}" 
-                        Padding="4,2,0,4" FontSize="14" FontWeight="Light" TextWrapping="NoWrap"
-                        Foreground="DimGray"
-                        MaxWidth="300"
                         TextTrimming="CharacterEllipsis"
-                        HorizontalAlignment="Left" 
-                        VerticalAlignment="Center"/>
+                        Padding="4,2,0,4" FontSize="14" FontWeight="Light" TextWrapping="NoWrap"
+                        Foreground="DimGray" MaxWidth="300"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </Grid>
             </StackPanel>
         </Grid>
-        <cherylUi:HorizontalSeparator />
+        <controls:HorizontalSeparator />
     </StackPanel>
 </UserControl>

@@ -1,6 +1,5 @@
 using System;
 using Avalonia.Input;
-using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -25,4 +24,6 @@ public partial class FavoriteWorkViewModel : ViewModelBase
         "写作者深秋之夜在东坡雪堂开怀畅饮，" +
         "醉後返归临皋住所的情景，" +
         "表达了词人退避社会的生活态度和希望彻底解脱的出世意念。";
+    
+    [ObservableProperty] private string? translation ="译文";
 }

@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using CherylUI.Controls;
+using PoetryPlanet.Controls;
 using PoetryPlanet.ViewModels;
+using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.Views;
 

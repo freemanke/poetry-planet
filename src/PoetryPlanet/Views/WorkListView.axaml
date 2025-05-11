@@ -12,14 +12,12 @@
     </Design.DataContext>
     <Grid Background="{DynamicResource Background}" Margin="0,0,0,40">
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-            <TextBox 
+            <TextBox Classes=""
                 Text="{Binding Keyword, Mode=TwoWay}" 
-                Margin="2" 
-                TextChanged="KeywordTextChanged"
-                HorizontalAlignment="Center" 
+                Margin="10" TextChanged="KeywordTextChanged" MinWidth="300"
+                HorizontalAlignment="Stretch" 
                 VerticalAlignment="Center"
-                MinWidth="400"
-                Watermark="请输入诗人、作品、年代或内容关键字进行搜索..."/>
+                Watermark="输入诗人、作品或年代进行搜索..."/>
         </StackPanel>
         <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
                 <ItemsControl ItemsSource="{Binding WorkList}">

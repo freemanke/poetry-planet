@@ -3,8 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
-             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:DataType="viewModels:FavoriteWorksViewModel"
              x:Class="PoetryPlanet.Views.FavoriteWorksView">
@@ -12,9 +12,11 @@
         <viewModels:FavoriteWorksViewModel></viewModels:FavoriteWorksViewModel>
     </Design.DataContext>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,46" GotFocus="InputElement_OnGotFocus">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock FontSize="24" FontWeight="Bold" TextAlignment="Center" Text="我的收藏" Margin="10"></TextBlock>
-            <cherylUi:HorizontalSeparator></cherylUi:HorizontalSeparator>
+        <StackPanel VerticalAlignment="Top">
+            <TextBlock 
+                FontSize="20" TextAlignment="Center" HorizontalAlignment="Stretch"
+                Text="我的收藏" Margin="10"></TextBlock>
+            <controls:HorizontalSeparator HorizontalAlignment="Stretch"></controls:HorizontalSeparator>
             <ItemsControl ItemsSource="{Binding Works}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

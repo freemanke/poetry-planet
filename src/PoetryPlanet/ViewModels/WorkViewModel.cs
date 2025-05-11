@@ -1,9 +1,10 @@
 using System;
 using Avalonia.Input;
-using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using PoetryPlanet.Controls;
+using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.ViewModels;
 

@@ -1,13 +1,11 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace PoetryPlanet.Views;
+namespace PoetryPlanet.Controls;
 
-public partial class MineView : UserControl
+public partial class HorizontalSeparator : UserControl
 {
-    public MineView()
+    public HorizontalSeparator()
     {
         InitializeComponent();
     }

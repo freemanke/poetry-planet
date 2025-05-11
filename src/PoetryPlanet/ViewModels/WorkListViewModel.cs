@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using CherylUI.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Microsoft.Extensions.Logging;
+using PoetryPlanet.Controls;
 using PoetryPlanet.Dtos;
 using PoetryPlanet.Services;
+using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.ViewModels;
 

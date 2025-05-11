@@ -1,0 +1,67 @@
+﻿<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="PoetryPlanet.Controls.SliverPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls1="clr-namespace:PoetryPlanet.Controls">
+    <UserControl.Styles>
+        <Style Selector="controls1|SliverPage">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Grid Background="{DynamicResource Background}">
+                        <Grid.Resources>
+                            <controls1:OffsetToHeightConverter x:Key="HeightConverter" />
+                            <controls1:OffsetToFontSizeConverter x:Key="FontSizeConverter" />
+                            <controls1:OffsetToMarginConverter x:Key="MarginConverter" />
+                        </Grid.Resources>
+                        
+                        <ScrollViewer
+                            IsScrollInertiaEnabled="True"
+                            Margin="0,0,0,0"
+                            Name="scrollView"
+                            VerticalScrollBarVisibility="Hidden">
+                            <StackPanel>
+                                <Grid Height="170" />
+                                <ContentControl Content="{TemplateBinding Content}" Margin="13,0" />
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Border
+                            Background="{DynamicResource Background}"
+                            BorderThickness="0,0,0,0"
+                            Height="{Binding #scrollView.Offset, Converter={StaticResource HeightConverter}}"
+                            VerticalAlignment="Top">
+                            <Panel>
+                              <Border ClipToBounds="True">
+                              </Border>
+                                <Grid Margin="{Binding #scrollView.Offset, Converter={StaticResource MarginConverter}, ConverterParameter={TemplateBinding IsBackVisible}}">
+                                    <TextBlock
+                                        FontSize="{Binding #scrollView.Offset, Converter={StaticResource FontSizeConverter}}"
+                                        HorizontalAlignment="Left"
+                                        Margin="0,0,0,0"
+                                        Text="{TemplateBinding Header}"
+                                        VerticalAlignment="Center" />
+                                </Grid>
+                            </Panel>
+                        </Border>
+                        <Button
+                            Classes="Void" IsVisible="{TemplateBinding IsBackVisible}"
+                            Click="GoBack"
+                            HorizontalAlignment="Left"
+                            Padding="23,40"
+                            VerticalAlignment="Top">
+                            <PathIcon
+                                Data="{StaticResource arrow_left_regular}"
+                                Foreground="{DynamicResource SecondaryText}"
+                                Height="20"
+                                Width="20" />
+                        </Button>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

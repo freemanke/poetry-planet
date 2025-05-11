@@ -1,0 +1,28 @@
+﻿<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="400"
+    mc:Ignorable="d"
+    x:Class="PoetryPlanet.Controls.GroupBox"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls1="clr-namespace:PoetryPlanet.Controls">
+    <UserControl.Styles>
+        <Style Selector="controls1|GroupBox">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <StackPanel>
+                        <TextBlock
+                            Classes="Secondary"
+                            Margin="20,32,0,10"
+                            Text="{TemplateBinding Header}" />
+                            <Grid Margin="10,-6">
+                                <ContentControl Content="{TemplateBinding Content}" />
+                            </Grid>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

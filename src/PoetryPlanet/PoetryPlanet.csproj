@@ -53,10 +53,83 @@
       <DependentUpon>FavoriteWorkView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\MobileNavigation.axaml.cs">
+      <DependentUpon>MobileNavigation.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\InteractiveContainer.axaml.cs">
+      <DependentUpon>InteractiveContainer.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\HorizontalSeparator.axaml.cs">
+      <DependentUpon>HorizontalSeparator.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\SliverPage.axaml.cs">
+      <DependentUpon>SliverPage.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\GroupBox.axaml.cs">
+      <DependentUpon>GroupBox.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFields\FormFieldAction.axaml.cs">
+      <DependentUpon>FormFieldAction.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFields\FormFieldNumberPicker.axaml.cs">
+      <DependentUpon>FormFieldNumberPicker.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFields\FormFieldPicker.axaml.cs">
+      <DependentUpon>FormFieldPicker.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFields\FormFieldSwitch.axaml.cs">
+      <DependentUpon>FormFieldSwitch.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MobilePicker\MobilePicker.axaml.cs">
+      <DependentUpon>MobilePicker.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MobilePicker\MobilePickerPopUp.axaml.cs">
+      <DependentUpon>MobilePickerPopUp.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MobilePicker.axaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MobilePickerPopUp.axaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFieldAction.axaml.cs">
+      <DependentUpon>FormFieldAction.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFieldNumberPicker.axaml.cs">
+      <DependentUpon>FormFieldNumberPicker.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFieldPicker.axaml.cs">
+      <DependentUpon>FormFieldPicker.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\FormFieldSwitch.axaml.cs">
+      <DependentUpon>FormFieldSwitch.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MobileNumberPicker.axaml.cs">
+      <DependentUpon>MobileNumberPicker.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MobileNumberPickerPopup.axaml.cs">
+      <DependentUpon>MobileNumberPickerPopup.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CherylUI\CherylUI\CherylUI.csproj" />
     <ProjectReference Include="..\PoetryPlanet.Core\PoetryPlanet.Core.csproj" />
   </ItemGroup>
 </Project>

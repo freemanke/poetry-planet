@@ -2,10 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
-             xmlns:formFields="clr-namespace:CherylUI.Controls.FormFields;assembly=CherylUI"
-             xmlns:cherylUi="clr-namespace:CherylUI;assembly=CherylUI"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:DataType="vm:MainViewModel"
              x:Class="PoetryPlanet.Views.SettingView">
@@ -16,9 +14,9 @@
         <StackPanel Orientation="Vertical" Spacing="6">
             <controls:GroupBox Header="视图控制">
                 <StackPanel>
-                    <formFields:FormFieldSwitch Title="黑暗背景模式" IsChecked="False" />
-                    <cherylUi:HorizontalSeparator />
-                    <formFields:FormFieldNumberPicker Content="字体大小" Value="10" Margin="5" />
+                    <controls:FormFieldSwitch Title="黑暗背景模式" IsChecked="False" />
+                    <controls:HorizontalSeparator />
+                    <controls:FormFieldNumberPicker Content="字体大小" Value="10" Margin="5" />
                 </StackPanel>
             </controls:GroupBox>
         </StackPanel>

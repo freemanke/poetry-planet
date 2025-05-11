@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
-             xmlns:controls="clr-namespace:CherylUI.Controls;assembly=CherylUI"
+             xmlns:controls1="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
     <vm:MainViewModel />
   </Design.DataContext>
-    <controls:InteractiveContainer>
+    <controls1:InteractiveContainer>
         <TabControl Classes="nav" Background="White">
             <TabItem>
                 <TabItem.Header>
@@ -50,5 +50,5 @@
                 <views:MineView></views:MineView>
             </TabItem>
         </TabControl>
-    </controls:InteractiveContainer>
+    </controls1:InteractiveContainer>
 </UserControl>

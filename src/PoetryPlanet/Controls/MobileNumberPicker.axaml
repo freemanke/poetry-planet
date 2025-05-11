@@ -1,0 +1,30 @@
+﻿<UserControl
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    x:Class="PoetryPlanet.Controls.MobileNumberPicker"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:PoetryPlanet.Controls">
+    <UserControl.Resources>
+        <controls:IntToStringConverter x:Key="ToStringConverter" />
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="controls|MobileNumberPicker">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Button Classes="Void" Click="OpenPopup">
+                        <Border
+                            BorderThickness="0"
+                            CornerRadius="30"
+                            Padding="10,0">
+                            <TextBlock Classes="Secondary Demibold" Text="{TemplateBinding Value, Converter={StaticResource ToStringConverter}}" />
+                        </Border>
+                    </Button>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </UserControl.Styles>
+</UserControl>
