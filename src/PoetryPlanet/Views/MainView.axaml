@@ -12,7 +12,7 @@
     <vm:MainViewModel />
   </Design.DataContext>
     <controls1:InteractiveContainer>
-        <TabControl Classes="nav" Background="White">
+        <TabControl Classes="Navigator" Background="White">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel>

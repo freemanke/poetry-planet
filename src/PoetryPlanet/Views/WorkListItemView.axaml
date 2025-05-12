@@ -25,7 +25,7 @@
                 <Grid>
                     <TextBlock 
                         Text="{Binding Title}" 
-                        Padding="4,4,4,0" FontSize="16" FontWeight="Medium" 
+                        Padding="4,4,4,0" FontSize="16" FontWeight="Normal" 
                         VerticalAlignment="Center" HorizontalAlignment="Left" />
                     <TextBlock 
                         Text="{Binding AuthorAndDynasty}" 

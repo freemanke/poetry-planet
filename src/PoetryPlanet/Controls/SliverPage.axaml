@@ -1,22 +1,22 @@
 ﻿<UserControl
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="400"
     mc:Ignorable="d"
     x:Class="PoetryPlanet.Controls.SliverPage"
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls1="clr-namespace:PoetryPlanet.Controls">
+    xmlns:controls="clr-namespace:PoetryPlanet.Controls">
     <UserControl.Styles>
-        <Style Selector="controls1|SliverPage">
+        <Style Selector="controls|SliverPage">
             <Setter Property="Template">
                 <ControlTemplate>
                     <Grid Background="{DynamicResource Background}">
                         <Grid.Resources>
-                            <controls1:OffsetToHeightConverter x:Key="HeightConverter" />
-                            <controls1:OffsetToFontSizeConverter x:Key="FontSizeConverter" />
-                            <controls1:OffsetToMarginConverter x:Key="MarginConverter" />
+                            <controls:OffsetToHeightConverter x:Key="HeightConverter" />
+                            <controls:OffsetToFontSizeConverter x:Key="FontSizeConverter" />
+                            <controls:OffsetToMarginConverter x:Key="MarginConverter" />
                         </Grid.Resources>
                         
                         <ScrollViewer

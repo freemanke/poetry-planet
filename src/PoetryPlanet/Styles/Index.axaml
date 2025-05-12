@@ -13,5 +13,5 @@
         </ResourceDictionary>
     </Styles.Resources>
     <SimpleTheme />
-    <StyleInclude Source="NavTabControlStyles.axaml" />
+    <StyleInclude Source="NavigatorTabControlStyles.axaml" />
 </Styles>

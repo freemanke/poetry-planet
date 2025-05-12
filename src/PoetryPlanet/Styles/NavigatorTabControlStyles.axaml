@@ -2,24 +2,28 @@
     xmlns="https://github.com/avaloniaui" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Grid Background="{DynamicResource Background}" Width="400" Height="600">
-            <TabControl Classes="nav">
+        <Grid Background="{DynamicResource Background}" Width="400" Height="450">
+            <TabControl Classes="Navigator">
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource ScrollBarContractDelay}" />
+                            <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
                             <TextBlock Classes="Tab" Text="Tab 1" />
                         </StackPanel>
                     </TabItem.Header>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Text="Content"
-                        VerticalAlignment="Center" />
+                    <TabControl>
+                        <TabItem Header="Header 1">
+                            <TextBlock HorizontalAlignment="Center" Text="Content" VerticalAlignment="Center" />
+                        </TabItem>
+                        <TabItem Header="Header 2">
+                            <TextBlock HorizontalAlignment="Center" Text="Content" VerticalAlignment="Center" />
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource ScrollBarContractDelay}" />
+                            <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
                             <TextBlock Classes="Tab" Text="Tab 2" />
                         </StackPanel>
                     </TabItem.Header>
@@ -27,7 +31,7 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource ScrollBarContractDelay}" />
+                            <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
                             <TextBlock Classes="Tab" Text="Tab 3" />
                         </StackPanel>
                     </TabItem.Header>
@@ -35,7 +39,7 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource ScrollBarContractDelay}" />
+                            <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
                             <TextBlock Classes="Tab" Text="Tab 4" />
                         </StackPanel>
                     </TabItem.Header>
@@ -44,7 +48,7 @@
         </Grid>
     </Design.PreviewWith>
     <!-- 移动应用导航控件样式，通过 classes=nav 来制定类别 -->
-    <Style Selector="TabControl.nav">
+    <Style Selector="TabControl.Navigator">
        <Setter Property="TabStripPlacement" Value="Bottom" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -84,7 +88,7 @@
         </Setter>
     </Style>
 
-    <Style Selector="TabControl.nav TabItem">
+    <Style Selector="TabControl.Navigator TabItem.Tab">
         <Setter Property="FontSize" Value="50" />
         <Setter Property="FontWeight" Value="{DynamicResource TabItemHeaderThemeFontWeight}" />
         <Setter Property="Background" Value="Transparent" />
@@ -123,16 +127,16 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    <Style Selector="TabControl.nav TabItem TextBlock.Tab">
+    <Style Selector="TabControl.Navigator TabItem TextBlock.Tab">
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
     </Style>
-    <Style Selector="TabControl.nav TabItem:selected TextBlock.Tab">
+    <Style Selector="TabControl.Navigator TabItem:selected TextBlock.Tab">
         <Setter Property="Foreground" Value="{DynamicResource Accent}" />
     </Style>
-    <Style Selector="TabControl.nav TabItem PathIcon.Tab">
+    <Style Selector="TabControl.Navigator TabItem PathIcon.Tab">
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Width" Value="20" />
@@ -145,7 +149,7 @@
             </Transitions>
         </Setter>
     </Style>
-    <Style Selector="TabControl.nav TabItem:selected PathIcon.Tab">
+    <Style Selector="TabControl.Navigator TabItem:selected PathIcon.Tab">
         <Setter Property="Foreground" Value="{DynamicResource Accent}" />
     </Style>
 </Styles>

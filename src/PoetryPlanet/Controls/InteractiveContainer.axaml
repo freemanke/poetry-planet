@@ -7,9 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls1="clr-namespace:PoetryPlanet.Controls">
+    xmlns:controls="clr-namespace:PoetryPlanet.Controls">
     <UserControl.Styles>
-        <Style Selector="controls1|InteractiveContainer">
+        <Style Selector="controls|InteractiveContainer">
             <Setter Property="Template">
                 <ControlTemplate>
                     <Grid>
@@ -19,14 +19,14 @@
                                     <DoubleTransition Duration="0:0:0.25" Property="Opacity" />
                                 </Transitions>
                             </Border.Transitions>
-                            <controls1:MobileNavigation Name="MB"  >
-                                <controls1:MobileNavigation.Transitions>
+                            <controls:MobileNavigation Name="MB"  >
+                                <controls:MobileNavigation.Transitions>
                                     <Transitions>
                                         <EffectTransition Property="Effect" Duration="0:0:0.25"></EffectTransition>
                                     </Transitions>
-                                </controls1:MobileNavigation.Transitions>
+                                </controls:MobileNavigation.Transitions>
                                     <ContentControl Content="{TemplateBinding Content}" />
-                            </controls1:MobileNavigation>
+                            </controls:MobileNavigation>
                         </Border>
                         <Border
                             Background="{DynamicResource DialogBackground}"
@@ -95,54 +95,54 @@
                 </ControlTemplate>
             </Setter>
         </Style>
-        <Style Selector="controls1|InteractiveContainer[IsToastOpen=True] Border#ToastBorder">
+        <Style Selector="controls|InteractiveContainer[IsToastOpen=True] Border#ToastBorder">
             <Setter Property="Opacity" Value="1" />
             <Setter Property="Margin" Value="0,100,0,0" />
         </Style>
         
-        <Style Selector="controls1|InteractiveContainer[IsToastOpen=False] Border#ToastBorder">
+        <Style Selector="controls|InteractiveContainer[IsToastOpen=False] Border#ToastBorder">
             <Setter Property="Opacity" Value="0" />
             <Setter Property="Margin" Value="0,125,0,0" />
         </Style>
         
-        <Style Selector="controls1|InteractiveContainer[IsDialogOpen=True] controls1|MobileNavigation#MB">
+        <Style Selector="controls|InteractiveContainer[IsDialogOpen=True] controls|MobileNavigation#MB">
             <Setter Property="Effect" Value="blur(20)" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[IsDialogOpen=True] Grid#gridDialog">
+        <Style Selector="controls|InteractiveContainer[IsDialogOpen=True] Grid#gridDialog">
             <Setter Property="Opacity" Value="0.3" />
             <Setter Property="IsHitTestVisible" Value="True" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[IsDialogOpen=True] Border#BorderContent">
+        <Style Selector="controls|InteractiveContainer[IsDialogOpen=True] Border#BorderContent">
             <Setter Property="Opacity" Value="0.5" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[IsDialogOpen=False] Grid#gridDialog">
+        <Style Selector="controls|InteractiveContainer[IsDialogOpen=False] Grid#gridDialog">
             <Setter Property="Opacity" Value="0" />
             <Setter Property="IsHitTestVisible" Value="False" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[IsDialogOpen=True] Border#borderDialog">
+        <Style Selector="controls|InteractiveContainer[IsDialogOpen=True] Border#borderDialog">
             <Setter Property="Margin" Value="0,25,0,0" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="IsHitTestVisible" Value="True" />
             <Setter Property="RenderTransform" Value="scale(1)" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[IsDialogOpen=False] Border#borderDialog">
+        <Style Selector="controls|InteractiveContainer[IsDialogOpen=False] Border#borderDialog">
             <Setter Property="Opacity" Value="0" />
             <Setter Property="IsHitTestVisible" Value="False" />
             <Setter Property="RenderTransform" Value="scale(0.7)" />
             <Setter Property="Margin" Value="0,125,0,0" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[ShowAtBottom=True] Border#borderDialog">
+        <Style Selector="controls|InteractiveContainer[ShowAtBottom=True] Border#borderDialog">
             <Setter Property="VerticalAlignment" Value="Bottom" />
             <Setter Property="Margin" Value="0,0,0,20" />
         </Style>
 
-        <Style Selector="controls1|InteractiveContainer[ShowAtBottom=False] Border#borderDialog">
+        <Style Selector="controls|InteractiveContainer[ShowAtBottom=False] Border#borderDialog">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0" />
         </Style>
