@@ -1,8 +1,7 @@
 using DeepSeek.Core;
 using DeepSeek.Core.Models;
-using PoetryPlanet.Web.Components.Pages;
 
-namespace PoetryPlanet.Web.Services;
+namespace PoetryPlanet.Services;
 
 public class ModelInfo
 {
@@ -50,7 +49,7 @@ public class ChatService
         if (chatResponse is not null)
         {
             var first = chatResponse.Choices.FirstOrDefault();
-            if (first is not null && first.Message is not null)
+            if (first?.Message != null)
             {
                 return first.Message.Content;
             }

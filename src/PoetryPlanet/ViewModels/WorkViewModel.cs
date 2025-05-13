@@ -1,9 +1,15 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DeepSeek.Core;
+using DeepSeek.Core.Models;
 using Microsoft.Extensions.Logging;
 using PoetryPlanet.Controls;
+using PoetryPlanet.Services;
+using PoetryPlanet.Views;
 using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.ViewModels;
@@ -14,6 +20,7 @@ public partial class WorkViewModel : ViewModelBase
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
     [ObservableProperty] private string? author = "苏轼";
     [ObservableProperty] private string? dynasty = "宋";
+    [ObservableProperty] private string? pronunciation = "通过 DeepSeek 生成注音";
     [ObservableProperty] private string? translation = 
         "这首词作于神宗元豐五年，" +
         "即东坡黄州之贬的第三年，" +
@@ -34,9 +41,60 @@ public partial class WorkViewModel : ViewModelBase
         "醉後返归临皋住所的情景，" +
         "表达了词人退避社会的生活态度和希望彻底解脱的出世意念。";
 
+    [ObservableProperty] private bool isSendDisabled;
+    
     [RelayCommand]
     public void PreviousView()
     {
         MobileNavigation.Pop();
+    } 
+    
+    [RelayCommand]
+    public void Pronounce()
+    {
+        Task.Run(async () => { await ChatStreamAsync(); });
     }
+    
+    [RelayCommand]
+    public void OpenMediaPlayer()
+    {
+        MobileNavigation.Push(new MediaPlayerView());
+    }
+    
+    private async Task ChatStreamAsync()
+    {
+        IsSendDisabled = true;
+        Pronunciation = "生成中...";
+        Thread.Sleep(100);
+        var message = "";
+
+        var request = new ChatRequest
+        {
+            Messages =
+            [
+                Message.NewSystemMessage($"请帮我给出诗句原句和注音：{Content}"),
+                Message.NewUserMessage(message)
+            ],
+            Model = DeepSeekModels.ChatModel
+        };
+
+        logger.LogInformation($"发送消息 {message}");
+        var choices = new ChatService().client.ChatStreamAsync(request, CancellationToken.None);
+        if (choices is not null)
+        {
+            Pronunciation = "";
+            await foreach (var choice in choices)
+            {
+                if (choice.Delta is not null)
+                {
+                    var text = choice.Delta.Content;
+                    Pronunciation += text;
+                }
+            }
+        }
+
+        IsSendDisabled = false;
+    }
+
+    
 }

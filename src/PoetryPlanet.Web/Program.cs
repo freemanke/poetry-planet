@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using PoetryPlanet.Data;
 using PoetryPlanet.Data.Repositories;
+using PoetryPlanet.Services;
 using PoetryPlanet.Web.Components;
 using PoetryPlanet.Web.Components.Account;
 using PoetryPlanet.Web.Controllers;

@@ -16,6 +16,7 @@
     <PackageReference Include="Avalonia.iOS" Version="11.3.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.9" />
     <PackageReference Include="System.Text.Json" Version="9.0.4" />
+    <PackageReference Include="VideoLAN.LibVLC.iOS" Version="3.3.18" />
   </ItemGroup>
 
   <ItemGroup>
