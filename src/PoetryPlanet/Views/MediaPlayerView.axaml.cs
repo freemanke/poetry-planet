@@ -14,30 +14,29 @@ public partial class MediaPlayerView : UserControl
 {
     private LibVLC MainLibVLC { get; set; }
     private MediaPlayer MainMediaPlayer { get; set; }
-    private Stream MediaStream { get; set; }
+    private Stream? MediaStream { get; set; }
     
     public MediaPlayerView()
     {
         AvaloniaXamlLoader.Load(this);
 
-        MainLibVLC = new(enableDebugLogs: true);
+        MainLibVLC = new LibVLC(enableDebugLogs: true);
 
-        MainMediaPlayer = new(MainLibVLC);
+        MainMediaPlayer = new MediaPlayer(MainLibVLC);
         MainMediaPlayer.TimeChanged += MediaPlayer_TimeChanged;
     }
     
     public void ClickHandler(object sender, RoutedEventArgs args)
     {
         MediaStream?.Dispose();
-
-        MediaStream = AssetLoader.Open(new Uri("avares://Assets/sample.mp3"));
+        MediaStream = File.Open("./Assets/sample.mp3", FileMode.Open);
         using var media = new Media(MainLibVLC, new StreamMediaInput(MediaStream));
 
         MainMediaPlayer.Media = media;
         MainMediaPlayer.Play();
     }
 
-    private void MediaPlayer_TimeChanged(object sender, MediaPlayerTimeChangedEventArgs e)
+    private void MediaPlayer_TimeChanged(object? sender, MediaPlayerTimeChangedEventArgs e)
     {
         Dispatcher.UIThread.Invoke(
             new Action(

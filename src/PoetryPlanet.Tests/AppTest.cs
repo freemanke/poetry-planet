@@ -19,4 +19,10 @@ public class AppTest
         var items = JsonSerializer.Deserialize<List<WorkInfo>>(File.ReadAllText("./data/works.json"));
         Console.WriteLine(JsonSerializer.Serialize(items));
     }
+
+    [Test]
+    public void Read()
+    {
+       var  MediaStream = File.Open("./Assets/sample.mp3", FileMode.Open);
+    }
 }

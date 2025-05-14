@@ -17,15 +17,8 @@
             Text="{Binding Greeting}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center" />
-
-        <TextBox
-            x:Name="mediaURI"
-            Text="avares://Assets/sample.mp3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center" />
-
         <Button
-            Content="Play"
+            Content="Play Music"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Click="ClickHandler" />
