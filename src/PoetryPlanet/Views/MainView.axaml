@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
-             xmlns:controls1="clr-namespace:PoetryPlanet.Controls"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
     <vm:MainViewModel />
   </Design.DataContext>
-    <controls1:InteractiveContainer>
+    <controls:InteractiveContainer>
         <TabControl Classes="Navigator" Background="White">
             <TabItem>
                 <TabItem.Header>
@@ -50,5 +50,5 @@
                 <views:MineView></views:MineView>
             </TabItem>
         </TabControl>
-    </controls1:InteractiveContainer>
+    </controls:InteractiveContainer>
 </UserControl>

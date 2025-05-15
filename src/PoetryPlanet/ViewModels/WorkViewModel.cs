@@ -44,12 +44,6 @@ public partial class WorkViewModel : ViewModelBase
     [ObservableProperty] private bool isSendDisabled;
     
     [RelayCommand]
-    public void PreviousView()
-    {
-        MobileNavigation.Pop();
-    } 
-    
-    [RelayCommand]
     public void Pronounce()
     {
         Task.Run(async () => { await ChatStreamAsync(); });
