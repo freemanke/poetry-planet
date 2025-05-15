@@ -20,9 +20,9 @@ public partial class FormFieldAction : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
-    
      
-    public static readonly StyledProperty<string> TitleProperty = AvaloniaProperty.Register<FormFieldSwitch, string>(nameof(Title), defaultValue: "Title");
+    public static readonly StyledProperty<string> TitleProperty = 
+        AvaloniaProperty.Register<FormFieldSwitch, string>(nameof(Title), defaultValue: "Title");
 
     public string Title
     {

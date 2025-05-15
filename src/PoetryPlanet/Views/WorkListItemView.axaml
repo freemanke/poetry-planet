@@ -21,7 +21,7 @@
                 <PathIcon Data="{StaticResource favorite}"></PathIcon>
             </Button>
             <!--如果要触碰 StackPanel 整个区域都触发 Tapped 事件，该布局空间的背景不能设置为透明，否则空白区域无法触发事件-->
-            <StackPanel Margin="52,0,0,0" Tapped="WorkListItemTapped" Background="White">
+            <StackPanel Margin="52,0,0,0" Tapped="WorkListItemTapped" Background="{DynamicResource Background}">
                 <Grid>
                     <TextBlock 
                         Text="{Binding Title}" 

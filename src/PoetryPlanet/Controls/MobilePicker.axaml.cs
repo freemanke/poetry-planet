@@ -31,15 +31,8 @@ public partial class MobilePicker : UserControl
 
     public static readonly DirectProperty<MobilePicker, string> SubTitleProperty =
         AvaloniaProperty.RegisterDirect<MobilePicker, string>(
-            nameof(SubTitle),
-            o =>
-            {
-                Debug.Assert(o.SubTitle != null, "o.SubTitle != null");
-                return o.SubTitle;
-            },
-            (o, v) => o.SubTitle = v,
-            defaultBindingMode: BindingMode.TwoWay,
-            enableDataValidation: true);
+            nameof(SubTitle), o => o.SubTitle, (o, v) => o.SubTitle = v,
+            defaultBindingMode: BindingMode.TwoWay, enableDataValidation: true);
 
     public string Title
     {
@@ -49,11 +42,8 @@ public partial class MobilePicker : UserControl
 
     public static readonly DirectProperty<MobilePicker, string> TitleProperty =
         AvaloniaProperty.RegisterDirect<MobilePicker, string>(
-            nameof(Title),
-            o => o.Title,
-            (o, v) => o.Title = v,
-            defaultBindingMode: BindingMode.TwoWay,
-            enableDataValidation: true);
+            nameof(Title), o => o.Title, (o, v) => o.Title = v,
+            defaultBindingMode: BindingMode.TwoWay, enableDataValidation: true);
 
 
     public string SelectedItem
@@ -64,11 +54,8 @@ public partial class MobilePicker : UserControl
 
     public static readonly DirectProperty<MobilePicker, string> SelectedItemProperty =
         AvaloniaProperty.RegisterDirect<MobilePicker, string>(
-            nameof(SelectedItem),
-            o => o.SelectedItem,
-            (o, v) => o.SelectedItem = v,
-            defaultBindingMode: BindingMode.TwoWay,
-            enableDataValidation: true);
+            nameof(SelectedItem), o => o.SelectedItem, (o, v) => o.SelectedItem = v,
+            defaultBindingMode: BindingMode.TwoWay, enableDataValidation: true);
 
 
     public static readonly StyledProperty<ObservableCollection<string>> ItemsProperty =
@@ -84,14 +71,12 @@ public partial class MobilePicker : UserControl
     private void OpenPopup(object sender, RoutedEventArgs e)
     {
         var control = new MobilePickerPopUp();
-
         var vm = (MobilePickerPopUpViewModel)control.DataContext!;
         vm.Items = Items;
         vm.SelectedItem = SelectedItem;
         vm.Title = Title;
         vm.SubTitle = SubTitle;
         vm.mobilePicker = this;
-
 
         control.Width = PopupWidth;
         control.FindControl<Border>("rootBorder")!.RenderTransform = PopupScale;

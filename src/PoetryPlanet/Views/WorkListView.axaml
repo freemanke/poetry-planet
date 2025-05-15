@@ -10,7 +10,7 @@
     <Design.DataContext>
         <viewModels:WorkListViewModel/>
     </Design.DataContext>
-    <Grid Background="{DynamicResource Background}" Margin="0,0,0,40">
+    <Grid Background="{DynamicResource Background}" Margin="0,0,0,50">
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBox Classes=""
                 Text="{Binding Keyword, Mode=TwoWay}" 

@@ -4,7 +4,7 @@
     <Design.PreviewWith>
         <Grid Background="{DynamicResource Background}" Width="400" Height="450">
             <TabControl Classes="Navigator">
-                <TabItem>
+                <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
                             <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
@@ -20,7 +20,7 @@
                         </TabItem>
                     </TabControl>
                 </TabItem>
-                <TabItem>
+                <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
                             <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
@@ -28,7 +28,7 @@
                         </StackPanel>
                     </TabItem.Header>
                 </TabItem>
-                <TabItem>
+                <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
                             <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
@@ -36,7 +36,7 @@
                         </StackPanel>
                     </TabItem.Header>
                 </TabItem>
-                <TabItem>
+                <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
                             <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
@@ -69,9 +69,8 @@
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <Border BorderBrush="{DynamicResource Separator}" BorderThickness="0,1,0,0" VerticalAlignment="Bottom" >
                             <Panel>
-                                <Border Opacity="0.25" IsVisible="{DynamicResource IsDark}" Background="Black"></Border>
-                                <Border Opacity="0.25" IsVisible="{DynamicResource IsLight}" Background="White"></Border>
-                                <Border ClipToBounds="True" Background="White">
+                                <Border Opacity="0.75" IsVisible="{DynamicResource IsDark}" Background="{DynamicResource Background}"></Border>
+                                <Border ClipToBounds="True" Background="{DynamicResource Background}">
                                 </Border>
                                 <ItemsPresenter Name="PART_ItemsPresenter">
                                     <ItemsPresenter.ItemsPanel>
