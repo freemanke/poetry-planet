@@ -20,6 +20,5 @@ public partial class MainView : UserControl
             var vm = view.DataContext as FavoriteWorksViewModel;
             vm?.DoGetFavoriteWorks();
         }
-
     }
 }

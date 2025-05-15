@@ -13,7 +13,7 @@
   </Design.DataContext>
     <controls:InteractiveContainer>
         <TabControl Classes="Navigator" Background="White">
-            <TabItem>
+            <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
@@ -22,7 +22,7 @@
                 </TabItem.Header>
                 <views:WorkListView></views:WorkListView>
             </TabItem>
-            <TabItem Tapped="TabFavoriteTapped">
+            <TabItem Classes="Navigator" Tapped="TabFavoriteTapped">
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
@@ -31,7 +31,7 @@
                 </TabItem.Header>
                 <views:FavoriteWorksView></views:FavoriteWorksView>
             </TabItem>
-            <TabItem>
+            <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
@@ -40,7 +40,7 @@
                 </TabItem.Header>
                 <views:SettingView></views:SettingView>
             </TabItem>
-            <TabItem>
+            <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
