@@ -1,6 +1,6 @@
 ﻿<UserControl
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="400"
     mc:Ignorable="d"
     x:Class="PoetryPlanet.Controls.MobileNumberPickerPopup"
     xmlns="https://github.com/avaloniaui"
@@ -60,11 +60,8 @@
                 <controls:HorizontalSeparator Margin="0,35,0,0" Width="80" />
                 <controls:HorizontalSeparator Margin="0,0,0,35" Width="80" />
             </Grid>
-            <Button
-                Classes="Small"
-                Click="DoneClick"
-                VerticalAlignment="Bottom">
-                <TextBlock FontWeight="Bold" Text="Done" />
+            <Button Click="DoneClick" VerticalAlignment="Bottom">
+                <TextBlock FontWeight="Bold" Text="完成" />
             </Button>
         </Grid>
     </Border>

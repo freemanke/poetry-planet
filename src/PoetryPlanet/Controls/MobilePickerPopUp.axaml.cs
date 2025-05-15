@@ -21,44 +21,43 @@ public partial class MobilePickerPopUp : UserControl
     private void DoneClick(object sender, RoutedEventArgs e)
     {
         InteractiveContainer.CloseDialog();
-        var model = (MobilePickerPopUpVM)DataContext!;
+        var model = (MobilePickerPopUpViewModel)DataContext!;
         if (model.mobilePicker != null) model.mobilePicker.SelectedItem = model.SelectedItem;
     }
 }
 
-public class MobilePickerPopUpVM: ReactiveObject
+public class MobilePickerPopUpViewModel : ReactiveObject
 {
-    private ObservableCollection<string> _items = new();
-
+    private string title = "";
+    private string subtitle = "";
+    private string selectedItem = "";
+    private ObservableCollection<string> items = [];
+    
+    public MobilePicker? mobilePicker { get; set; }
+    
     public ObservableCollection<string> Items
     {
-        get => _items;
-        set => this.RaiseAndSetIfChanged(ref _items, value);
+        get => items;
+        set => this.RaiseAndSetIfChanged(ref items, value);
     }
-    
-    private string _selectedItem= "";
 
     public string SelectedItem
     {
-        get => _selectedItem;
-        set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
+        get => selectedItem;
+        set => this.RaiseAndSetIfChanged(ref selectedItem, value);
     }
-    
-    private string _title = "";
 
     public string Title
     {
-        get => _title;
-        set => this.RaiseAndSetIfChanged(ref _title, value);
+        get => title;
+        set => this.RaiseAndSetIfChanged(ref title, value);
     }
-    
-    private string _subtitle = "";
 
     public string SubTitle
     {
-        get => _subtitle;
-        set => this.RaiseAndSetIfChanged(ref _subtitle, value);
+        get => subtitle;
+        set => this.RaiseAndSetIfChanged(ref subtitle, value);
     }
 
-    public MobilePicker? mobilePicker { get; set; }
+   
 }

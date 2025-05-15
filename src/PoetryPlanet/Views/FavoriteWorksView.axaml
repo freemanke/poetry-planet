@@ -11,12 +11,12 @@
     <Design.DataContext>
         <viewModels:FavoriteWorksViewModel></viewModels:FavoriteWorksViewModel>
     </Design.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,46" GotFocus="InputElement_OnGotFocus">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" GotFocus="InputElement_OnGotFocus">
         <StackPanel VerticalAlignment="Top">
             <TextBlock 
                 FontSize="20" TextAlignment="Center" HorizontalAlignment="Stretch"
                 Text="我的收藏" Margin="10"></TextBlock>
-            <controls:HorizontalSeparator HorizontalAlignment="Stretch"></controls:HorizontalSeparator>
+            <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
             <ItemsControl ItemsSource="{Binding Works}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

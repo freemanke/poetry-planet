@@ -4,51 +4,51 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
-             xmlns:controls1="clr-namespace:PoetryPlanet.Controls"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:Class="PoetryPlanet.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
     <vm:MainViewModel />
   </Design.DataContext>
-    <controls1:InteractiveContainer>
-        <TabControl Classes="Navigator" Background="White">
-            <TabItem>
+    <controls:InteractiveContainer>
+        <TabControl Classes="Navigator">
+            <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
-                        <TextBlock Classes="Tab" Text="诗词" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource home_regular}" />
+                        <TextBlock Classes="Navigator" Text="诗词" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:WorkListView></views:WorkListView>
             </TabItem>
-            <TabItem Tapped="TabFavoriteTapped">
+            <TabItem Classes="Navigator" Tapped="TabFavoriteTapped">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
-                        <TextBlock Classes="Tab" Text="收藏" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource favorite}" />
+                        <TextBlock Classes="Navigator" Text="收藏" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:FavoriteWorksView></views:FavoriteWorksView>
             </TabItem>
-            <TabItem>
+            <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
-                        <TextBlock Classes="Tab" Text="设置" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource settings_regular}" />
+                        <TextBlock Classes="Navigator" Text="设置" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:SettingView></views:SettingView>
             </TabItem>
-            <TabItem>
+            <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
-                        <TextBlock Classes="Tab" Text="我的" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource person_regular}" />
+                        <TextBlock Classes="Navigator" Text="我" />
                     </StackPanel>
                 </TabItem.Header>
-                <views:MineView></views:MineView>
+                <views:MineView DataContext="{Binding MineViewModel}"></views:MineView>
             </TabItem>
         </TabControl>
-    </controls1:InteractiveContainer>
+    </controls:InteractiveContainer>
 </UserControl>

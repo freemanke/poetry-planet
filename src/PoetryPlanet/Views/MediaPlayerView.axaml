@@ -3,31 +3,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
              x:DataType="vm:MediaPlayerViewModel"
              x:Class="PoetryPlanet.Views.MediaPlayerView">
     <Design.DataContext>
         <vm:MediaPlayerViewModel />
     </Design.DataContext>
-    <StackPanel
-        Orientation="Vertical"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center">
-        <TextBlock
-            Text="{Binding Greeting}"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center" />
-        <Button
-            Content="Play Music"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Click="ClickHandler" />
-
-        <TextBlock
-            x:Name="playbackStatus"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Text="-" />
-
-    </StackPanel>
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock
+                Text="{Binding Greeting}" FontSize="16"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+            <controls:HorizontalSeparator></controls:HorizontalSeparator>
+            <Button Margin="10,20"
+                    Content="播放音乐"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="Button_OnClick" />
+            <SelectableTextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                TextWrapping="Wrap"
+                Foreground="LightGray"
+                Text="{Binding PlayStatus}" />
+          
+        </StackPanel>
+        <Button 
+            Command="{Binding PreviousViewCommand}"
+            Content="返回" Height="54"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"/>
+    </Grid>
 </UserControl>

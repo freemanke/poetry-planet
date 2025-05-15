@@ -25,18 +25,14 @@
                                         <EffectTransition Property="Effect" Duration="0:0:0.25"></EffectTransition>
                                     </Transitions>
                                 </controls:MobileNavigation.Transitions>
-                                    <ContentControl Content="{TemplateBinding Content}" />
+                                <ContentControl Content="{TemplateBinding Content}" />
                             </controls:MobileNavigation>
                         </Border>
                         <Border
                             Background="{DynamicResource DialogBackground}"
                             BorderBrush="{DynamicResource ComponentBackground}"
-                            CornerRadius="30"
-                            HorizontalAlignment="Center"
-                            IsHitTestVisible="False"
-                            Margin="0,125,0,0"
-                            Name="ToastBorder"
-                            VerticalAlignment="Top">
+                            CornerRadius="30" HorizontalAlignment="Center"
+                            IsHitTestVisible="False" Margin="0,125,0,0" Name="ToastBorder" VerticalAlignment="Top">
                             <Border.Transitions>
                                 <Transitions>
                                     <DoubleTransition Duration="0:0:0.3" Property="Opacity">

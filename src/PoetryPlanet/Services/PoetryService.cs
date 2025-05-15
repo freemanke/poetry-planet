@@ -7,13 +7,13 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using PoetryPlanet.Dtos;
-using ReactiveUI;
 
 namespace PoetryPlanet.Services;
 
 public class PoetryService
 {
     private readonly ILogger<PoetryService> logger;
+    private readonly AppSetting appSetting;
     private readonly bool useCache;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
@@ -23,9 +23,10 @@ public class PoetryService
     private readonly HttpClient httpClient;
     private List<WorkInfo> workCache = [];
 
-    public PoetryService(ILogger<PoetryService> logger, bool useCache = true)
+    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting, bool useCache = true)
     {
         this.logger = logger;
+        this.appSetting = appSetting;
         this.useCache = useCache;
         rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
@@ -47,11 +48,54 @@ public class PoetryService
             Translation = ""
         };
     }
+    
+    public List<WorkListItemInfo> GetWorkListItems()
+    {
+        var works = new List<WorkListItemInfo>();
+        if (useCache
+            && TryGet<List<WorkListItemInfo>>(workListFilePath, out var workList)
+            && workList != null)
+        {
+            logger.LogInformation($"从缓存文件中获取到作品列表 {workList.Count}");
+            return workList;
+        }
+
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, workListRoute);
+            var response = httpClient.SendAsync(request).Result;
+            var json = response.Content.ReadAsStringAsync().Result;
+            var infos = JsonSerializer.Deserialize<List<WorkListItemInfo>>(json);
+
+            File.WriteAllText(workListFilePath, json);
+            if (infos != null)
+            {
+                logger.LogInformation($"通过接口获取到作品列表 {infos.Count} 文件已保存到 {workListFilePath}");
+                works.AddRange(infos);
+            }
+        }
+        catch (Exception e)
+        {
+            logger.LogError($"获取作品列表出错，{e.Message}");
+        }
+
+        return works;
+    }
+
 
     public void Favorite(int id, bool isFavorite)
     {
-        var find = workCache.FirstOrDefault(a => a.Id == id);
-        if (find != null) find.IsFavorite = isFavorite;
+        if (isFavorite && !appSetting.FavoriteWorkIds.Contains(id))
+        {
+            appSetting.FavoriteWorkIds.Add(id);
+            appSetting.Save();
+        }
+
+        if (!isFavorite && appSetting.FavoriteWorkIds.Contains(id))
+        {
+            appSetting.FavoriteWorkIds.Remove(id);
+            appSetting.Save();
+        }
     }
 
     public List<WorkInfo> GetFavoriteWorks()
@@ -95,40 +139,7 @@ public class PoetryService
 
         return workCache;
     }
-
-    public List<WorkListItemInfo> GetWorkList()
-    {
-        var works = new List<WorkListItemInfo>();
-        if (useCache
-            && TryGet<List<WorkListItemInfo>>(workListFilePath, out var workList)
-            && workList != null)
-        {
-            logger.LogInformation($"从缓存文件中获取到作品列表 {workList.Count}");
-            return workList;
-        }
-
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, workListRoute);
-            var response = httpClient.SendAsync(request).Result;
-            var json = response.Content.ReadAsStringAsync().Result;
-            var infos = JsonSerializer.Deserialize<List<WorkListItemInfo>>(json);
-
-            File.WriteAllText(workListFilePath, json);
-            if (infos != null)
-            {
-                logger.LogInformation($"通过接口获取到作品列表 {infos.Count} 文件已保存到 {workListFilePath}");
-                works.AddRange(infos);
-            }
-        }
-        catch (Exception e)
-        {
-            logger.LogError($"获取作品列表出错，{e.Message}");
-        }
-
-        return works;
-    }
-
+    
     public WorkInfo GetWork(int id)
     {
         var first = workCache.FirstOrDefault(a => a.Id == id);

@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PoetryPlanet.Views.MyDialogView">
+    <Grid Margin="10">
+        <StackPanel Spacing="5">
+        <TextBlock Text="确认要删除该记录吗？" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="确认" Classes="Success" Click="CloseButton_OnClick" Margin="5"></Button>
+                <Button Content="取消" Classes="Danger" Click="CloseButton_OnClick" Margin="5"></Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

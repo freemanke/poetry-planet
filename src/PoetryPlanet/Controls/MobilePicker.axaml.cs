@@ -11,6 +11,8 @@ namespace PoetryPlanet.Controls;
 
 public partial class MobilePicker : UserControl
 {
+    private string title = "", subtitle = "", selectedItem = "";
+
     public MobilePicker()
     {
         InitializeComponent();
@@ -21,64 +23,44 @@ public partial class MobilePicker : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-
-    private string? _subtitle;
-
-    public string? SubTitle
+    public string SubTitle
     {
-        get => _subtitle;
-        set => SetAndRaise(SubTitleProperty!, ref _subtitle, value);
+        get => subtitle;
+        set => SetAndRaise(SubTitleProperty, ref subtitle, value);
     }
 
     public static readonly DirectProperty<MobilePicker, string> SubTitleProperty =
         AvaloniaProperty.RegisterDirect<MobilePicker, string>(
-            nameof(SubTitle),
-            o =>
-            {
-                Debug.Assert(o.SubTitle != null, "o.SubTitle != null");
-                return o.SubTitle;
-            },
-            (o, v) => o.SubTitle = v,
-            defaultBindingMode: BindingMode.TwoWay,
-            enableDataValidation: true);
-
-
-    private string _title = "";
+            nameof(SubTitle), o => o.SubTitle, (o, v) => o.SubTitle = v,
+            defaultBindingMode: BindingMode.TwoWay, enableDataValidation: true);
 
     public string Title
     {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
+        get => title;
+        set => SetAndRaise(TitleProperty, ref title, value);
     }
 
     public static readonly DirectProperty<MobilePicker, string> TitleProperty =
         AvaloniaProperty.RegisterDirect<MobilePicker, string>(
-            nameof(Title),
-            o => o.Title,
-            (o, v) => o.Title = v,
-            defaultBindingMode: BindingMode.TwoWay,
-            enableDataValidation: true);
+            nameof(Title), o => o.Title, (o, v) => o.Title = v,
+            defaultBindingMode: BindingMode.TwoWay, enableDataValidation: true);
 
-    private string _selectedItem = "";
 
     public string SelectedItem
     {
-        get => _selectedItem;
-        set => SetAndRaise(SelectedItemProperty, ref _selectedItem, value);
+        get => selectedItem;
+        set => SetAndRaise(SelectedItemProperty, ref selectedItem, value);
     }
 
     public static readonly DirectProperty<MobilePicker, string> SelectedItemProperty =
         AvaloniaProperty.RegisterDirect<MobilePicker, string>(
-            nameof(SelectedItem),
-            o => o.SelectedItem,
-            (o, v) => o.SelectedItem = v,
-            defaultBindingMode: BindingMode.TwoWay,
-            enableDataValidation: true);
+            nameof(SelectedItem), o => o.SelectedItem, (o, v) => o.SelectedItem = v,
+            defaultBindingMode: BindingMode.TwoWay, enableDataValidation: true);
 
 
     public static readonly StyledProperty<ObservableCollection<string>> ItemsProperty =
         AvaloniaProperty.Register<MobilePicker, ObservableCollection<string>>(nameof(Items),
-            defaultValue: new ObservableCollection<string>());
+            defaultValue: []);
 
     public ObservableCollection<string> Items
     {
@@ -89,14 +71,12 @@ public partial class MobilePicker : UserControl
     private void OpenPopup(object sender, RoutedEventArgs e)
     {
         var control = new MobilePickerPopUp();
-
-        var vm = (MobilePickerPopUpVM)control.DataContext!;
+        var vm = (MobilePickerPopUpViewModel)control.DataContext!;
         vm.Items = Items;
         vm.SelectedItem = SelectedItem;
         vm.Title = Title;
-        vm.SubTitle = SubTitle ?? "";
+        vm.SubTitle = SubTitle;
         vm.mobilePicker = this;
-
 
         control.Width = PopupWidth;
         control.FindControl<Border>("rootBorder")!.RenderTransform = PopupScale;

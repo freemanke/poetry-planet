@@ -4,25 +4,54 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:controls="clr-namespace:PoetryPlanet.Controls"
+             xmlns:objectModel="clr-namespace:System.Collections.ObjectModel;assembly=System.ObjectModel"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:DataType="vm:MainViewModel"
+             x:DataType="vm:SettingViewModel"
              x:Class="PoetryPlanet.Views.SettingView">
     <Design.DataContext>
         <vm:SettingViewModel />
     </Design.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
-        <StackPanel>
-            <TextBlock FontSize="20" FontWeight="Light" TextAlignment="Center" Text="系统设置" Margin="10"></TextBlock>
-            <controls:HorizontalSeparator></controls:HorizontalSeparator>
-                <controls:GroupBox Header="视图控制">
-                    <controls:GlassCard Margin="0" Padding="10">
-                    <StackPanel>
-                       <controls:FormFieldSwitch Title="黑暗背景模式" IsChecked="False" />
-                       <controls:HorizontalSeparator />
-                       <controls:FormFieldNumberPicker Content="字体大小" Value="10" Margin="5" />
-                   </StackPanel>
+    <StackPanel>
+        <TextBlock 
+            FontSize="20" TextAlignment="Center" HorizontalAlignment="Stretch"
+            Text="我的收藏" Margin="10"></TextBlock>
+        <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <StackPanel Spacing="5" Margin="5">
+                <controls:GroupBox Header="基础设置">
+                    <controls:GlassCard>
+                        <StackPanel>
+                            <controls:FormFieldSwitch Title="黑暗背景模式" Command="{Binding ChangeThemeCommand}" IsChecked="{Binding IsDark}" />
+                            <controls:HorizontalSeparator />
+                            <controls:FormFieldNumberPicker Title="标题文字大小" Value="20" Maximum="30" Minimum="10" />
+                            <controls:HorizontalSeparator />
+                            <controls:FormFieldNumberPicker Title="正文文字大小" Value="16" Maximum="30" Minimum="10" />
+                        </StackPanel>
                     </controls:GlassCard>
                 </controls:GroupBox>
-        </StackPanel>
-    </ScrollViewer>
+                <controls:GroupBox Header="其他配置">
+                    <controls:GlassCard>
+                        <StackPanel>
+                            <controls:FormFieldSwitch Title="开启导航" IsChecked="False" />
+                            <controls:HorizontalSeparator />
+                            <controls:MobilePicker Margin="5"
+                                SubTitle="选择系统文字样式"
+                                SelectedItem="默认"
+                                Title="文字样式">
+                                <controls:MobilePicker.Items>
+                                    <objectModel:ObservableCollection x:TypeArguments="system:String">
+                                        <system:String>Default</system:String>
+                                        <system:String>Italic</system:String>
+                                        <system:String>Bold</system:String>
+                                    </objectModel:ObservableCollection>
+                                </controls:MobilePicker.Items>
+                            </controls:MobilePicker>
+                        </StackPanel>
+                    </controls:GlassCard>
+                </controls:GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </StackPanel>
+    
 </UserControl>

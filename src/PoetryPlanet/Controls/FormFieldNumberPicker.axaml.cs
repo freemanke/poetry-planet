@@ -7,6 +7,8 @@ namespace PoetryPlanet.Controls;
 
 public partial class FormFieldNumberPicker : UserControl
 {
+    private int value, maximum, minimum;
+
     public FormFieldNumberPicker()
     {
         InitializeComponent();
@@ -16,66 +18,44 @@ public partial class FormFieldNumberPicker : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
-    
-    
+
     public static readonly DirectProperty<FormFieldNumberPicker, int> MaximumProperty =
         AvaloniaProperty.RegisterDirect<FormFieldNumberPicker, int>(
-            nameof(Maximum),
-            o => o.Maximum,
-            (o, v) => o.Maximum = v, 0, BindingMode.TwoWay);
-
-    private int _Maximum = 0;
+            nameof(Maximum), o => o.Maximum, (o, v) => o.Maximum = v, 0, BindingMode.TwoWay);
 
     public int Maximum
     {
-        get { return _Maximum; }
-        set { SetAndRaise(MaximumProperty, ref _Maximum, value); }
+        get => maximum;
+        set => SetAndRaise(MaximumProperty, ref maximum, value);
     }
 
 
     public static readonly DirectProperty<FormFieldNumberPicker, int> MinimumProperty =
         AvaloniaProperty.RegisterDirect<FormFieldNumberPicker, int>(
-            nameof(Minimum),
-            o => o.Minimum,
-            (o, v) => o.Minimum = v, 0, BindingMode.TwoWay);
-
-    private int _Minimum = 0;
+            nameof(Minimum), o => o.Minimum, (o, v) => o.Minimum = v, 0, BindingMode.TwoWay);
 
     public int Minimum
     {
-        get { return _Minimum; }
-        set { SetAndRaise(MinimumProperty, ref _Minimum, value); }
+        get => minimum;
+        set => SetAndRaise(MinimumProperty, ref minimum, value);
     }
-
-
-
-
-
 
     public static readonly DirectProperty<FormFieldNumberPicker, int> ValueProperty =
         AvaloniaProperty.RegisterDirect<FormFieldNumberPicker, int>(
-            nameof(Value),
-            o => o.Value,
-            (o, v) => o.Value = v, 0, BindingMode.TwoWay);
-
-    private int _Value = 0;
+            nameof(Value), o => o.Value, (o, v) => o.Value = v, 0, BindingMode.TwoWay);
 
     public int Value
     {
-        get { return _Value; }
-        set { SetAndRaise(ValueProperty, ref _Value, value); }
+        get => value;
+        set => SetAndRaise(ValueProperty, ref this.value, value);
     }
 
-     
-    public static readonly StyledProperty<string> TitleProperty = AvaloniaProperty.Register<PoetryPlanet.Controls.FormFieldSwitch, string>(nameof(Title), defaultValue: "Title");
+    public static readonly StyledProperty<string> TitleProperty =
+        AvaloniaProperty.Register<FormFieldSwitch, string>(nameof(Title), defaultValue: "Title");
 
     public string Title
     {
-        get { return GetValue(TitleProperty); }
-        set
-        {
-            
-            SetValue(TitleProperty, value );
-        }
+        get => GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
     }
 }

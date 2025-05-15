@@ -18,11 +18,8 @@
                             <controls:OffsetToFontSizeConverter x:Key="FontSizeConverter" />
                             <controls:OffsetToMarginConverter x:Key="MarginConverter" />
                         </Grid.Resources>
-                        
                         <ScrollViewer
-                            IsScrollInertiaEnabled="True"
-                            Margin="0,0,0,0"
-                            Name="scrollView"
+                            IsScrollInertiaEnabled="True" Margin="0,0,0,0" Name="scrollView" 
                             VerticalScrollBarVisibility="Hidden">
                             <StackPanel>
                                 <Grid Height="170" />
