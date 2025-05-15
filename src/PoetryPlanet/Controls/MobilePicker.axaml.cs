@@ -11,6 +11,8 @@ namespace PoetryPlanet.Controls;
 
 public partial class MobilePicker : UserControl
 {
+    private string title = "", subtitle = "", selectedItem = "";
+
     public MobilePicker()
     {
         InitializeComponent();
@@ -21,13 +23,10 @@ public partial class MobilePicker : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-
-    private string? _subtitle;
-
-    public string? SubTitle
+    public string SubTitle
     {
-        get => _subtitle;
-        set => SetAndRaise(SubTitleProperty!, ref _subtitle, value);
+        get => subtitle;
+        set => SetAndRaise(SubTitleProperty, ref subtitle, value);
     }
 
     public static readonly DirectProperty<MobilePicker, string> SubTitleProperty =
@@ -42,13 +41,10 @@ public partial class MobilePicker : UserControl
             defaultBindingMode: BindingMode.TwoWay,
             enableDataValidation: true);
 
-
-    private string _title = "";
-
     public string Title
     {
-        get => _title;
-        set => SetAndRaise(TitleProperty, ref _title, value);
+        get => title;
+        set => SetAndRaise(TitleProperty, ref title, value);
     }
 
     public static readonly DirectProperty<MobilePicker, string> TitleProperty =
@@ -59,12 +55,11 @@ public partial class MobilePicker : UserControl
             defaultBindingMode: BindingMode.TwoWay,
             enableDataValidation: true);
 
-    private string _selectedItem = "";
 
     public string SelectedItem
     {
-        get => _selectedItem;
-        set => SetAndRaise(SelectedItemProperty, ref _selectedItem, value);
+        get => selectedItem;
+        set => SetAndRaise(SelectedItemProperty, ref selectedItem, value);
     }
 
     public static readonly DirectProperty<MobilePicker, string> SelectedItemProperty =
@@ -78,7 +73,7 @@ public partial class MobilePicker : UserControl
 
     public static readonly StyledProperty<ObservableCollection<string>> ItemsProperty =
         AvaloniaProperty.Register<MobilePicker, ObservableCollection<string>>(nameof(Items),
-            defaultValue: new ObservableCollection<string>());
+            defaultValue: []);
 
     public ObservableCollection<string> Items
     {
@@ -90,11 +85,11 @@ public partial class MobilePicker : UserControl
     {
         var control = new MobilePickerPopUp();
 
-        var vm = (MobilePickerPopUpVM)control.DataContext!;
+        var vm = (MobilePickerPopUpViewModel)control.DataContext!;
         vm.Items = Items;
         vm.SelectedItem = SelectedItem;
         vm.Title = Title;
-        vm.SubTitle = SubTitle ?? "";
+        vm.SubTitle = SubTitle;
         vm.mobilePicker = this;
 
 

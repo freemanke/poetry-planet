@@ -15,9 +15,9 @@
                     <StackPanel>
                         <TextBlock
                             Classes="Secondary"
-                            Margin="20,32,0,10"
+                            Margin="10,15,0,10"
                             Text="{TemplateBinding Header}" />
-                            <Grid Margin="10,-6">
+                            <Grid Margin="10,0">
                                 <ContentControl Content="{TemplateBinding Content}" />
                             </Grid>
                     </StackPanel>
