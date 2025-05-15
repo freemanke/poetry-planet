@@ -54,15 +54,15 @@ public class PoetryService
         var works = new List<WorkListItemInfo>();
         if (useCache
             && TryGet<List<WorkListItemInfo>>(workListFilePath, out var workList)
-            && workList != null)
+            && workList != null && workList.Count != 200)
         {
-            logger.LogInformation($"从缓存文件中获取到作品列表 {workList.Count}");
+            logger.LogInformation($"Local cached works count {workList.Count}");
             return workList;
         }
 
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, workListRoute);
+            var request = new HttpRequestMessage(HttpMethod.Get, workListRoute + "?count=10000000");
             var response = httpClient.SendAsync(request).Result;
             var json = response.Content.ReadAsStringAsync().Result;
             var infos = JsonSerializer.Deserialize<List<WorkListItemInfo>>(json);

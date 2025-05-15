@@ -6,13 +6,10 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class SettingViewModel : ViewModelBase
 {
-    private readonly AppSetting appSetting;
     [ObservableProperty] private bool isDark;
 
-    public SettingViewModel(AppSetting appSetting)
+    public SettingViewModel()
     {
-        logger.LogInformation($"使用带参数构造方法");
-        this.appSetting = appSetting;
         IsDark = appSetting.IsDark;
     }
 

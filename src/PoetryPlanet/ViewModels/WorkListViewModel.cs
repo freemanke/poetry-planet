@@ -40,13 +40,13 @@ public partial class WorkListViewModel : ViewModelBase
 
     public void DoGetWorkList()
     {
-        logger.LogInformation($"Get works by keyword \"{Keyword}\"");
         var workInfos = poetryService.GetWorkListItems();
         var items = workInfos.Where(a =>
                 a.Title!.Contains(Keyword)
                 || a.Content!.Contains(Keyword)
                 || a.Dynasty!.Contains(Keyword)
                 || a.Author!.Contains(Keyword))
+            .Take(500)
             .Select(item => WorkListItemViewModel.Create(item, IsFavorite(item.Id))).ToList();
         WorkList.Clear();
         WorkList.AddRange(items);

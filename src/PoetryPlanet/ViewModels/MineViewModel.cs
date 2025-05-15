@@ -1,6 +1,10 @@
+using System.IO;
+using System.Net;
+using System.Text.Json;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Styling;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PoetryPlanet.Controls;
 using PoetryPlanet.Views;
@@ -9,6 +13,29 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class MineViewModel : ViewModelBase
 {
+    [ObservableProperty] private string fileSetting;
+    [ObservableProperty] private string memorySetting;
+    [ObservableProperty] private string logs = "点击加载读取日志...";
+
+    public MineViewModel()
+    {
+        FileSetting = JsonSerializer.Serialize(AppSetting.Load());
+        memorySetting = JsonSerializer.Serialize(appSetting);
+    }
+    
+    [RelayCommand]
+    private void RefreshSetting()
+    {
+        FileSetting = JsonSerializer.Serialize(AppSetting.Load());
+        MemorySetting = JsonSerializer.Serialize(appSetting);
+    }
+    
+    [RelayCommand]
+    private void RefreshLogs()
+    {
+        Logs = File.ReadAllText(AppSetting.LogFilePath);
+    }
+    
     [RelayCommand]
     private void ShowDialog()
     {

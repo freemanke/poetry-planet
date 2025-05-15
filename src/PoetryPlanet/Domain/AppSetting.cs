@@ -11,6 +11,7 @@ public class AppSetting
     public static string ConfigRootPath = OperatingSystem.IsAndroid()
         ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+    public static string LogFilePath = Path.Combine(ConfigRootPath, "poetry.planet.log");
 
     private static string fileName = "App.setting.json";
 
@@ -41,6 +42,9 @@ public class AppSetting
         var json = File.ReadAllText(filePath);
         try
         {
+            // 由于泛型序列化组件跨平台在 ios 上会导致反序列化的属性内容不全，
+            // 需要反序列化先创建一个包含所有属性的实例后，反序列化才正常执行
+            var s = new AppSetting { IsDark = true, FavoriteWorkIds = [10], BodyFontSize = 10, H1FontSize = 12 };
             var setting = JsonSerializer.Deserialize<AppSetting>(json);
             Console.WriteLine($"Load app setting from {filePath}, {json}");
             if (setting != null) return setting;

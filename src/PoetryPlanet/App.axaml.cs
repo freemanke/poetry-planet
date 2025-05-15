@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
@@ -42,7 +43,16 @@ public class App : Application
     private static void ConfigServices()
     {
         var services = new ServiceCollection();
-        services.AddSingleton(LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Information).AddConsole()));
+        services.AddSingleton(LoggerFactory.Create(builder =>
+        {
+            builder.SetMinimumLevel(LogLevel.Information).AddSimpleConsole(options =>
+            {
+                options.IncludeScopes = true;
+                options.SingleLine = true;
+                options.TimestampFormat = "yyyy-MM-dd HH:mm:ss.fff ";
+            });
+            builder.AddProvider(new CustomFileLoggerProvider(new StreamWriter(AppSetting.LogFilePath, append: true)));
+        }));
         services.AddLogging();
         services.AddSingleton(AppSetting.Load());
         services.AddSingleton<PoetryService>();
