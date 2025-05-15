@@ -21,7 +21,4 @@ public class WorkListItemInfo
     
     [JsonPropertyName("content")]
     public string? Content { get; set; }
-    
-    [JsonPropertyName("is_favorite")]
-    public bool IsFavorite { get; set; }
 }

@@ -9,17 +9,26 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkListItemViewModel : ViewModelBase
 {
+    private static SolidColorBrush FavoriteColorBrush = new(Colors.LawnGreen);
+    private static SolidColorBrush UnFavoriteColorBrush = new(Colors.LightGray);
+
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "江城子 密州出猎";
     [ObservableProperty] private string? authorAndDynasty = "苏轼 · 宋";
-
-    [ObservableProperty] private string? content =
-        "老夫聊发少年狂，左牵黄，右擎苍，锦帽貂裘，千骑卷平冈。为报倾城随太守，亲射虎，看孙郎。酒酣胸胆尚开张。鬓微霜，又何妨！持节云中，何日遣冯唐？会挽雕弓如满月，西北望，射天狼。";
-
+    [ObservableProperty] private string? content = "老夫聊发少年狂，左牵黄，右擎苍，锦帽貂裘，千骑卷平冈。";
     [ObservableProperty] private bool isFavorite;
-    [ObservableProperty] private IBrush favoriteBrush = new SolidColorBrush(Colors.LightGray);
+    [ObservableProperty] private IBrush favoriteColor = UnFavoriteColorBrush;
 
-    public WorkViewModel CreateViewModel()
+    [RelayCommand]
+    private void Favorite()
+    {
+        logger.LogInformation($"{(IsFavorite ? "Unfavorite" : "Favorite")} work \"{Title}\"");
+        IsFavorite = !IsFavorite;
+        poetryService.Favorite(Id, IsFavorite);
+        FavoriteColor = IsFavorite ? FavoriteColorBrush : UnFavoriteColorBrush;
+    }
+    
+    public WorkViewModel CreateWorkViewModel()
     {
         logger.LogInformation($"当前线程：{Environment.CurrentManagedThreadId}");
         var work = poetryService.GetWork(Id);
@@ -33,28 +42,18 @@ public partial class WorkListItemViewModel : ViewModelBase
             Intro = work.Intro,
             Translation = work.Translation,
         };
-        IsFavorite = work.IsFavorite;
         return vm;
     }
 
-    public static WorkListItemViewModel Create(WorkListItemInfo item)
+    public static WorkListItemViewModel Create(WorkListItemInfo item, bool isFavorite)
     {
         return new WorkListItemViewModel
         {
             Id = item.Id, Title = item.Title,
             AuthorAndDynasty = $"{item.Author} · {item.Dynasty}",
             Content = item.Content,
-            IsFavorite = item.IsFavorite
+            IsFavorite = isFavorite,
+            FavoriteColor = isFavorite ? FavoriteColorBrush : UnFavoriteColorBrush,
         };
-    }
-
-    [RelayCommand]
-    private void Favorite()
-    {
-        logger.LogInformation($"{(IsFavorite ? "Unfavorite" : "Favorite")} work \"{Title}\"");
-        IsFavorite = !IsFavorite;
-        poetryService.Favorite(Id, IsFavorite);
-        FavoriteBrush = IsFavorite ? new SolidColorBrush(Colors.LawnGreen) : new SolidColorBrush(Colors.LightGray);
-       
     }
 }

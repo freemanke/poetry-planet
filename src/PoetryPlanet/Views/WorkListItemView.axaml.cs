@@ -26,7 +26,7 @@ public partial class WorkListItemView : UserControl
     {
         Console.WriteLine($"当前线程 {Environment.CurrentManagedThreadId}");
         var vm = DataContext as WorkListItemViewModel;
-        var workViewModel = vm?.CreateViewModel();
+        var workViewModel = vm?.CreateWorkViewModel();
         MobileNavigation.Push(new WorkView{DataContext = workViewModel});
     }
 }

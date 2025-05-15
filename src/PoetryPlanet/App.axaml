@@ -3,7 +3,7 @@
              xmlns:local="using:PoetryPlanet"
              xmlns:semi="https://irihi.tech/semi"
              x:Class="PoetryPlanet.App"
-             RequestedThemeVariant="Dark">
+             RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.DataTemplates>
         <local:ViewLocator/>

@@ -33,8 +33,7 @@ public class App : Application
 
     public static void ChangeTheme(bool isDark)
     {
-        Current!.RequestedThemeVariant = isDark ? ThemeVariant.Light : ThemeVariant.Dark;
-
+        Current!.RequestedThemeVariant = isDark ? ThemeVariant.Dark : ThemeVariant.Light;
     }
 
     /// <summary>

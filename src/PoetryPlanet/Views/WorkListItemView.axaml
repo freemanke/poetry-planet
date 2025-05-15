@@ -15,7 +15,7 @@
             <Button 
                 Background="Transparent"
                 Command="{Binding FavoriteCommand}"
-                Foreground="{Binding FavoriteBrush}"
+                Foreground="{Binding FavoriteColor}"
                 Margin="4,0" Width="45" Height="45" BorderThickness="0" CornerRadius="10"
                 HorizontalAlignment="Left">
                 <PathIcon Data="{StaticResource favorite}"></PathIcon>

@@ -85,23 +85,23 @@ public class PoetryService
 
     public void Favorite(int id, bool isFavorite)
     {
-        if (isFavorite && !appSetting.FavoriteWorkIds.Contains(id))
+        switch (isFavorite)
         {
-            appSetting.FavoriteWorkIds.Add(id);
-            appSetting.Save();
-        }
-
-        if (!isFavorite && appSetting.FavoriteWorkIds.Contains(id))
-        {
-            appSetting.FavoriteWorkIds.Remove(id);
-            appSetting.Save();
+            case true when !appSetting.FavoriteWorkIds.Contains(id):
+                appSetting.FavoriteWorkIds.Add(id);
+                appSetting.Save();
+                break;
+            case false when appSetting.FavoriteWorkIds.Contains(id):
+                appSetting.FavoriteWorkIds.Remove(id);
+                appSetting.Save();
+                break;
         }
     }
 
     public List<WorkInfo> GetFavoriteWorks()
     {
-        var items = workCache.Where(a => a.IsFavorite).ToList();
-        logger.LogInformation($"获取到收藏作品：\"{string.Join(",", items.Select(a => a.Title))}\"");
+        var items = workCache.Where(a => appSetting.FavoriteWorkIds.Contains(a.Id)).ToList();
+        logger.LogInformation($"Get favorites \"{string.Join(",", items.Select(a => a.Title))}\"");
         return items;
     }
 
