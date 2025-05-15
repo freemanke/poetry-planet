@@ -21,7 +21,6 @@ public partial class MediaPlayerView : UserControl
         AvaloniaXamlLoader.Load(this);
 
         MainLibVLC = new LibVLC(enableDebugLogs: true);
-
         MainMediaPlayer = new MediaPlayer(MainLibVLC);
         MainMediaPlayer.TimeChanged += MediaPlayer_TimeChanged;
     }
