@@ -42,6 +42,7 @@ public class App : Application
         services.AddSingleton<PoetryService>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<WorkViewModel>();
+        services.AddSingleton<MineViewModel>();
         services.AddSingleton<WorkListViewModel>();
         services.AddSingleton<WorkListItemViewModel>();
         services.AddSingleton<FavoriteWorksViewModel>();

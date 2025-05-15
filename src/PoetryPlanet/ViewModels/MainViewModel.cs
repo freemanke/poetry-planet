@@ -6,4 +6,8 @@ using PoetryPlanet.Views;
 
 namespace PoetryPlanet.ViewModels;
 
-public partial class MainViewModel : ViewModelBase;
+public partial class MainViewModel : ViewModelBase
+{
+    [ObservableProperty] 
+    public MineViewModel mineViewModel = App.GetRequiredService<MineViewModel>();
+}

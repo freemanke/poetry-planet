@@ -5,13 +5,15 @@
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:DataType="viewModels:MainViewModel"
+             x:DataType="viewModels:MineViewModel"
              x:Class="PoetryPlanet.Views.MineView">
     <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,40">
         <StackPanel>
             <TextBlock FontSize="20" FontWeight="Light" TextAlignment="Center" Text="我的信息" Margin="10"></TextBlock>
             <controls:HorizontalSeparator></controls:HorizontalSeparator>
             <TextBlock Text="个人信息" HorizontalAlignment="Center"></TextBlock>
+            <Button Content="显示对话框" Command="{Binding ShowDialogCommand}" Margin="10"></Button>
+            <Button Content="显示提示框" Command="{Binding ShowToastCommand}" Margin="10"></Button>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

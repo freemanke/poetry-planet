@@ -47,7 +47,7 @@
                         <TextBlock Classes="Tab" Text="我的" />
                     </StackPanel>
                 </TabItem.Header>
-                <views:MineView></views:MineView>
+                <views:MineView DataContext="{Binding MineViewModel}"></views:MineView>
             </TabItem>
         </TabControl>
     </controls:InteractiveContainer>
