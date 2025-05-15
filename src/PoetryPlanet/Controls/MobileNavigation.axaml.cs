@@ -13,7 +13,7 @@ namespace PoetryPlanet.Controls;
 public partial class MobileNavigation : UserControl
 {
     public Control? CurrentPage;
-    public Stack<Control> Pages = new();
+    public readonly Stack<Control> Pages = new();
 
     public MobileNavigation()
     {
@@ -23,14 +23,6 @@ public partial class MobileNavigation : UserControl
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
-    }
-
-    public void PopPage()
-    {
-        if (Pages.Count == 0) return;
-        var page = Pages.Pop();
-        Content = page;
-        CurrentPage = page;
     }
 
     public static void Pop()
