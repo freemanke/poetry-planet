@@ -46,7 +46,7 @@ public partial class WorkListViewModel : ViewModelBase
                 || a.Content!.Contains(Keyword)
                 || a.Dynasty!.Contains(Keyword)
                 || a.Author!.Contains(Keyword))
-            .Take(500)
+            .Take(200)
             .Select(item => WorkListItemViewModel.Create(item, IsFavorite(item.Id))).ToList();
         WorkList.Clear();
         WorkList.AddRange(items);
