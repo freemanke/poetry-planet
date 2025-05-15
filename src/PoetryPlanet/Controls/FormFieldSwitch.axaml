@@ -21,6 +21,7 @@
                         <ToggleSwitch
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Right"
+                            Command="{TemplateBinding Command}"
                             IsChecked="{TemplateBinding IsChecked, Mode=TwoWay}" Margin="0,0"
                             VerticalAlignment="Center" />
                     </DockPanel>

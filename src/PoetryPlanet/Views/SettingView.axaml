@@ -7,7 +7,7 @@
              xmlns:objectModel="clr-namespace:System.Collections.ObjectModel;assembly=System.ObjectModel"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:DataType="vm:MainViewModel"
+             x:DataType="vm:SettingViewModel"
              x:Class="PoetryPlanet.Views.SettingView">
     <Design.DataContext>
         <vm:SettingViewModel />
@@ -22,7 +22,7 @@
                 <controls:GroupBox Header="基础设置">
                     <controls:GlassCard>
                         <StackPanel>
-                            <controls:FormFieldSwitch Title="黑暗背景模式" IsChecked="False" />
+                            <controls:FormFieldSwitch Title="黑暗背景模式" Command="{Binding ChangeThemeCommand}" IsChecked="{Binding IsDark}" />
                             <controls:HorizontalSeparator />
                             <controls:FormFieldNumberPicker Title="标题文字大小" Value="20" Maximum="30" Minimum="10" />
                             <controls:HorizontalSeparator />

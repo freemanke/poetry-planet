@@ -3,15 +3,15 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
-using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Microsoft.EntityFrameworkCore;
+using Avalonia.Styling;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PoetryPlanet.Services;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
+using PostSharp.Aspects.Advices;
 
 namespace PoetryPlanet;
 
@@ -31,6 +31,12 @@ public class App : Application
         return serviceProvider?.GetRequiredService(type) as Control;
     }
 
+    public static void ChangeTheme(bool isDark)
+    {
+        Current!.RequestedThemeVariant = isDark ? ThemeVariant.Light : ThemeVariant.Dark;
+
+    }
+
     /// <summary>
     /// 依赖注册服务
     /// </summary>
@@ -39,10 +45,12 @@ public class App : Application
         var services = new ServiceCollection();
         services.AddSingleton(LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Information).AddConsole()));
         services.AddLogging();
+        services.AddSingleton(AppSetting.Load());
         services.AddSingleton<PoetryService>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<WorkViewModel>();
         services.AddSingleton<MineViewModel>();
+        services.AddSingleton<SettingViewModel>();
         services.AddSingleton<WorkListViewModel>();
         services.AddSingleton<WorkListItemViewModel>();
         services.AddSingleton<FavoriteWorksViewModel>();
@@ -59,6 +67,8 @@ public class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var mainViewModel = GetRequiredService<MainViewModel>();
+        var appSetting = GetRequiredService<AppSetting>();
+        ChangeTheme(appSetting.IsDark);
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:

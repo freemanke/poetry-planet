@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.Input;
 using PoetryPlanet.Controls;
 using PoetryPlanet.Views;
@@ -17,5 +19,14 @@ public partial class MineViewModel : ViewModelBase
     private void ShowToast()
     {
         InteractiveContainer.ShowToast(new TextBlock { Text = "操作已完成" }, 2);
+    }
+    
+    [RelayCommand]
+    private void ChangeTheme()
+    {
+        Application.Current!.RequestedThemeVariant = 
+            Application.Current.RequestedThemeVariant == ThemeVariant.Dark
+            ? ThemeVariant.Light
+            : ThemeVariant.Dark;
     }
 }

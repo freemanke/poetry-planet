@@ -17,6 +17,7 @@
                 <StackPanel Spacing="5" Orientation="Horizontal">
                     <Button Content="显示对话框" Command="{Binding ShowDialogCommand}"></Button>
                     <Button Content="显示提示框" Command="{Binding ShowToastCommand}"></Button>
+                    <Button Content="切换主题" Command="{Binding ChangeThemeCommand}"></Button>
                 </StackPanel>
             </controls:GlassCard>
         </StackPanel>
