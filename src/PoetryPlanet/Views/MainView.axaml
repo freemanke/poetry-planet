@@ -16,8 +16,8 @@
             <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource home_regular}" />
-                        <TextBlock Classes="Tab" Text="诗词" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource home_regular}" />
+                        <TextBlock Classes="Navigator" Text="诗词" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:WorkListView></views:WorkListView>
@@ -25,8 +25,8 @@
             <TabItem Classes="Navigator" Tapped="TabFavoriteTapped">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
-                        <TextBlock Classes="Tab" Text="收藏" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource favorite}" />
+                        <TextBlock Classes="Navigator" Text="收藏" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:FavoriteWorksView></views:FavoriteWorksView>
@@ -34,8 +34,8 @@
             <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
-                        <TextBlock Classes="Tab" Text="设置" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource settings_regular}" />
+                        <TextBlock Classes="Navigator" Text="设置" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:SettingView></views:SettingView>
@@ -43,8 +43,8 @@
             <TabItem Classes="Navigator">
                 <TabItem.Header>
                     <StackPanel>
-                        <PathIcon Classes="Tab" Data="{StaticResource person_regular}" />
-                        <TextBlock Classes="Tab" Text="我的" />
+                        <PathIcon Classes="Navigator" Data="{StaticResource person_regular}" />
+                        <TextBlock Classes="Navigator" Text="我" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:MineView DataContext="{Binding MineViewModel}"></views:MineView>

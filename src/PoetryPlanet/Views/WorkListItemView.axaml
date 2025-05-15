@@ -13,15 +13,18 @@
     <StackPanel>
         <Grid>
             <Button 
-                Classes="Tertiary"
-                Background="{Binding FavoriteBrush}" 
+                Background="Transparent"
                 Command="{Binding FavoriteCommand}"
+                Foreground="{Binding FavoriteBrush}"
                 Margin="4,0" Width="45" Height="45" BorderThickness="0" CornerRadius="10"
                 HorizontalAlignment="Left">
                 <PathIcon Data="{StaticResource favorite}"></PathIcon>
             </Button>
             <!--如果要触碰 StackPanel 整个区域都触发 Tapped 事件，该布局空间的背景不能设置为透明，否则空白区域无法触发事件-->
-            <StackPanel Margin="52,0,0,0" Tapped="WorkListItemTapped" Background="{DynamicResource Background}">
+            <StackPanel 
+                Margin="52,0,0,0" 
+                Tapped="WorkListItemTapped"
+                Background="{DynamicResource Background}">
                 <Grid>
                     <TextBlock 
                         Text="{Binding Title}" 

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using Microsoft.Extensions.Logging;
-using PoetryPlanet.Controls;
-using PoetryPlanet.Dtos;
-using PoetryPlanet.Services;
 using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.ViewModels;
@@ -35,13 +30,17 @@ public partial class WorkListViewModel : ViewModelBase
 
     public void DoGetWorks()
     {
-        Task.Run(() => poetryService.GetWorks());
+        Task.Run(() =>
+        {
+            var workInfos = poetryService.GetWorks();
+            workInfos.ForEach(a => a.IsFavorite = appSetting.FavoriteWorkIds.Contains(a.Id));
+        });
     }
 
     public void DoGetWorkList()
     {
-        logger.LogInformation($"开始获取作品列表，关键字：\"{Keyword}\"");
-        var workInfos = poetryService.GetWorkList();
+        logger.LogInformation($"Get works by keyword \"{Keyword}\"");
+        var workInfos = poetryService.GetWorkListItems();
         var items = workInfos.Where(a =>
                 a.Title!.Contains(Keyword)
                 || a.Content!.Contains(Keyword)
@@ -50,6 +49,9 @@ public partial class WorkListViewModel : ViewModelBase
             .Select(item => WorkListItemViewModel.Create(item)).ToList();
         WorkList.Clear();
         WorkList.AddRange(items);
+        return;
+
+        bool IsFavorite(int id) => appSetting.FavoriteWorkIds.Contains(id);
     }
 
     private void CreateDefault()

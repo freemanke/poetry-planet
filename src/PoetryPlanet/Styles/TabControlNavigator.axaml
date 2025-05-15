@@ -7,8 +7,8 @@
                 <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource favorite}" />
-                            <TextBlock Classes="Tab" Text="Tab 1" />
+                            <PathIcon Classes="Navigator" Data="{StaticResource favorite}" />
+                            <TextBlock Classes="Navigator" Text="Tab 1" />
                         </StackPanel>
                     </TabItem.Header>
                     <TabControl>
@@ -23,24 +23,24 @@
                 <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
-                            <TextBlock Classes="Tab" Text="Tab 2" />
+                            <PathIcon Classes="Navigator" Data="{StaticResource settings_regular}" />
+                            <TextBlock Classes="Navigator" Text="Tab 2" />
                         </StackPanel>
                     </TabItem.Header>
                 </TabItem>
                 <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource weather_sunny_regular}" />
-                            <TextBlock Classes="Tab" Text="Tab 3" />
+                            <PathIcon Classes="Navigator" Data="{StaticResource weather_sunny_regular}" />
+                            <TextBlock Classes="Navigator" Text="Tab 3" />
                         </StackPanel>
                     </TabItem.Header>
                 </TabItem>
                 <TabItem Classes="Navigator">
                     <TabItem.Header>
                         <StackPanel>
-                            <PathIcon Classes="Tab" Data="{StaticResource settings_regular}" />
-                            <TextBlock Classes="Tab" Text="Tab 4" />
+                            <PathIcon Classes="Navigator" Data="{StaticResource settings_regular}" />
+                            <TextBlock Classes="Navigator" Text="Tab 4" />
                         </StackPanel>
                     </TabItem.Header>
                 </TabItem>
@@ -61,18 +61,19 @@
                     VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <Panel>
                         <ContentPresenter
+                            Margin="0,0,0,50"
                             Content="{TemplateBinding SelectedContent}"
                             ContentTemplate="{TemplateBinding SelectedContentTemplate}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            Margin="{TemplateBinding Padding}"
-                            Name="PART_SelectedContentHost"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        <Border BorderBrush="{DynamicResource Separator}" BorderThickness="0,1,0,0" VerticalAlignment="Bottom" >
+                        <Border BorderBrush="{DynamicResource Separator}" 
+                                BorderThickness="0,1,0,0" VerticalAlignment="Bottom" >
                             <Panel>
-                                <Border Opacity="0.75" IsVisible="{DynamicResource IsDark}" Background="{DynamicResource Background}"></Border>
+                                <Border Opacity="0.75" IsVisible="{DynamicResource IsDark}" 
+                                        Background="{DynamicResource Background}"></Border>
                                 <Border ClipToBounds="True" Background="{DynamicResource Background}">
                                 </Border>
-                                <ItemsPresenter Name="PART_ItemsPresenter">
+                                <ItemsPresenter>
                                     <ItemsPresenter.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Rows="1" />
@@ -88,36 +89,23 @@
     </Style>
 
     <Style Selector="TabControl.Navigator TabItem.Navigator">
-        <Setter Property="FontSize" Value="50" />
         <Setter Property="FontWeight" Value="{DynamicResource TabItemHeaderThemeFontWeight}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="Red" />
         <Setter Property="Padding" Value="{DynamicResource TabItemHeaderMargin}" />
         <Setter Property="Margin" Value="0" />
-        <Setter Property="MinHeight" Value="{DynamicResource TabItemMinHeight}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border
-                    Background="Transparent"
-                    BorderThickness="0"
-                    CornerRadius="20"
-                    Name="PART_LayoutRoot"
+                    Background="Transparent" BorderThickness="0" CornerRadius="20"
                     Padding="{TemplateBinding Padding}">
                     <Panel>
                         <Border
-                            CornerRadius="50"
-                            HorizontalAlignment="Center"
-                            Name="SelectedBorder"
-                            Padding="0,0"
-                            VerticalAlignment="Center">
+                            CornerRadius="50" HorizontalAlignment="Center" Name="SelectedBorder"
+                            Padding="0,0" VerticalAlignment="Center">
                             <ContentPresenter
-                                Content="{TemplateBinding Header}"
-                                FontSize="50"
-                                FontWeight="Bold"
-                                Foreground="Red"
+                                Content="{TemplateBinding Header}" 
                                 HorizontalContentAlignment="Center"
-                                Name="PartContentPresenter"
                                 Padding="4,8,4,4"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
@@ -126,16 +114,16 @@
             </ControlTemplate>
         </Setter>
     </Style>
-    <Style Selector="TabControl.Navigator TabItem TextBlock.Tab">
+    <Style Selector="TabControl.Navigator TabItem.Navigator TextBlock.Navigator">
         <Setter Property="FontWeight" Value="DemiBold" />
-        <Setter Property="FontSize" Value="12" />
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />
     </Style>
-    <Style Selector="TabControl.Navigator TabItem:selected TextBlock.Tab">
+    <Style Selector="TabControl.Navigator TabItem.Navigator:selected TextBlock.Navigator">
         <Setter Property="Foreground" Value="{DynamicResource Accent}" />
     </Style>
-    <Style Selector="TabControl.Navigator TabItem PathIcon.Tab">
+    <Style Selector="TabControl.Navigator TabItem.Navigator PathIcon.Navigator">
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="Height" Value="20" />
         <Setter Property="Width" Value="20" />
@@ -148,7 +136,7 @@
             </Transitions>
         </Setter>
     </Style>
-    <Style Selector="TabControl.Navigator TabItem:selected PathIcon.Tab">
+    <Style Selector="TabControl.Navigator TabItem.Navigator:selected PathIcon.Navigator">
         <Setter Property="Foreground" Value="{DynamicResource Accent}" />
     </Style>
 </Styles>

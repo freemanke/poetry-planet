@@ -11,7 +11,7 @@
     <Design.DataContext>
         <viewModels:FavoriteWorksViewModel></viewModels:FavoriteWorksViewModel>
     </Design.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,46" GotFocus="InputElement_OnGotFocus">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden" GotFocus="InputElement_OnGotFocus">
         <StackPanel VerticalAlignment="Top">
             <TextBlock 
                 FontSize="20" TextAlignment="Center" HorizontalAlignment="Stretch"

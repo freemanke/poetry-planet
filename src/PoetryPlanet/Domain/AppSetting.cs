@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PoetryPlanet;
 
@@ -12,9 +14,12 @@ public class AppSetting
 
     private static string fileName = "App.setting.json";
 
-    public bool IsDark { get; set; }
-    public int TitleSize { get; set; }
-    public int BodyFontSize { get; set; }
+    [JsonPropertyName("is_dark")] public bool IsDark { get; set; }
+    [JsonPropertyName("h1_font_size")] public int H1FontSize { get; set; } = 20;
+    [JsonPropertyName("body_font_size")] public int BodyFontSize { get; set; } = 16;
+
+    [JsonPropertyName("favorite_work_ids")]
+    public List<int> FavoriteWorkIds { get; set; } = [];
 
     public void Save()
     {
@@ -42,7 +47,7 @@ public class AppSetting
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine($"Load app setting error, {e.Message}");
         }
 
         return new AppSetting();

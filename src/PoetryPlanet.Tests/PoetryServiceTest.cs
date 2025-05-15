@@ -8,7 +8,7 @@ public class PoetryServiceTest
     public void GetWorkList()
     {
         var service = App.GetRequiredService<PoetryService>();
-        var lists =  service.GetWorkList();
+        var lists =  service.GetWorkListItems();
         Assert.That(lists, Has.Count.GreaterThan(1));
     }
     
