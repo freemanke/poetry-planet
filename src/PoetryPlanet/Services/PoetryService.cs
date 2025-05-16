@@ -51,6 +51,7 @@ public class PoetryService
             Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false,
             Translation = ""
         };
+        var collection = new CollectionInfo { Name = "*", Desc = "*", Id = 10, Kind = "*" };
     }
     
     public List<WorkListItemInfo> GetWorkList()
