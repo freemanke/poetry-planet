@@ -47,13 +47,12 @@
             </TabControl>
         </Grid>
     </Design.PreviewWith>
-    <!-- 移动应用导航控件样式，通过 classes=nav 来制定类别 -->
+    <!-- 移动应用导航控件样式，通过 classes="Navigator" 来制定类别 -->
     <Style Selector="TabControl.Navigator">
        <Setter Property="TabStripPlacement" Value="Bottom" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border
-                    Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{TemplateBinding CornerRadius}"

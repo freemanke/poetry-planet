@@ -1,6 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.VisualTree;
+using Material.Styles.Themes;
 using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
@@ -9,7 +11,7 @@ public partial class MainView : UserControl
 {
     public MainView()
     {
-        InitializeComponent();
+        InitializeComponent(); 
     }
     
     private void TabFavoriteTapped(object? sender, TappedEventArgs e)

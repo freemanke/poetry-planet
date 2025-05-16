@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using PoetryPlanet.Services;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
-using PostSharp.Aspects.Advices;
 
 namespace PoetryPlanet;
 
@@ -23,7 +22,8 @@ public class App : Application
     public static T GetRequiredService<T>() where T : class
     {
         if(serviceProvider == null) ConfigServices();
-        return serviceProvider?.GetRequiredService<T>()!;
+        if (serviceProvider == null) throw new NullReferenceException(nameof(serviceProvider));
+        return serviceProvider.GetRequiredService<T>();
     }
     
     public static Control? GetRequiredService(Type type)
@@ -34,7 +34,8 @@ public class App : Application
 
     public static void ChangeTheme(bool isDark)
     {
-        Current!.RequestedThemeVariant = isDark ? ThemeVariant.Dark : ThemeVariant.Light;
+        if(Current == null) return;
+        Current.RequestedThemeVariant = isDark ? ThemeVariant.Dark : ThemeVariant.Light;
     }
 
     /// <summary>

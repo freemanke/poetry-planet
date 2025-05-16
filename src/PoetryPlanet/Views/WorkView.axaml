@@ -45,7 +45,8 @@
                 </StackPanel>
                 <TextBlock 
                     Text="{Binding Content}" 
-                    FontSize="18" TextWrapping="Wrap" 
+                    FontSize="16" 
+                    TextWrapping="Wrap" 
                     TextAlignment="Left"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
