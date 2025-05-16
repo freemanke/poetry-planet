@@ -25,13 +25,16 @@
                             <PathIcon
                                 Data="{StaticResource chevron_right_regular}"
                                 Foreground="{DynamicResource SecondaryText}"
+                                FontSize="{TemplateBinding FontSize}"
                                 Height="13"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Width="13" />
                             <TextBlock
                                 Foreground="{DynamicResource Foreground}"
-                                FontWeight="Normal"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                FontSize="{TemplateBinding FontSize}"
+                                TextTrimming="CharacterEllipsis"
                                 HorizontalAlignment="Left"
                                 Text="{TemplateBinding Title}"
                                 VerticalAlignment="Center" />

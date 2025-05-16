@@ -28,15 +28,16 @@ public partial class CollectionListViewModel : ViewModelBase
     {
         var infos = poetryService.GetCollections();
         var items = infos.Where(a =>
-            (a.Name != null && a.Name.Contains(Keyword))
-            || (a.Desc != null && a.Desc.Contains(Keyword)))
+                (a.Name != null && a.Name.Contains(Keyword))
+                || (a.Desc != null && a.Desc.Contains(Keyword)))
             .Select(a => new CollectionListItemViewModel
-        {
-            Id = a.Id,
-            Name = a.Name ?? "",
-            Kind = a.Kind ?? "",
-            Desc = a.Desc ?? "",
-        }).ToList();
+            {
+                Id = a.Id,
+                Name = a.Name ?? "",
+                Kind = a.Kind ?? "",
+                Desc = a.Desc ?? "",
+                Title = $"{a.Name} (共 {a.WorksCount} 篇)",
+            }).ToList();
         List.Clear();
         List.AddRange(items);
     }

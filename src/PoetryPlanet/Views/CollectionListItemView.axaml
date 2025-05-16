@@ -10,5 +10,10 @@
     <Design.DataContext>
         <viewModels:CollectionListItemViewModel />
     </Design.DataContext>
-    <controls:FormFieldAction Title="{Binding Name}" Command="{Binding ShowCollectionCommand}"></controls:FormFieldAction>
+    <StackPanel>
+        <controls:FormFieldAction FontSize="16" FontWeight="Normal"
+            Title="{Binding Title}" 
+            Command="{Binding ShowCollectionCommand}"/>
+        <controls:HorizontalSeparator/>
+    </StackPanel>
 </UserControl>
