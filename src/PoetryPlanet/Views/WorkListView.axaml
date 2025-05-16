@@ -20,19 +20,17 @@
                 Watermark="输入诗人、作品或年代进行搜索..."/>
         </StackPanel>
         <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
-                <ItemsControl ItemsSource="{Binding WorkList}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="viewModels:WorkListItemViewModel">
-                            <views:WorkListItemView>
-                            </views:WorkListItemView>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
+            <ItemsRepeater ItemsSource="{Binding WorkList}">
+                <ItemsRepeater.Layout>
+                    <StackLayout />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate DataType="viewModels:WorkListItemViewModel">
+                        <views:WorkListItemView/>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
         </ScrollViewer>
     </Grid>
 </UserControl>

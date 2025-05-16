@@ -57,7 +57,7 @@ public class PoetryService
             && workList != null && workList.Count != 200)
         {
             logger.LogInformation($"Local cached works count {workList.Count}");
-            return workList.Take(100).ToList();
+            return workList;
         }
 
         try

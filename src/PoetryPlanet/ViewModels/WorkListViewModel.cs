@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
-using DynamicData.Aggregation;
-using Microsoft.Extensions.Logging;
 using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.ViewModels;
@@ -42,11 +40,10 @@ public partial class WorkListViewModel : ViewModelBase
     {
         var workInfos = poetryService.GetWorkListItems();
         var items = workInfos.Where(a =>
-                a.Title!.Contains(Keyword)
-                || a.Content!.Contains(Keyword)
-                || a.Dynasty!.Contains(Keyword)
-                || a.Author!.Contains(Keyword))
-            .Take(500)
+                a.Title.Contains(Keyword)
+                || a.Content.Contains(Keyword)
+                || a.Dynasty.Contains(Keyword)
+                || a.Author.Contains(Keyword))
             .Select(item => WorkListItemViewModel.Create(item, IsFavorite(item.Id))).ToList();
         WorkList.Clear();
         WorkList.AddRange(items);
