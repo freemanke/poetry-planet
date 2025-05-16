@@ -14,8 +14,8 @@
                 <ControlTemplate>
                     <StackPanel>
                         <TextBlock
-                            Classes="Secondary"
                             Margin="10,15,0,10"
+                            FontWeight="Medium"
                             Text="{TemplateBinding Header}" />
                             <Grid Margin="10,0">
                                 <ContentControl Content="{TemplateBinding Content}" />

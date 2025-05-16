@@ -14,16 +14,17 @@ public abstract partial class ViewModelBase : ObservableObject
 
     protected ViewModelBase()
     {
-        logger = App.GetRequiredService<ILoggerFactory>().CreateLogger(GetType().FullName!);
+        logger = App.GetRequiredService<ILoggerFactory>().CreateLogger(GetType().FullName ?? "");
         poetryService = App.GetRequiredService<PoetryService>();
         appSetting = App.GetRequiredService<AppSetting>();
-        if (GetType().Name != nameof(WorkListItemViewModel))
-            logger.LogInformation($"创建视图模型 {GetType().Name}");
+        if (GetType().Name != nameof(WorkListItemViewModel)
+            && GetType().Name != nameof(CollectionListItemViewModel))
+            logger.LogInformation("Create  view model {}", GetType().Name);
     }
-    
+
     [RelayCommand]
     public void PreviousView()
     {
         MobileNavigation.Pop();
-    } 
+    }
 }

@@ -18,10 +18,14 @@
             Text="设置" Margin="10"></TextBlock>
         <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <StackPanel Spacing="5" Margin="5">
+            <StackPanel Spacing="5">
                 <controls:GroupBox Header="基础设置">
-                    <controls:GlassCard>
+                    <controls:GlassCard Padding="0">
                         <StackPanel>
+                            <controls:FormFieldAction Title="个人信息" Command="{Binding PersonCommand}"></controls:FormFieldAction>
+                            <controls:HorizontalSeparator />
+                            <controls:FormFieldAction Title="诗单" Command="{Binding PersonCommand}"></controls:FormFieldAction>
+                            <controls:HorizontalSeparator />
                             <controls:FormFieldSwitch Title="黑暗背景模式" Command="{Binding ChangeThemeCommand}" IsChecked="{Binding IsDark}" />
                             <controls:HorizontalSeparator />
                             <controls:FormFieldNumberPicker Title="标题文字大小" Value="20" Maximum="30" Minimum="10" />

@@ -56,6 +56,7 @@ public class Program
         services.AddControllers();
         services.AddScoped<WorkController>();
         services.AddScoped<WorkListController>();
+        services.AddScoped<CollectionController>();
         services.AddCascadingAuthenticationState();
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddAuthentication(options =>

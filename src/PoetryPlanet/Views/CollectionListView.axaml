@@ -5,29 +5,29 @@
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:DataType="viewModels:WorkListViewModel"
-             x:Class="PoetryPlanet.Views.WorkListView">
+             x:DataType="viewModels:CollectionListViewModel"
+             x:Class="PoetryPlanet.Views.CollectionListView">
     <Design.DataContext>
-        <viewModels:WorkListViewModel/>
+        <viewModels:CollectionListViewModel/>
     </Design.DataContext>
     <Grid Background="{DynamicResource Background}">
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBox Classes=""
                 Text="{Binding Keyword, Mode=TwoWay}" 
-                Margin="10" TextChanged="KeywordTextChanged" MinWidth="300"
+                Margin="10" TextChanged="OnTextChanged" MinWidth="300"
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Center"
-                Watermark="输入诗人、作品或年代进行搜索..."/>
+                Watermark="输入关键字进行搜索..."/>
         </StackPanel>
         <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
             <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
-            <ItemsRepeater ItemsSource="{Binding WorkList}">
+            <ItemsRepeater ItemsSource="{Binding List}">
                 <ItemsRepeater.Layout>
                     <StackLayout />
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
-                    <DataTemplate DataType="viewModels:WorkListItemViewModel">
-                        <views:WorkListItemView/>
+                    <DataTemplate DataType="viewModels:CollectionListItemViewModel">
+                        <views:CollectionListItemView/>
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.8"/>
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.1.5" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.8"/>
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.8"/>
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -128,6 +129,18 @@
       <DependentUpon>MobileNumberPickerPopup.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CollectionListView.axaml.cs">
+      <DependentUpon>CollectionListView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CollectionListItemView.axaml.cs">
+      <DependentUpon>CollectionListItemView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CollectionView.axaml.cs">
+      <DependentUpon>CollectionView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -139,5 +152,6 @@
     <Content Include="Assets\sample.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="PoetryPlanet.csproj.DotSettings" />
   </ItemGroup>
 </Project>

@@ -9,8 +9,8 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkListItemViewModel : ViewModelBase
 {
-    private static SolidColorBrush FavoriteColorBrush = new(Colors.LawnGreen);
-    private static SolidColorBrush UnFavoriteColorBrush = new(Colors.LightGray);
+    private static readonly SolidColorBrush FavoriteColorBrush = new(Colors.DarkGreen);
+    private static readonly SolidColorBrush UnFavoriteColorBrush = new(Colors.LightGray);
 
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "江城子 密州出猎";

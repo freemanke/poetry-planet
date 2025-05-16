@@ -20,4 +20,9 @@ public partial class SettingViewModel : ViewModelBase
         appSetting.Save();
         App.ChangeTheme(appSetting.IsDark);
     }
+    
+    [RelayCommand]
+    private void Person()
+    {
+    }
 }

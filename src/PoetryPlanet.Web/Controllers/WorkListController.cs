@@ -7,7 +7,7 @@ using PoetryPlanet.Dtos;
 namespace PoetryPlanet.Web.Controllers;
 
 [Route("api/v1/work_list")]
-public class WorkListController(ApplicationDbContext db) : Controller
+public class WorkListController(ApplicationDbContext db, IMapper mapper) : Controller
 {
     [HttpGet]
     public async Task<List<WorkListItemInfo>> GetWorkListAsync(int count = 200)
@@ -20,7 +20,7 @@ public class WorkListController(ApplicationDbContext db) : Controller
             Author = a.Author,
             AuthorId = a.AuthorId,
             Dynasty = a.Dynasty,
-            Content = a.Content.Split("。", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+            Content = a.Content.Split("。", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? ""
         }).ToListAsync();
         return items;
     }
