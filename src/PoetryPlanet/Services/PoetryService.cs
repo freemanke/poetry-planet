@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using PoetryPlanet.Data;
 using PoetryPlanet.Dtos;
 
 namespace PoetryPlanet.Services;
@@ -14,6 +15,7 @@ public class PoetryService
 {
     private readonly ILogger<PoetryService> logger;
     private readonly AppSetting appSetting;
+    private readonly ApplicationDbContext db;
     private readonly bool useCache;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
@@ -25,11 +27,13 @@ public class PoetryService
     private readonly HttpClient httpClient;
     private List<WorkInfo> workCache = [];
     private List<CollectionInfo> collectionCache = [];
+    private static readonly char[] separator = ['。', '；'];
 
-    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting, bool useCache = true)
+    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting, ApplicationDbContext db, bool useCache = true)
     {
         this.logger = logger;
         this.appSetting = appSetting;
+        this.db = db;
         this.useCache = useCache;
         rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
@@ -53,31 +57,19 @@ public class PoetryService
         };
         var collection = new CollectionInfo { Name = "*", Desc = "*", Id = 10, Kind = "*" };
     }
-    
+
     public List<WorkListItemInfo> GetWorkList()
     {
         var works = new List<WorkListItemInfo>();
-        if (useCache
-            && TryGet<List<WorkListItemInfo>>(workListFilePath, out var workList)
-            && workList != null && workList.Count != 200)
-        {
-            logger.LogInformation($"Local cached works count {workList.Count}");
-            return workList;
-        }
-
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, workListRoute + "?count=10000000");
-            var response = httpClient.SendAsync(request).Result;
-            var json = response.Content.ReadAsStringAsync().Result;
-            var infos = JsonSerializer.Deserialize<List<WorkListItemInfo>>(json);
-
-            File.WriteAllText(workListFilePath, json);
-            if (infos != null)
+            works = db.Works.Select(a => new WorkListItemInfo
             {
-                logger.LogInformation($"通过接口获取到作品列表 {infos.Count} 文件已保存到 {workListFilePath}");
-                works.AddRange(infos);
-            }
+                Id = a.Id, Title = a.Title, Author = a.Author,
+                AuthorId = a.AuthorId, 
+                Content = a.Content.Split(separator, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()??"",
+                Dynasty = a.Dynasty
+            }).ToList();
         }
         catch (Exception e)
         {

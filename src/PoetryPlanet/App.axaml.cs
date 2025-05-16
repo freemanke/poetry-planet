@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using AutoMapper;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
@@ -74,7 +75,7 @@ public class App : Application
         
         // 注册 SQLite 数据库组件
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite("DataSource=./data/poetry-planet.db;Cache=Shared"));
+            options.UseSqlite($"DataSource={Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite")};Cache=Shared"));
         services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceProvider = services.BuildServiceProvider();
@@ -90,6 +91,10 @@ public class App : Application
         var mainViewModel = GetRequiredService<MainViewModel>();
         var appSetting = GetRequiredService<AppSetting>();
         ChangeTheme(appSetting.IsDark);
+        var db = GetRequiredService<ApplicationDbContext>();
+        db.Database.EnsureCreated();
+        db.EnsuredInitialize(GetRequiredService<IMapper>());
+        
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:
