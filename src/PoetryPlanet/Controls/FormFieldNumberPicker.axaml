@@ -12,15 +12,15 @@
         <Style Selector="controls|FormFieldNumberPicker">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Grid Height="47">
+                    <Grid Height="46">
                         <TextBlock 
-                            FontWeight="DemiBold" 
+                            Margin="10,0"
                             HorizontalAlignment="Left" 
                             Text="{TemplateBinding Title}"
                             VerticalAlignment="Center" />
                         <controls:MobileNumberPicker
                             HorizontalAlignment="Right"
-                            Margin="0,0"
+                            Margin="10,0"
                             Maximum="{TemplateBinding Maximum}"
                             Minimum="{TemplateBinding Minimum}"
                             Value="{TemplateBinding Value, Mode=TwoWay}"

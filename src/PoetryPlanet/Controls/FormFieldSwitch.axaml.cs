@@ -41,13 +41,13 @@ public partial class FormFieldSwitch : UserControl
         set => SetValue(TitleProperty, value);
     }
 
-    public static readonly DirectProperty<FormFieldSwitch, ICommand> CommandProperty =
-        AvaloniaProperty.RegisterDirect<FormFieldSwitch, ICommand>(
-            nameof(Command), o => o.Command!, (o, v) => o.Command = v);
+    public static readonly DirectProperty<FormFieldSwitch, ICommand?> CommandProperty =
+        AvaloniaProperty.RegisterDirect<FormFieldSwitch, ICommand?>(
+            nameof(Command), o => o.Command, (o, v) => o.Command = v);
 
     public ICommand? Command
     {
         get => command;
-        set => SetAndRaise(CommandProperty!, ref command, value);
+        set => SetAndRaise(CommandProperty, ref command, value);
     }
 }

@@ -17,7 +17,16 @@
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Navigator" Data="{StaticResource home_regular}" />
-                        <TextBlock Classes="Navigator" Text="诗词" />
+                        <TextBlock Classes="Navigator" Text="作品" />
+                    </StackPanel>
+                </TabItem.Header>
+                <views:WorkListView></views:WorkListView>
+            </TabItem>
+            <TabItem Classes="Navigator">
+                <TabItem.Header>
+                    <StackPanel>
+                        <PathIcon Classes="Navigator" Data="{StaticResource tag}" />
+                        <TextBlock Classes="Navigator" Text="诗集" />
                     </StackPanel>
                 </TabItem.Header>
                 <views:WorkListView></views:WorkListView>

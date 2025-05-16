@@ -12,9 +12,9 @@
         <Style Selector="controls|FormFieldSwitch">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <DockPanel Height="47">
+                    <DockPanel Height="46">
                         <TextBlock
-                            FontWeight="DemiBold"
+                            Margin="10,0"
                             HorizontalAlignment="Left"
                             Text="{TemplateBinding Title}"
                             VerticalAlignment="Center" />
@@ -22,7 +22,8 @@
                             DockPanel.Dock="Right"
                             HorizontalAlignment="Right"
                             Command="{TemplateBinding Command}"
-                            IsChecked="{TemplateBinding IsChecked, Mode=TwoWay}" Margin="0,0"
+                            IsChecked="{TemplateBinding IsChecked, Mode=TwoWay}" 
+                            Margin="10,0"
                             VerticalAlignment="Center" />
                     </DockPanel>
                 </ControlTemplate>
