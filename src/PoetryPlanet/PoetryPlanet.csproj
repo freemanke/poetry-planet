@@ -145,6 +145,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PoetryPlanet.Core\PoetryPlanet.Core.csproj" />
+    <ProjectReference Include="..\PoetryPlanet.Data\PoetryPlanet.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
