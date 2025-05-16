@@ -15,10 +15,9 @@
         <Style Selector="controls|MobileNumberPicker">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Button Classes="Void" Click="OpenPopup">
-                        <Border BorderThickness="0" CornerRadius="30" Padding="10,0">
+                    <Button Click="OpenPopup">
+                        <Border BorderThickness="0" CornerRadius="20" Padding="10,0">
                             <TextBlock 
-                                Classes="Secondary Medium" 
                                 Text="{TemplateBinding Value, Converter={StaticResource ToStringConverter}}" />
                         </Border>
                     </Button>

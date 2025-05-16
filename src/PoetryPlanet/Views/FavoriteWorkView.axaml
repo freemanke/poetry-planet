@@ -10,7 +10,7 @@
     <Design.DataContext>
         <viewModels:FavoriteWorkViewModel/>
     </Design.DataContext>
-    <StackPanel>
+    <StackPanel Background="{StaticResource Background}">
         <TextBlock 
             Text="{Binding Title}" 
             FontSize="20" TextAlignment="Center" 
