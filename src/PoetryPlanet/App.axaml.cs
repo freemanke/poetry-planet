@@ -58,13 +58,16 @@ public class App : Application
         services.AddSingleton(AppSetting.Load());
         services.AddSingleton<PoetryService>();
         services.AddSingleton<MainViewModel>();
-        services.AddSingleton<WorkViewModel>();
         services.AddSingleton<MineViewModel>();
         services.AddSingleton<SettingViewModel>();
         services.AddSingleton<WorkListViewModel>();
         services.AddSingleton<WorkListItemViewModel>();
         services.AddSingleton<FavoriteWorksViewModel>();
         services.AddSingleton<FavoriteWorkViewModel>();
+        services.AddSingleton<CollectionListViewModel>();
+        services.AddTransient<CollectionListItemViewModel>();
+        services.AddTransient<WorkViewModel>();
+        services.AddTransient<CollectionViewModel>();
 
         serviceProvider = services.BuildServiceProvider();
     }

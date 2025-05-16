@@ -17,11 +17,14 @@ public class PoetryService
     private readonly bool useCache;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
+    private const string collectionListRoute = "/api/v1/collections";
     private readonly string rootPath;
     private readonly string workListFilePath;
     private readonly string worksFilePath;
+    private readonly string collectionsFilePath;
     private readonly HttpClient httpClient;
     private List<WorkInfo> workCache = [];
+    private List<CollectionInfo> collectionCache = [];
 
     public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting, bool useCache = true)
     {
@@ -33,6 +36,7 @@ public class PoetryService
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         workListFilePath = Path.Combine(rootPath, "work_list.json");
         worksFilePath = Path.Combine(rootPath, "works.json");
+        collectionsFilePath = Path.Combine(rootPath, "collections.json");
         logger.LogInformation($"当前数据文件存储根目录：{rootPath}");
 
         var handler = new HttpClientHandler();
@@ -49,7 +53,7 @@ public class PoetryService
         };
     }
     
-    public List<WorkListItemInfo> GetWorkListItems()
+    public List<WorkListItemInfo> GetWorkList()
     {
         var works = new List<WorkListItemInfo>();
         if (useCache
@@ -82,7 +86,39 @@ public class PoetryService
         return works;
     }
 
+    public List<CollectionInfo> GetCollections()
+    {
+        var items = new List<CollectionInfo>();
+        if (useCache
+            && TryGet<List<CollectionInfo>>(collectionsFilePath, out var value)
+            && value != null && value.Count != 200)
+        {
+            logger.LogInformation($"Local cached works count {value.Count}");
+            return value;
+        }
 
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, collectionListRoute);
+            var response = httpClient.SendAsync(request).Result;
+            var json = response.Content.ReadAsStringAsync().Result;
+            var infos = JsonSerializer.Deserialize<List<CollectionInfo>>(json);
+
+            File.WriteAllText(collectionsFilePath, json);
+            if (infos != null)
+            {
+                logger.LogInformation("Get list {} saved to {}", infos.Count, collectionsFilePath);
+                items.AddRange(infos);
+            }
+        }
+        catch (Exception e)
+        {
+            logger.LogError("Get list error，{}", e.Message);
+        }
+
+        return items;
+    }
+    
     public void Favorite(int id, bool isFavorite)
     {
         switch (isFavorite)
@@ -105,7 +141,7 @@ public class PoetryService
         return items;
     }
 
-    public List<WorkInfo> GetWorks()
+    public List<WorkInfo> GetList()
     {
         if (workCache.Count != 0) return workCache;
         try

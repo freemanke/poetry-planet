@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+             x:DataType="viewModels:CollectionViewModel"
+             x:Class="PoetryPlanet.Views.CollectionView">
+    <Design.DataContext>
+        <viewModels:CollectionViewModel/>
+    </Design.DataContext>
+    <DockPanel Background="{DynamicResource Background}">
+        <ScrollViewer 
+            DockPanel.Dock="Top" VerticalScrollBarVisibility="Hidden" 
+            Margin="10,0,10,0">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+                <SelectableTextBlock 
+                    Text="{Binding Name}" 
+                    FontSize="20" FontWeight="Medium" 
+                    TextAlignment="Center" 
+                    HorizontalAlignment="Center"  Margin="0,10"
+                    VerticalAlignment="Center"/>
+                <TextBlock 
+                    Text="{Binding Desc}"
+                    TextWrapping="Wrap" FontSize="18"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
+                <TextBlock FontSize="18" Text="·" VerticalAlignment="Center"/>
+                <TabControl>
+                    <TabItem Header="作品">
+                        <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
+                            <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
+                            <ItemsRepeater ItemsSource="{Binding WorkList}">
+                                <ItemsRepeater.Layout>
+                                    <StackLayout />
+                                </ItemsRepeater.Layout>
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate DataType="viewModels:WorkListItemViewModel">
+                                        <views:WorkListItemView/>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </StackPanel>
+        </ScrollViewer>
+        <Button 
+            Command="{Binding PreviousViewCommand}"
+            Content="返回" Height="54"
+            HorizontalAlignment="Stretch"
+            DockPanel.Dock="Bottom"/>
+    </DockPanel>
+</UserControl>

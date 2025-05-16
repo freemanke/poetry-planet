@@ -31,14 +31,14 @@ public partial class WorkListViewModel : ViewModelBase
     {
         Task.Run(() =>
         {
-            var workInfos = poetryService.GetWorks();
+            var workInfos = poetryService.GetList();
             workInfos.ForEach(a => a.IsFavorite = appSetting.FavoriteWorkIds.Contains(a.Id));
         });
     }
 
     public void DoGetWorkList()
     {
-        var workInfos = poetryService.GetWorkListItems();
+        var workInfos = poetryService.GetWorkList();
         var items = workInfos.Where(a =>
                 a.Title.Contains(Keyword)
                 || a.Content.Contains(Keyword)

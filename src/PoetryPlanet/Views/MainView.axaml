@@ -29,6 +29,7 @@
                         <TextBlock Classes="Navigator" Text="诗集" />
                     </StackPanel>
                 </TabItem.Header>
+                <views:CollectionListView/>
             </TabItem>
             <TabItem Classes="Navigator" Tapped="TabFavoriteTapped">
                 <TabItem.Header>
