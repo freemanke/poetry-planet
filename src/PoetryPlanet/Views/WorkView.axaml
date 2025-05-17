@@ -23,7 +23,7 @@
                     <TextBlock Classes="H3" Text="·" />
                     <TextBlock Classes="H3" Text="{Binding Author}" TextWrapping="Wrap"/>
                 </StackPanel>
-                <TextBlock Classes="Body" Text="{Binding Content}" TextWrapping="Wrap"/>
+                <TextBlock Classes="Body" Text="{Binding Content}" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                 <TextBlock Classes="H3" Text="注音" Foreground="Chocolate"/>
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <Button IsEnabled="{Binding !IsSendDisabled}" Content="生成注音" Command="{Binding PronounceCommand}"></Button>

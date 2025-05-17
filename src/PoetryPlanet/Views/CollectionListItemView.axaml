@@ -11,7 +11,7 @@
         <viewModels:CollectionListItemViewModel />
     </Design.DataContext>
     <StackPanel>
-        <controls:FormFieldAction FontSize="16" FontWeight="Normal"
+        <controls:FormFieldAction FontSize="18" FontWeight="Normal"
             Title="{Binding Title}" 
             Command="{Binding ShowCollectionCommand}"/>
         <controls:HorizontalSeparator/>

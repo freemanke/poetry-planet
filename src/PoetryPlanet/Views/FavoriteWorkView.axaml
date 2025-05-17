@@ -10,39 +10,26 @@
     <Design.DataContext>
         <viewModels:FavoriteWorkViewModel/>
     </Design.DataContext>
-    <StackPanel Background="{StaticResource Background}">
+    <StackPanel Margin="10" Spacing="10" Background="{StaticResource Background}">
         <TextBlock 
+            Classes="H1"
             Text="{Binding Title}" 
-            FontSize="20" TextAlignment="Center" 
-            HorizontalAlignment="Center"  Padding="10"
+            TextAlignment="Center" 
+            HorizontalAlignment="Center" 
             VerticalAlignment="Center"/>
         <TextBlock 
+            Classes="Body"
             Text="{Binding Author}"
             TextWrapping="Wrap" 
-            FontSize="18" TextAlignment="Center"
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center"
-            Margin="10"/>
+            HorizontalAlignment="Center" />
         <TextBlock 
+            Classes="Body"
             Text="{Binding Content}" 
-            FontSize="16" TextWrapping="Wrap" TextAlignment="Center"
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center"
-            Margin="10"/>
-        <TabControl>
-            <TabItem Header="简介">
-                <TextBlock 
-                    Text="{Binding Intro}" 
-                    FontSize="16" TextWrapping="Wrap" 
-                    Margin="10"/>
-            </TabItem>
-            <TabItem Header="译文">
-                <TextBlock 
-                    Text="{Binding Translation}" 
-                    FontSize="16" TextWrapping="Wrap" 
-                    Margin="10"/>
-            </TabItem>
-        </TabControl>
+            TextWrapping="Wrap" 
+            HorizontalAlignment="Center"/>
+        <TextBlock Classes="H3" Text="简介" Foreground="Chocolate"/>
+        <TextBlock Classes="Body" Text="{Binding Intro}" TextWrapping="Wrap" />
+        <TextBlock Classes="H3" Text="译文" Foreground="Chocolate"/>
         <controls:HorizontalSeparator />
     </StackPanel>
 </UserControl>

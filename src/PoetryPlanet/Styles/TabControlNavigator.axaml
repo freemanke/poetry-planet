@@ -114,7 +114,7 @@
         </Setter>
     </Style>
     <Style Selector="TabControl.Navigator TabItem.Navigator TextBlock.Navigator">
-        <Setter Property="FontWeight" Value="DemiBold" />
+        <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{DynamicResource SecondaryText}" />

@@ -13,8 +13,7 @@
     </Design.DataContext>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" GotFocus="InputElement_OnGotFocus">
         <StackPanel VerticalAlignment="Top">
-            <TextBlock 
-                FontSize="20" TextAlignment="Center" HorizontalAlignment="Stretch"
+            <TextBlock Classes="Body" TextAlignment="Center" HorizontalAlignment="Stretch"
                 Text="我的收藏" Margin="10"></TextBlock>
             <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
             <ItemsControl ItemsSource="{Binding Works}">
@@ -25,7 +24,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="viewModels:FavoriteWorkViewModel">
-                        <views:FavoriteWorkView Margin="5,5,5,0"></views:FavoriteWorkView>
+                        <views:FavoriteWorkView></views:FavoriteWorkView>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

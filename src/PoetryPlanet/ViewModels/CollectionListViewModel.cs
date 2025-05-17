@@ -36,7 +36,7 @@ public partial class CollectionListViewModel : ViewModelBase
                 Name = a.Name ?? "",
                 Kind = a.Kind ?? "",
                 Desc = a.Desc ?? "",
-                Title = $"{a.Name} (共 {a.WorksCount} 篇)",
+                Title = $"{a.Name}",
             }).ToList();
         List.Clear();
         List.AddRange(items);

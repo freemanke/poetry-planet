@@ -13,16 +13,15 @@
         <vm:SettingViewModel />
     </Design.DataContext>
     <StackPanel>
-        <TextBlock 
-            FontSize="20" TextAlignment="Center" HorizontalAlignment="Stretch"
+        <TextBlock Classes="Body" TextAlignment="Center" HorizontalAlignment="Stretch"
             Text="设置" Margin="10"></TextBlock>
         <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <StackPanel Spacing="5">
-                <controls:GroupBox Header="基础设置">
+                <controls:GroupBox FontSize="17" Header="基础设置">
                     <controls:GlassCard Padding="0">
                         <StackPanel>
-                            <controls:FormFieldAction Title="个人信息" Command="{Binding PersonCommand}"></controls:FormFieldAction>
+                            <controls:FormFieldAction FontSize="17" Title="个人信息" Command="{Binding PersonCommand}"></controls:FormFieldAction>
                             <controls:HorizontalSeparator />
                             <controls:FormFieldAction Title="诗单" Command="{Binding PersonCommand}"></controls:FormFieldAction>
                             <controls:HorizontalSeparator />
@@ -34,7 +33,7 @@
                         </StackPanel>
                     </controls:GlassCard>
                 </controls:GroupBox>
-                <controls:GroupBox Header="其他配置">
+                <controls:GroupBox FontSize="17" Header="其他配置">
                     <controls:GlassCard>
                         <StackPanel>
                             <controls:FormFieldSwitch Title="开启导航" IsChecked="False" />

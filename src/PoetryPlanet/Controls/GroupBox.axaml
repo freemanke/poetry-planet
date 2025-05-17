@@ -15,7 +15,7 @@
                     <StackPanel>
                         <TextBlock
                             Margin="10,15,0,10"
-                            FontWeight="Medium"
+                            FontWeight="Normal"
                             Text="{TemplateBinding Header}" />
                             <Grid Margin="10,0">
                                 <ContentControl Content="{TemplateBinding Content}" />

@@ -28,7 +28,7 @@
                     <DockPanel>
                         <TextBlock 
                             Classes="H2"
-                            Text="{Binding Title}" 
+                            Text="{Binding Title}" FontWeight="Normal"
                             TextTrimming="CharacterEllipsis"
                             Padding="0,8,4,0"
                             HorizontalAlignment="Left" 

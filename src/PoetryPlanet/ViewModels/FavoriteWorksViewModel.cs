@@ -31,10 +31,11 @@ public partial class FavoriteWorksViewModel : ViewModelBase
         {
             Id = a.Id,
             Title = a.Title,
-            Author = a.Author,
+            Author = $"{a.Author}·{a.Dynasty}" ,
             Dynasty = a.Dynasty,
             Content = a.Content,
-            Intro = a.Intro
+            Intro = a.Intro??"暂无介绍",
+            Translation = a.Translation??"暂无译文",
         });
         Works.Clear();
         Works.AddRange(items);

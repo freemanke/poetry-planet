@@ -13,7 +13,7 @@ public partial class CollectionListItemViewModel : ViewModelBase
     [ObservableProperty] private string name = "小学生诗词";
     [ObservableProperty] private string kind = "书籍";
     [ObservableProperty] private string desc = "描述信息";
-    [ObservableProperty] private string title = "小学生诗词 (描述信息)";
+    [ObservableProperty] private string title = "小学生诗词";
     [ObservableProperty] private bool isFavorite;
 
     [RelayCommand]
