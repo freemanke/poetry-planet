@@ -16,33 +16,38 @@
                 Background="Transparent"
                 Command="{Binding FavoriteCommand}"
                 Foreground="{Binding FavoriteColor}"
-                Margin="4,0" Width="45" Height="45" BorderThickness="0" CornerRadius="10"
-                HorizontalAlignment="Left">
+                Margin="4,0" Width="45" Height="45" BorderThickness="0" 
+                CornerRadius="10" HorizontalAlignment="Left">
                 <PathIcon Data="{StaticResource favorite}"></PathIcon>
             </Button>
             <!--如果要触碰 StackPanel 整个区域都触发 Tapped 事件，该布局空间的背景不能设置为透明，否则空白区域无法触发事件-->
             <StackPanel 
-                Margin="52,0,0,0" 
-                Tapped="WorkListItemTapped"
+                Margin="52,0,0,0" Tapped="WorkListItemTapped"
                 Background="{DynamicResource Background}">
                 <Grid>
                     <TextBlock 
+                        Classes="H2"
                         Text="{Binding Title}" 
-                        Padding="4,4,4,0" FontSize="16" FontWeight="Normal" 
-                        VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        TextTrimming="CharacterEllipsis"
+                        Padding="0,8,4,0"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center" />
                     <TextBlock 
+                        Classes="H4"
                         Text="{Binding AuthorAndDynasty}" 
                         TextWrapping="WrapWithOverflow"
-                        Padding="4,4,4,0"
+                        Padding="0,8,4,0"
                         Foreground="DimGray"
-                        HorizontalAlignment="Right" VerticalAlignment="Center" />
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center" />
                 </Grid>
                 <Grid>
                     <TextBlock 
+                        Classes="H4"
                         Text="{Binding Content}" 
                         TextTrimming="CharacterEllipsis"
-                        Padding="4,2,0,4" FontSize="14" FontWeight="Light" TextWrapping="NoWrap"
-                        Foreground="DimGray" MaxWidth="300"
+                        Padding="0,2,4,8" TextWrapping="NoWrap"
+                        Foreground="DimGray"
                         HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </Grid>
             </StackPanel>

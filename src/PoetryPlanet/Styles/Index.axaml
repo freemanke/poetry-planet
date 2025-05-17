@@ -14,4 +14,5 @@
     </Styles.Resources>
     <SimpleTheme />
     <StyleInclude Source="TabControlNavigator.axaml" />
+    <StyleInclude Source="TextBlockStyles.axaml" />
 </Styles>
