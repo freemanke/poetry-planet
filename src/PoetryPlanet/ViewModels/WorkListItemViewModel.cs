@@ -9,7 +9,7 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkListItemViewModel : ViewModelBase
 {
-    private static readonly SolidColorBrush FavoriteColorBrush = new(Colors.DarkGreen);
+    private static readonly SolidColorBrush FavoriteColorBrush = new(Colors.MediumSeaGreen);
     private static readonly SolidColorBrush UnFavoriteColorBrush = new(Colors.LightGray);
 
     [ObservableProperty] private int id = 1001;
@@ -22,15 +22,15 @@ public partial class WorkListItemViewModel : ViewModelBase
     [RelayCommand]
     private void Favorite()
     {
-        logger.LogInformation($"{(IsFavorite ? "Unfavorite" : "Favorite")} work \"{Title}\"");
+        logger.LogInformation("{} work \"{}\"", IsFavorite ? "Unfavorite" : "Favorite", Title);
         IsFavorite = !IsFavorite;
         poetryService.Favorite(Id, IsFavorite);
         FavoriteColor = IsFavorite ? FavoriteColorBrush : UnFavoriteColorBrush;
     }
-    
+
     public WorkViewModel CreateWorkViewModel()
     {
-        logger.LogInformation($"当前线程：{Environment.CurrentManagedThreadId}");
+        logger.LogInformation("当前线程：{}", Environment.CurrentManagedThreadId);
         var work = poetryService.GetWork(Id);
         var vm = new WorkViewModel
         {
@@ -39,8 +39,8 @@ public partial class WorkListItemViewModel : ViewModelBase
             Author = work.Author,
             Content = work.Content,
             Dynasty = work.Dynasty,
-            Intro = work.Intro,
-            Translation = work.Translation,
+            Intro = work.Intro ?? "暂无介绍",
+            Translation = work.Translation ?? "暂无译文",
         };
         return vm;
     }

@@ -20,7 +20,7 @@ public partial class WorkViewModel : ViewModelBase
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
     [ObservableProperty] private string? author = "苏轼";
     [ObservableProperty] private string? dynasty = "宋";
-    [ObservableProperty] private string? pronunciation = "注音有 DeepSeek AI 生成，请自行鉴别结果...";
+    [ObservableProperty] private string? pronunciation = "注音由 DeepSeek AI 实时生成，请自行鉴别结果...";
     [ObservableProperty] private string? translation = 
         "这首词作于神宗元豐五年，" +
         "即东坡黄州之贬的第三年，" +

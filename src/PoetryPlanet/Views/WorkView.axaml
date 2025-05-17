@@ -12,68 +12,29 @@
     <DockPanel Background="{DynamicResource Background}">
         <Button 
             Command="{Binding PreviousViewCommand}"
-            Content="返回" Height="54"
+            Content="返回" Height="48"
             HorizontalAlignment="Stretch"
             DockPanel.Dock="Bottom"/>
-        <ScrollViewer 
-            DockPanel.Dock="Top" VerticalScrollBarVisibility="Hidden" 
-            Margin="10,0,10,0">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-                <SelectableTextBlock 
-                    Text="{Binding Title}" 
-                    FontSize="20" FontWeight="Medium" 
-                    TextAlignment="Center" 
-                    HorizontalAlignment="Center"  Margin="0,10"
-                    VerticalAlignment="Center"/>
+        <ScrollViewer Margin="10,10" DockPanel.Dock="Top" VerticalScrollBarVisibility="Hidden">
+            <StackPanel Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <SelectableTextBlock Classes="H1" Text="{Binding Title}" HorizontalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock 
-                        Text="{Binding Dynasty}"
-                        TextWrapping="Wrap" FontSize="18"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Center"/>
-                    <TextBlock FontSize="18" Text="·" VerticalAlignment="Center"/>
-                    <TextBlock 
-                        Text="{Binding Author}"
-                        TextWrapping="Wrap"
-                        FontSize="18"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Margin="0,10"
-                        VerticalAlignment="Center">
-                    </TextBlock>
+                    <TextBlock Classes="H3" Text="{Binding Dynasty}" TextWrapping="Wrap"/>
+                    <TextBlock Classes="H3" Text="·" />
+                    <TextBlock Classes="H3" Text="{Binding Author}" TextWrapping="Wrap"/>
                 </StackPanel>
-                <TextBlock 
-                    Text="{Binding Content}" 
-                    FontSize="16" 
-                    TextWrapping="Wrap" 
-                    TextAlignment="Left"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Margin="0,10" />
-                <TextBlock 
-                    Text="注音" Foreground="Chocolate" FontSize="16" FontWeight="DemiBold" Margin="0,10"/>
+                <TextBlock Classes="Body" Text="{Binding Content}" TextWrapping="Wrap"/>
+                <TextBlock Classes="H3" Text="注音" Foreground="Chocolate"/>
                 <StackPanel Orientation="Horizontal" Spacing="4">
-                    <Button HorizontalAlignment="Left" IsEnabled="{Binding !IsSendDisabled}" Content="生成注音" Command="{Binding PronounceCommand}"></Button>
-                    <Button HorizontalAlignment="Left" IsEnabled="{Binding !IsSendDisabled}" Content="开始朗诵" Command="{Binding OpenMediaPlayerCommand}"></Button>
-                    <Button HorizontalAlignment="Left" IsEnabled="{Binding !IsSendDisabled}" Content="播放动画" Command="{Binding PronounceCommand}"></Button>
+                    <Button IsEnabled="{Binding !IsSendDisabled}" Content="生成注音" Command="{Binding PronounceCommand}"></Button>
+                    <Button IsEnabled="{Binding !IsSendDisabled}" Content="开始朗诵" Command="{Binding OpenMediaPlayerCommand}"></Button>
+                    <Button IsEnabled="{Binding !IsSendDisabled}" Content="播放动画" Command="{Binding PronounceCommand}"></Button>
                 </StackPanel>
-                <TextBlock Text="{Binding Pronunciation}" Margin="0,10" FontSize="16" TextWrapping="Wrap"></TextBlock>
-                <TextBlock 
-                    Text="简介" Foreground="Chocolate" FontSize="16" FontWeight="DemiBold" Margin="0,10"/>
-                <TextBlock 
-                    Text="{Binding Intro}" 
-                    FontSize="16" TextWrapping="Wrap"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center"/>
-                <TextBlock 
-                    Text="译文" Foreground="Chocolate" FontSize="16" FontWeight="DemiBold" Margin="0,10"/>
-                <TextBlock 
-                    Text="{Binding Translation}" 
-                    FontSize="16" TextWrapping="Wrap"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Center"/>
-                <TextBlock Text=" "></TextBlock>
+                <TextBlock Classes="Body" Text="{Binding Pronunciation}" TextWrapping="Wrap"/>
+                <TextBlock Classes="H3" Text="简介" Foreground="Chocolate"/>
+                <TextBlock Classes="Body" Text="{Binding Intro}" TextWrapping="Wrap" />
+                <TextBlock Classes="H3" Text="译文" Foreground="Chocolate"/>
+                <TextBlock Classes="Body" Text="{Binding Translation}" TextWrapping="Wrap"/>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

@@ -25,28 +25,30 @@
                 Margin="52,0,0,0" Tapped="WorkListItemTapped"
                 Background="{DynamicResource Background}">
                 <Grid>
-                    <TextBlock 
-                        Classes="H2"
-                        Text="{Binding Title}" 
-                        TextTrimming="CharacterEllipsis"
-                        Padding="0,8,4,0"
-                        HorizontalAlignment="Left" 
-                        VerticalAlignment="Center" />
-                    <TextBlock 
-                        Classes="H4"
-                        Text="{Binding AuthorAndDynasty}" 
-                        TextWrapping="WrapWithOverflow"
-                        Padding="0,8,4,0"
-                        Foreground="DimGray"
-                        HorizontalAlignment="Right" 
-                        VerticalAlignment="Center" />
+                    <DockPanel>
+                        <TextBlock 
+                            Classes="H2"
+                            Text="{Binding Title}" 
+                            TextTrimming="CharacterEllipsis"
+                            Padding="0,8,4,0"
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center" />
+                        <TextBlock 
+                            Classes="H4"
+                            Text="{Binding AuthorAndDynasty}" 
+                            TextWrapping="WrapWithOverflow"
+                            Padding="0,8,10,0"
+                            Foreground="DimGray"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" />
+                    </DockPanel>
                 </Grid>
                 <Grid>
                     <TextBlock 
                         Classes="H4"
                         Text="{Binding Content}" 
                         TextTrimming="CharacterEllipsis"
-                        Padding="0,2,4,8" TextWrapping="NoWrap"
+                        Padding="0,2,10,8" TextWrapping="NoWrap"
                         Foreground="DimGray"
                         HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </Grid>
