@@ -1,4 +1,6 @@
 using System.Text.Json;
+using AutoMapper;
+using PoetryPlanet.Data;
 using PoetryPlanet.Dtos;
 using PoetryPlanet.Views;
 
@@ -11,6 +13,14 @@ public class AppTest
     {
         var mainView = App.GetRequiredService<MainView>();
         Assert.That(mainView, Is.Not.Null);
+    }
+    
+    [Test]
+    public void SQLite()
+    {
+        var db = App.GetRequiredService<ApplicationDbContext>();
+        Assert.That(db, Is.Not.Null);
+        db.EnsuredInitialize(App.GetRequiredService<IMapper>());
     }
 
     [Test]

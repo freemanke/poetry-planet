@@ -7,8 +7,10 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PoetryPlanet.Data;
 using PoetryPlanet.Services;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
@@ -68,10 +70,16 @@ public class App : Application
         services.AddTransient<CollectionListItemViewModel>();
         services.AddTransient<WorkViewModel>();
         services.AddTransient<CollectionViewModel>();
-
+        services.AddAutoMapper(typeof(AutoMapperProfile));
+        
+        // 注册 SQLite 数据库组件
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite("DataSource=./data/poetry-planet.db;Cache=Shared"));
+        services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceProvider = services.BuildServiceProvider();
     }
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
