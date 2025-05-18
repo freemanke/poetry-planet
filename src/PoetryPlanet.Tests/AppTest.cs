@@ -2,6 +2,7 @@ using System.Text.Json;
 using AutoMapper;
 using PoetryPlanet.Data;
 using PoetryPlanet.Dtos;
+using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
 
 namespace PoetryPlanet.Tests;
@@ -11,7 +12,7 @@ public class AppTest
     [Test]
     public void GetRequiredService()
     {
-        var mainView = App.GetRequiredService<MainView>();
+        var mainView = App.GetRequiredService<MainViewModel>();
         Assert.That(mainView, Is.Not.Null);
     }
     
@@ -19,8 +20,9 @@ public class AppTest
     public void SQLite()
     {
         var db = App.GetRequiredService<ApplicationDbContext>();
-        Assert.That(db, Is.Not.Null);
+        db.Database.EnsureCreated();
         db.EnsuredInitialize(App.GetRequiredService<IMapper>());
+        Assert.That(db.Authors.Count(), Is.GreaterThan(10));
     }
 
     [Test]
