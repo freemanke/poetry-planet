@@ -26,7 +26,7 @@ public partial class CollectionListViewModel : ViewModelBase
 
     public void DoGet()
     {
-        var infos = poetryService.GetCollections();
+        var infos = poetryService.GetCollectionList();
         var items = infos.Where(a =>
                 (a.Name != null && a.Name.Contains(Keyword))
                 || (a.Desc != null && a.Desc.Contains(Keyword)))

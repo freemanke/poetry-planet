@@ -30,7 +30,6 @@ public partial class WorkListItemViewModel : ViewModelBase
 
     public WorkViewModel CreateWorkViewModel()
     {
-        logger.LogInformation("当前线程：{}", Environment.CurrentManagedThreadId);
         var work = poetryService.GetWork(Id);
         var vm = new WorkViewModel
         {

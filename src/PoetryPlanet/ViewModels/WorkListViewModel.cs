@@ -27,15 +27,6 @@ public partial class WorkListViewModel : ViewModelBase
     [RelayCommand]
     private void BackToFirstView() => MobileNavigation.Pop();
 
-    public void DoGetWorks()
-    {
-        Task.Run(() =>
-        {
-            var workInfos = poetryService.GetList();
-            workInfos.ForEach(a => a.IsFavorite = appSetting.FavoriteWorkIds.Contains(a.Id));
-        });
-    }
-
     public void DoGetWorkList()
     {
         var workInfos = poetryService.GetWorkList();

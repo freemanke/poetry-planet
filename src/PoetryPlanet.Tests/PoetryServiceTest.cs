@@ -16,14 +16,14 @@ public class PoetryServiceTest
     public void GetCollectionList()
     {
         var service = App.GetRequiredService<PoetryService>();
-        var lists =  service.GetCollections();
+        var lists =  service.GetCollectionList();
         Assert.That(lists, Has.Count.GreaterThan(1));
     }
     
     [Test]
     public void GetWork()
     {
-        var service =  App.GetRequiredService<PoetryService>();
+        var service = App.GetRequiredService<PoetryService>();
         var work =  service.GetWork(10001);
         Assert.That(work.Id, Is.EqualTo(10001));
     }

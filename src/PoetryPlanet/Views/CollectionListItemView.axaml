@@ -13,7 +13,7 @@
     <StackPanel>
         <controls:FormFieldAction FontSize="18" FontWeight="Normal"
             Title="{Binding Title}" 
-            Command="{Binding ShowCollectionCommand}"/>
+            Command="{Binding ShowDetailCommand}"/>
         <controls:HorizontalSeparator/>
     </StackPanel>
 </UserControl>

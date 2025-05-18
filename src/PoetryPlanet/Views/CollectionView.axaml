@@ -11,8 +11,13 @@
         <viewModels:CollectionViewModel/>
     </Design.DataContext>
     <Grid Margin="0,10,0,0">
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="10,0,10,0">
-                <StackPanel Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button 
+            Command="{Binding PreviousViewCommand}"
+            Content="返回" Height="48"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Bottom"/>
+        <ScrollViewer VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" Margin="10,0,10,48">
+            <StackPanel Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <SelectableTextBlock 
                         Classes="H1"
                         Text="{Binding Name}" 
@@ -24,7 +29,7 @@
                         Text="{Binding Desc}"
                         HorizontalAlignment="Center"
                         TextWrapping="Wrap"/>
-                    <TabControl Margin="0,10" HorizontalAlignment="Center">
+                    <TabControl Margin="0,0" HorizontalAlignment="Center">
                         <TabItem Header="作品">
                             <ScrollViewer VerticalScrollBarVisibility="Hidden">
                                 <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
@@ -42,11 +47,6 @@
                         </TabItem>
                     </TabControl>
                 </StackPanel>
-            </ScrollViewer>
-        <Button 
-            Command="{Binding PreviousViewCommand}"
-            Content="返回" Height="54"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Bottom"/>
+        </ScrollViewer>
     </Grid>
 </UserControl>

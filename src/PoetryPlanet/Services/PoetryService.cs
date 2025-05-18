@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using PoetryPlanet.Data;
 using PoetryPlanet.Dtos;
@@ -16,32 +17,26 @@ public class PoetryService
     private readonly ILogger<PoetryService> logger;
     private readonly AppSetting appSetting;
     private readonly ApplicationDbContext db;
-    private readonly bool useCache;
+    private readonly IMapper mapper;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
     private const string collectionListRoute = "/api/v1/collections";
-    private readonly string rootPath;
-    private readonly string workListFilePath;
-    private readonly string worksFilePath;
-    private readonly string collectionsFilePath;
-    private readonly HttpClient httpClient;
-    private List<WorkInfo> workCache = [];
     private List<CollectionInfo> collectionCache = [];
+    private HttpClient httpClient;
+    private List<WorkListItemInfo> workListCache = [];
     private static readonly char[] separator = ['。', '；'];
 
-    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting, ApplicationDbContext db, bool useCache = true)
+    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting,
+        ApplicationDbContext db, IMapper mapper)
     {
         this.logger = logger;
         this.appSetting = appSetting;
         this.db = db;
-        this.useCache = useCache;
-        rootPath = OperatingSystem.IsAndroid()
+        this.mapper = mapper;
+        var rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        workListFilePath = Path.Combine(rootPath, "work_list.json");
-        worksFilePath = Path.Combine(rootPath, "works.json");
-        collectionsFilePath = Path.Combine(rootPath, "collections.json");
-        logger.LogInformation($"当前数据文件存储根目录：{rootPath}");
+        logger.LogInformation("Current data root path: {}", rootPath);
 
         var handler = new HttpClientHandler();
         handler.ClientCertificateOptions = ClientCertificateOption.Manual;
@@ -60,58 +55,29 @@ public class PoetryService
 
     public List<WorkListItemInfo> GetWorkList()
     {
-        var works = new List<WorkListItemInfo>();
-        try
+        if (workListCache.Count > 0) return workListCache;
+        var works = db.Works.Select(a => new WorkListItemInfo
         {
-            works = db.Works.Select(a => new WorkListItemInfo
-            {
-                Id = a.Id, Title = a.Title, Author = a.Author,
-                AuthorId = a.AuthorId, 
-                Content = a.Content.Split(separator, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()??"",
-                Dynasty = a.Dynasty
-            }).ToList();
-        }
-        catch (Exception e)
-        {
-            logger.LogError($"获取作品列表出错，{e.Message}");
-        }
-
-        return works;
+            Id = a.Id, Title = a.Title, Author = a.Author,
+            AuthorId = a.AuthorId,
+            Content = a.Content.Split(separator).FirstOrDefault() ?? "",
+            Dynasty = a.Dynasty
+        }).ToList();
+        workListCache.AddRange(works);
+        return workListCache;
     }
 
-    public List<CollectionInfo> GetCollections()
+    public List<WorkListItemInfo> GetWorkList(int collectionId)
     {
-        var items = new List<CollectionInfo>();
-        if (useCache
-            && TryGet<List<CollectionInfo>>(collectionsFilePath, out var value)
-            && value != null && value.Count != 200)
-        {
-            logger.LogInformation($"Local cached works count {value.Count}");
-            return value;
-        }
-
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, collectionListRoute);
-            var response = httpClient.SendAsync(request).Result;
-            var json = response.Content.ReadAsStringAsync().Result;
-            var infos = JsonSerializer.Deserialize<List<CollectionInfo>>(json);
-
-            File.WriteAllText(collectionsFilePath, json);
-            if (infos != null)
-            {
-                logger.LogInformation("Get list {} saved to {}", infos.Count, collectionsFilePath);
-                items.AddRange(infos);
-            }
-        }
-        catch (Exception e)
-        {
-            logger.LogError("Get list error，{}", e.Message);
-        }
-
-        return items;
+       var items =  db.CollectionWorks.Where(a => a.CollectionId == collectionId).Select(a=>a.WorkId).ToList();
+       return workListCache.Where(a => items.Contains(a.Id)).ToList();
     }
-    
+
+    public List<CollectionInfo> GetCollectionList()
+    {
+        return db.Collections.Select(a => mapper.Map<CollectionInfo>(a)).ToList();
+    }
+
     public void Favorite(int id, bool isFavorite)
     {
         switch (isFavorite)
@@ -129,90 +95,18 @@ public class PoetryService
 
     public List<WorkInfo> GetFavoriteWorks()
     {
-        var items = workCache.Where(a => appSetting.FavoriteWorkIds.Contains(a.Id)).ToList();
-        logger.LogInformation($"Get favorites \"{string.Join(",", items.Select(a => a.Title))}\"");
+        var items = db.Works.Where(a =>
+                appSetting.FavoriteWorkIds.Contains(a.Id))
+            .Select(a => mapper.Map<WorkInfo>(a)).ToList();
+        logger.LogInformation("Get favorites \"{}\"", string.Join(",", items.Select(a => a.Title)));
         return items;
     }
 
-    public List<WorkInfo> GetList()
+    public WorkInfo? GetWork(int id)
     {
-        if (workCache.Count != 0) return workCache;
-        try
-        {
-            string json;
-            List<WorkInfo>? infos;
-            if (File.Exists(worksFilePath))
-            {
-                json = File.ReadAllText(worksFilePath);
-                infos = JsonSerializer.Deserialize<List<WorkInfo>>(json);
-                if (infos != null && infos.Count != 0)
-                {
-                    workCache = infos;
-                    return infos;
-                }
-            }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, worksRoute);
-            var response = httpClient.SendAsync(request).Result;
-            json = response.Content.ReadAsStringAsync().Result;
-            infos = JsonSerializer.Deserialize<List<WorkInfo>>(json);
-
-            File.WriteAllText(worksFilePath, json);
-            logger.LogInformation($"文件已保存到：{worksFilePath}");
-            if (infos != null) workCache = infos;
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e.Message);
-        }
-
-        return workCache;
-    }
-    
-    public WorkInfo GetWork(int id)
-    {
-        var first = workCache.FirstOrDefault(a => a.Id == id);
-        if (first != null) return first;
-
-        var filePath = Path.Combine(rootPath, $"{id}.json");
-        if (useCache
-            && TryGet<WorkInfo>(filePath, out var value)
-            && value != null) return value;
-
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, worksRoute + $"/{id}");
-            var response = httpClient.SendAsync(request).Result;
-            var json = response.Content.ReadAsStringAsync().Result;
-            var find = response.Content.ReadFromJsonAsync<WorkInfo>().Result;
-            File.WriteAllText(filePath, json);
-            logger.LogInformation($"文件已保存到：{filePath}");
-            if (find != null) return find;
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e.Message);
-        }
-
-        return new WorkInfo();
-    }
-
-    private bool TryGet<T>(string jsonFilePath, out T? value) where T : class
-    {
-        value = null;
-        if (!File.Exists(jsonFilePath)) return false;
-        try
-        {
-            var json = File.ReadAllText(jsonFilePath);
-            var find = JsonSerializer.Deserialize<T>(json);
-            value = find;
-            return find != null;
-        }
-        catch (Exception e)
-        {
-            logger.LogError(e.Message);
-        }
-
-        return false;
+        var find = db.Works.FirstOrDefault(a => a.Id == id);
+        if (find != null) return mapper.Map<WorkInfo>(find);
+        return null;
     }
 }

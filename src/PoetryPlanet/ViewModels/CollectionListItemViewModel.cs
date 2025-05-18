@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using Microsoft.Extensions.Logging;
 using PoetryPlanet.Controls;
 using PoetryPlanet.Views;
@@ -17,13 +19,13 @@ public partial class CollectionListItemViewModel : ViewModelBase
     [ObservableProperty] private bool isFavorite;
 
     [RelayCommand]
-    private void ShowCollection()
+    private void ShowDetail()
     {
-        logger.LogInformation("Show collection");
-        MobileNavigation.Push(new CollectionView
-        {
-            DataContext = new CollectionViewModel(),
-        });
+        logger.LogInformation("Show collection detail");
+        var vm = new CollectionViewModel();
+        vm.WorkList.Clear();
+        vm.WorkList.AddRange(poetryService.GetWorkList(Id).Select(a => WorkListItemViewModel.Create(a, false)));
+        MobileNavigation.Push(new CollectionView { DataContext = vm });
     }
 
     public CollectionViewModel Create()
