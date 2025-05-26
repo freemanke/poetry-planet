@@ -26,4 +26,6 @@ public partial class FavoriteWorkViewModel : ViewModelBase
         "表达了词人退避社会的生活态度和希望彻底解脱的出世意念。";
     
     [ObservableProperty] private string? translation ="译文";
+    
+    public FavoriteWorkViewModel(){}
 }

@@ -24,7 +24,7 @@ public class ApplicationDbContextTest : UnitTestBase
 	{
         Log($"数据库信息：InMemoryDb");
         Log("正在初始化数据库...");
-		db.EnsuredInitialize(GetRequiredService<IMapper>());
+		db.EnsuredInitialize();
         Log("数据库初始化完成");
 		Assert.That(db.Authors.Count(), Is.Not.EqualTo(0));
 		

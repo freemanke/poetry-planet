@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Nelibur.ObjectMapper;
 using PoetryPlanet.Data.Models;
 using PoetryPlanet.Dtos;
 using Author = PoetryPlanet.Data.Models.Author;
@@ -15,9 +16,35 @@ using Work = PoetryPlanet.Data.Models.Work;
 
 namespace PoetryPlanet.Data;
 
-public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options)
-    : IdentityDbContext<ApplicationUser>(options)
+public static class TinyMapperHelper
 {
+    public static void Init()
+    {
+        TinyMapper.Bind<AuthorInfo, Author>();
+        TinyMapper.Bind<CollectionKindInfo, CollectionKind>();
+        TinyMapper.Bind<CollectionQuoteInfo, CollectionQuote>();
+        TinyMapper.Bind<CollectionWorkInfo, CollectionWork>();
+        TinyMapper.Bind<CollectionInfo, Collection>();
+        TinyMapper.Bind<DynastyInfo, Dynasty>();
+        TinyMapper.Bind<QuoteInfo, Quote>();
+        TinyMapper.Bind<WorkInfo, Work>();
+        TinyMapper.Bind<WorkListItemInfo, Work>();
+            
+        TinyMapper.Bind<Author, AuthorInfo>();
+        TinyMapper.Bind<CollectionKind, CollectionKindInfo>();
+        TinyMapper.Bind<CollectionQuote, CollectionQuoteInfo>();
+        TinyMapper.Bind<CollectionWork, CollectionWorkInfo>();
+        TinyMapper.Bind<Collection, CollectionInfo>();
+        TinyMapper.Bind<Dynasty, DynastyInfo>();
+        TinyMapper.Bind<Quote, QuoteInfo>();
+        TinyMapper.Bind<Work, WorkInfo>();
+        TinyMapper.Bind<Work, WorkListItemInfo>();
+    }
+}
+
+public class ApplicationDbContext:DbContext
+{
+    private readonly ILogger<ApplicationDbContext> logger;
     public DbSet<Dynasty> Dynasties { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Work> Works { get; set; }
@@ -28,8 +55,17 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
     public DbSet<CollectionWork> CollectionWorks { get; set; }
     public DbSet<UserFavoriteWork> UserFavoriteWorks { get; set; }
 
-     public void EnsuredInitialize(IMapper mapper)
+    public ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        this.logger = logger;
+        base.ChangeTracker.Clear();
+    }
+
+    public void EnsuredInitialize()
+    {
+        TinyMapperHelper.Init(); 
+        Database.EnsureCreated();
+        var authors = Authors.Take(2).ToList();
         if (Authors.Any())
         {
             logger.LogInformation("数据库已初始化，此次无需操作");
@@ -44,48 +80,52 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
                 .Replace("\"show_order\" : \"null,", "\"show_order\" : 0,")
                 .Replace("\"views_count\" : \"\",", "\"views_count\" : 0,");
             var list = Serializer.Deserialize<AuthorList>(json);
-            foreach (var item in list!.Items) Authors.Add(mapper.Map<Author>(item));
+            foreach (var item in list!.Items)
+            {
+                var e = TinyMapper.Map<Author>(item);
+                Authors.Add(e);
+            }
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "collection_kinds.json");
             var json = File.ReadAllText(filePath);
             var list = Serializer.Deserialize<CollectionKindList>(json);
-            foreach (var item in list!.Items) CollectionKinds.Add(mapper.Map<CollectionKind>(item));
+            foreach (var item in list!.Items) CollectionKinds.Add(TinyMapper.Map<CollectionKind>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "collection_quotes.json");
             var list = Serializer.Deserialize<CollectionQuoteList>(File.ReadAllText(filePath));
-            foreach (var item in list!.Items) CollectionQuotes.Add(mapper.Map<CollectionQuote>(item));
+            foreach (var item in list!.Items) CollectionQuotes.Add(TinyMapper.Map<CollectionQuote>(item));
             SaveChanges();
         } 
         {
             var filePath = Path.Combine(rootPath, "collection_works.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
             var list = Serializer.Deserialize<CollectionWorkList>(json);
-            foreach (var item in list!.Items) CollectionWorks.Add(mapper.Map<CollectionWork>(item));
+            foreach (var item in list!.Items) CollectionWorks.Add(TinyMapper.Map<CollectionWork>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "collections.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
             var list = Serializer.Deserialize<CollectionList>(json);
-            foreach (var item in list!.Items) Collections.Add(mapper.Map<Collection>(item));
+            foreach (var item in list!.Items) Collections.Add(TinyMapper.Map<Collection>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "dynasties.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
             var list = Serializer.Deserialize<DynastyList>(json);
-            foreach (var item in list!.Items) Dynasties.Add(mapper.Map<Dynasty>(item));
+            foreach (var item in list!.Items) Dynasties.Add(TinyMapper.Map<Dynasty>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "quotes.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
             var list = Serializer.Deserialize<QuoteList>(json);
-            foreach (var item in list!.Items) Quotes.Add(mapper.Map<Quote>(item));
+            foreach (var item in list!.Items) Quotes.Add(TinyMapper.Map<Quote>(item));
             SaveChanges();
         }
         {
@@ -95,7 +135,7 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
                 .Replace(": null,", ": \"\",")
                 .Replace("\"posts_count\" : \"\",", "\"posts_count\" : 0,");
             var list = Serializer.Deserialize<WorkList>(json);
-            foreach (var item in list!.Items) Works.Add(mapper.Map<Work>(item));
+            foreach (var item in list!.Items) Works.Add(TinyMapper.Map<Work>(item));
             SaveChanges();
         }
         

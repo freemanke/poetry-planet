@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Nelibur.ObjectMapper;
 using PoetryPlanet.Data;
 using PoetryPlanet.Dtos;
 
@@ -17,7 +18,6 @@ public class PoetryService
     private readonly ILogger<PoetryService> logger;
     private readonly AppSetting appSetting;
     private readonly ApplicationDbContext db;
-    private readonly IMapper mapper;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
     private const string collectionListRoute = "/api/v1/collections";
@@ -25,14 +25,14 @@ public class PoetryService
     private HttpClient httpClient;
     private List<WorkListItemInfo> workListCache = [];
     private static readonly char[] separator = ['。', '；'];
+    private object locker = new();
 
     public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting,
-        ApplicationDbContext db, IMapper mapper)
+        ApplicationDbContext db)
     {
         this.logger = logger;
         this.appSetting = appSetting;
         this.db = db;
-        this.mapper = mapper;
         var rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -56,26 +56,65 @@ public class PoetryService
     public List<WorkListItemInfo> GetWorkList()
     {
         if (workListCache.Count > 0) return workListCache;
-        var works = db.Works.Select(a => new WorkListItemInfo
+
+        try
         {
-            Id = a.Id, Title = a.Title, Author = a.Author,
-            AuthorId = a.AuthorId,
-            Content = a.Content.Split(separator).FirstOrDefault() ?? "",
-            Dynasty = a.Dynasty
-        }).ToList();
-        workListCache.AddRange(works);
-        return workListCache;
+            lock (locker)
+            {
+                var works = db.Works.Select(a => new WorkListItemInfo
+                {
+                    Id = a.Id, Title = a.Title, Author = a.Author,
+                    AuthorId = a.AuthorId,
+                    Content = a.Content.Split(separator).FirstOrDefault() ?? "",
+                    Dynasty = a.Dynasty
+                }).ToList();
+                workListCache.AddRange(works);
+            }
+        
+            return workListCache;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        return [];
     }
 
     public List<WorkListItemInfo> GetWorkList(int collectionId)
     {
-       var items =  db.CollectionWorks.Where(a => a.CollectionId == collectionId).Select(a=>a.WorkId).ToList();
-       return workListCache.Where(a => items.Contains(a.Id)).ToList();
+        try
+        {
+            lock (locker)
+            {
+                var items = db.CollectionWorks.Where(a => a.CollectionId == collectionId).Select(a => a.WorkId).ToList();
+                return workListCache.Where(a => items.Contains(a.Id)).ToList();
+            }
+          
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        return [];
     }
 
     public List<CollectionInfo> GetCollectionList()
     {
-        return db.Collections.Select(a => mapper.Map<CollectionInfo>(a)).ToList();
+        try
+        {
+            lock (locker)
+            {
+                return db.Collections.Select(a => TinyMapper.Map<CollectionInfo>(a)).ToList();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        return [];
     }
 
     public void Favorite(int id, bool isFavorite)
@@ -95,18 +134,40 @@ public class PoetryService
 
     public List<WorkInfo> GetFavoriteWorks()
     {
-        var items = db.Works.Where(a =>
-                appSetting.FavoriteWorkIds.Contains(a.Id))
-            .Select(a => mapper.Map<WorkInfo>(a)).ToList();
-        logger.LogInformation("Get favorites \"{}\"", string.Join(",", items.Select(a => a.Title)));
-        return items;
+        try
+        {
+            lock (locker)
+            {
+                var items = db.Works.Where(a =>
+                        appSetting.FavoriteWorkIds.Contains(a.Id))
+                    .Select(a => TinyMapper.Map<WorkInfo>(a)).ToList();
+                logger.LogInformation("Get favorites \"{}\"", string.Join(",", items.Select(a => a.Title)));
+                return items;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        return [];
     }
 
     public WorkInfo? GetWork(int id)
     {
+        try
+        {
+            lock (locker)
+            {
+                var find = db.Works.FirstOrDefault(a => a.Id == id);
+                return find != null ? TinyMapper.Map<WorkInfo>(find) : null;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
 
-        var find = db.Works.FirstOrDefault(a => a.Id == id);
-        if (find != null) return mapper.Map<WorkInfo>(find);
         return null;
     }
 }

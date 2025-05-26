@@ -15,6 +15,8 @@ public partial class MediaPlayerViewModel : ViewModelBase
 
     private LibVLC? libVlc;
     private MediaPlayer? player;
+    
+    public MediaPlayerViewModel(){}
 
     [RelayCommand]
     public void Play()

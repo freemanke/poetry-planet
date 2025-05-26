@@ -10,4 +10,6 @@ public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty] 
     public MineViewModel mineViewModel = App.GetRequiredService<MineViewModel>();
+    
+    public MainViewModel(){}
 }

@@ -11,6 +11,8 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class CollectionListItemViewModel : ViewModelBase
 {
+    public CollectionListItemViewModel(){}
+    
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string name = "小学生诗词";
     [ObservableProperty] private string kind = "书籍";

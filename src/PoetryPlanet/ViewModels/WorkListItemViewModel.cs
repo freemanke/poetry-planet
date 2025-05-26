@@ -19,6 +19,8 @@ public partial class WorkListItemViewModel : ViewModelBase
     [ObservableProperty] private bool isFavorite;
     [ObservableProperty] private IBrush favoriteColor = UnFavoriteColorBrush;
 
+    public WorkListItemViewModel(){}
+    
     [RelayCommand]
     private void Favorite()
     {

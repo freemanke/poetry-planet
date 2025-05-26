@@ -16,6 +16,8 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class WorkViewModel : ViewModelBase
 {
+    public WorkViewModel(){}
+    
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
     [ObservableProperty] private string? author = "苏轼";

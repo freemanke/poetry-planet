@@ -71,13 +71,12 @@ public class App : Application
         services.AddTransient<CollectionListItemViewModel>();
         services.AddTransient<WorkViewModel>();
         services.AddTransient<CollectionViewModel>();
-        services.AddAutoMapper(typeof(AutoMapperProfile));
         
         // 注册 SQLite 数据库组件
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite($"DataSource={Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite")};Cache=Shared"));
-        services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+        //services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+          //  .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceProvider = services.BuildServiceProvider();
     }
 
@@ -92,9 +91,16 @@ public class App : Application
         var appSetting = GetRequiredService<AppSetting>();
         ChangeTheme(appSetting.IsDark);
         var db = GetRequiredService<ApplicationDbContext>();
-        db.Database.EnsureCreated();
-        db.EnsuredInitialize(GetRequiredService<IMapper>());
-        
+
+        try
+        {
+            db.EnsuredInitialize();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
         switch (ApplicationLifetime)
         {
             case IClassicDesktopStyleApplicationLifetime desktop:

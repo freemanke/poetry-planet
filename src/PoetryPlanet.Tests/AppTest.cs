@@ -21,7 +21,7 @@ public class AppTest
     {
         var db = App.GetRequiredService<ApplicationDbContext>();
         db.Database.EnsureCreated();
-        db.EnsuredInitialize(App.GetRequiredService<IMapper>());
+        db.EnsuredInitialize();
         Assert.That(db.Authors.Count(), Is.GreaterThan(10));
     }
 

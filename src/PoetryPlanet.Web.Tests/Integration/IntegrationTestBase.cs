@@ -41,7 +41,7 @@ public abstract class IntegrationTestBase : TestBase
         Log("正在迁移数据库...");
         db.Database.Migrate();
         Log("数据库迁移完成");
-        db.EnsuredInitialize(GetRequiredService<IMapper>());
+        db.EnsuredInitialize();
         Assert.That(db.Authors.Count(), Is.Not.EqualTo(0));
         
         var userFavorite = new UserFavoriteWork { WorkId = 100, Username = "freemanke" };

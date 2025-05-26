@@ -142,7 +142,7 @@ public class Program
                 try
                 {
                     db.Database.Migrate();
-                    db.EnsuredInitialize(sp.GetRequiredService<IMapper>());
+                    db.EnsuredInitialize();
                     break;
                 }
                 catch (Exception)
