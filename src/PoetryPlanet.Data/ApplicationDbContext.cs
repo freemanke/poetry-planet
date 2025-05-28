@@ -16,33 +16,7 @@ using Work = PoetryPlanet.Data.Models.Work;
 
 namespace PoetryPlanet.Data;
 
-public static class TinyMapperHelper
-{
-    public static void Init()
-    {
-        TinyMapper.Bind<AuthorInfo, Author>();
-        TinyMapper.Bind<CollectionKindInfo, CollectionKind>();
-        TinyMapper.Bind<CollectionQuoteInfo, CollectionQuote>();
-        TinyMapper.Bind<CollectionWorkInfo, CollectionWork>();
-        TinyMapper.Bind<CollectionInfo, Collection>();
-        TinyMapper.Bind<DynastyInfo, Dynasty>();
-        TinyMapper.Bind<QuoteInfo, Quote>();
-        TinyMapper.Bind<WorkInfo, Work>();
-        TinyMapper.Bind<WorkListItemInfo, Work>();
-            
-        TinyMapper.Bind<Author, AuthorInfo>();
-        TinyMapper.Bind<CollectionKind, CollectionKindInfo>();
-        TinyMapper.Bind<CollectionQuote, CollectionQuoteInfo>();
-        TinyMapper.Bind<CollectionWork, CollectionWorkInfo>();
-        TinyMapper.Bind<Collection, CollectionInfo>();
-        TinyMapper.Bind<Dynasty, DynastyInfo>();
-        TinyMapper.Bind<Quote, QuoteInfo>();
-        TinyMapper.Bind<Work, WorkInfo>();
-        TinyMapper.Bind<Work, WorkListItemInfo>();
-    }
-}
-
-public class ApplicationDbContext:DbContext
+public class ApplicationDbContext : DbContext
 {
     private readonly ILogger<ApplicationDbContext> logger;
     public DbSet<Dynasty> Dynasties { get; set; }
@@ -55,15 +29,15 @@ public class ApplicationDbContext:DbContext
     public DbSet<CollectionWork> CollectionWorks { get; set; }
     public DbSet<UserFavoriteWork> UserFavoriteWorks { get; set; }
 
-    public ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options) : base(options)
+    public ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options) :
+        base(options)
     {
         this.logger = logger;
-        base.ChangeTracker.Clear();
     }
 
     public void EnsuredInitialize()
     {
-        TinyMapperHelper.Init(); 
+        TinyMapperHelper.Init();
         Database.EnsureCreated();
         var authors = Authors.Take(2).ToList();
         if (Authors.Any())
@@ -71,7 +45,7 @@ public class ApplicationDbContext:DbContext
             logger.LogInformation("数据库已初始化，此次无需操作");
             return;
         }
-        
+
         const string rootPath = "./json";
         {
             var filePath = Path.Combine(rootPath, "authors.json");
@@ -85,6 +59,7 @@ public class ApplicationDbContext:DbContext
                 var e = TinyMapper.Map<Author>(item);
                 Authors.Add(e);
             }
+
             SaveChanges();
         }
         {
@@ -99,7 +74,7 @@ public class ApplicationDbContext:DbContext
             var list = Serializer.Deserialize<CollectionQuoteList>(File.ReadAllText(filePath));
             foreach (var item in list!.Items) CollectionQuotes.Add(TinyMapper.Map<CollectionQuote>(item));
             SaveChanges();
-        } 
+        }
         {
             var filePath = Path.Combine(rootPath, "collection_works.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
@@ -129,8 +104,8 @@ public class ApplicationDbContext:DbContext
             SaveChanges();
         }
         {
-            var filePath = Path.Combine(rootPath, "works.json"); 
-            var json = File.ReadAllText(filePath)                
+            var filePath = Path.Combine(rootPath, "works.json");
+            var json = File.ReadAllText(filePath)
                 .Replace("\"show_order\" : null,", "\"show_order\" : 0,")
                 .Replace(": null,", ": \"\",")
                 .Replace("\"posts_count\" : \"\",", "\"posts_count\" : 0,");
@@ -138,7 +113,7 @@ public class ApplicationDbContext:DbContext
             foreach (var item in list!.Items) Works.Add(TinyMapper.Map<Work>(item));
             SaveChanges();
         }
-        
+
         logger.LogInformation("数据库数据初始化完成");
     }
 }

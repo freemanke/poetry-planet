@@ -21,6 +21,7 @@ namespace PoetryPlanet;
 public class App : Application
 {
     private static ServiceProvider? serviceProvider;
+    public static string DatabaseFilePath => Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite");
     
     public static T GetRequiredService<T>() where T : class
     {
@@ -74,7 +75,7 @@ public class App : Application
         
         // 注册 SQLite 数据库组件
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite($"DataSource={Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite")};Cache=Shared"));
+            options.UseSqlite($"DataSource={DatabaseFilePath};Cache=Shared"));
         //services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
           //  .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceProvider = services.BuildServiceProvider();
