@@ -23,8 +23,8 @@
                         <StackLayout />
                     </ItemsRepeater.Layout>
                     <ItemsRepeater.ItemTemplate>
-                        <DataTemplate DataType="viewModels:WorkListItemViewModel">
-                            <views:WorkListItemView/>
+                        <DataTemplate DataType="viewModels:FavoriteListItemViewModel">
+                            <views:FavoriteListItemView/>
                         </DataTemplate>
                     </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>

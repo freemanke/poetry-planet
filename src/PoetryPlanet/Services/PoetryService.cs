@@ -28,16 +28,16 @@ public class PoetryService
     private const string workListRoute = "/api/v1/work_list";
     private const string collectionListRoute = "/api/v1/collections";
     private List<CollectionInfo> collectionCache = [];
-    private List<WorkListItemInfo> workListCache = [];
+    private List<WorkInfo> workCache = [];
 
     public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting)
     {
         this.logger = logger;
         this.appSetting = appSetting;
-        
-        if(!File.Exists(AppSetting.SQLiteFilePath)) File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
+
+        if (!File.Exists(AppSetting.SQLiteFilePath)) File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
         connection = new SqliteConnection($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
-        
+
         var rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -49,25 +49,40 @@ public class PoetryService
         httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://home.freemanke.com:60011") };
     }
 
-    public List<WorkListItemInfo> GetWorkList()
+    private List<WorkInfo> GetWorks()
     {
-        if (workListCache.Count > 0) return workListCache;
-
+        if (workCache.Count != 0) return workCache;
         try
         {
             lock (locker)
             {
-                var works = new List<WorkListItemInfo>();
                 var items = connection.Query(
                         "select id as Id, title as Title, author as Author, content as Content, dynasty as Dynasty  from works")
-                    .ToWorks().Select(a => new WorkListItemInfo
-                    {
-                        Id = a.Id, Title = a.Title, Author = a.Author, Content = a.Content, Dynasty = a.Dynasty
-                    }).ToList();
-                workListCache.AddRange(items);
+                    .ToWorks();
+                workCache.AddRange(items);
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
 
-            return workListCache;
+        return workCache;
+    }
+
+    public List<WorkListItemInfo> GetWorkList()
+    {
+        try
+        {
+            var works = GetWorks();
+            return works.Select(a => new WorkListItemInfo
+            {
+                Id = a.Id,
+                Title = a.Title ?? string.Empty,
+                Author = a.Author ?? string.Empty,
+                Content = a.Content ?? string.Empty,
+                Dynasty = a.Dynasty ?? string.Empty
+            }).ToList();
         }
         catch (Exception e)
         {
@@ -83,10 +98,11 @@ public class PoetryService
         {
             lock (locker)
             {
+                var workList = GetWorkList();
                 var workIds = connection.Query(
                         $"select work_id as WorkId from collection_works where collection_id={collectionId}")
                     .ToCollectionWorks().Select(a => a.WorkId).ToList();
-                return workListCache.Where(a => workIds.Contains(a.Id)).ToList();
+                return workList.Where(a => workIds.Contains(a.Id)).ToList();
             }
 
         }
@@ -106,12 +122,12 @@ public class PoetryService
             {
                 var items = connection.Query("select id as Id, name as Name from collections")
                     .ToCollections();
-                    
-                 var infos = items.Select(a => new CollectionInfo
-                 {
-                     Id = a.Id, Name = a.Name
-                 }).ToList();
-                 return infos;
+
+                var infos = items.Select(a => new CollectionInfo
+                {
+                    Id = a.Id, Name = a.Name
+                }).ToList();
+                return infos;
             }
         }
         catch (Exception e)
@@ -137,17 +153,21 @@ public class PoetryService
         }
     }
 
-    public List<WorkInfo> GetFavoriteWorks()
+    public List<WorkInfo> GetFavorites()
     {
         try
         {
             lock (locker)
             {
-                var items = workListCache.Where(a =>
-                        appSetting.FavoriteWorkIds.Contains(a.Id))
-                    .Select(a =>new WorkInfo
+                var works = GetWorks();
+                var items = works.Where(a => appSetting.FavoriteWorkIds.Contains(a.Id))
+                    .Select(a => new WorkInfo
                     {
-                        Id = a.Id, Author = a.Author, Content = a.Content, Dynasty = a.Dynasty
+                        Id = a.Id,
+                        Title = a.Title ?? string.Empty,
+                        Author = a.Author,
+                        Content = a.Content,
+                        Dynasty = a.Dynasty
                     }).ToList();
                 logger.LogInformation("Get favorites \"{}\"", string.Join(",", items.Select(a => a.Title)));
                 return items;

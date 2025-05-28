@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:controls="clr-namespace:PoetryPlanet.Controls"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+             x:DataType="viewModels:FavoriteListItemViewModel"
+             x:Class="PoetryPlanet.Views.FavoriteListItemView">
+    <Design.DataContext>
+        <viewModels:WorkListItemViewModel />
+    </Design.DataContext>
+    <StackPanel>
+        <Grid>
+            <Button 
+                Background="Transparent"
+                Command="{Binding FavoriteCommand}"
+                Foreground="{Binding FavoriteColor}"
+                Margin="4,0" Width="45" Height="45" BorderThickness="0" 
+                CornerRadius="10" HorizontalAlignment="Left">
+                <PathIcon Data="{StaticResource favorite}"></PathIcon>
+            </Button>
+            <!--如果要触碰 StackPanel 整个区域都触发 Tapped 事件，该布局空间的背景不能设置为透明，否则空白区域无法触发事件-->
+            <StackPanel 
+                Margin="52,0,0,0" Tapped="WorkListItemTapped"
+                Background="{DynamicResource Background}">
+                <Grid>
+                    <DockPanel>
+                        <TextBlock 
+                            Classes="H2"
+                            Text="{Binding Title}" FontWeight="Normal"
+                            TextTrimming="CharacterEllipsis"
+                            Padding="0,8,4,0"
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center" />
+                        <TextBlock 
+                            Classes="H4"
+                            Text="{Binding AuthorAndDynasty}" 
+                            TextWrapping="WrapWithOverflow"
+                            Padding="0,8,10,0"
+                            Foreground="DimGray"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" />
+                    </DockPanel>
+                </Grid>
+                <Grid>
+                    <TextBlock 
+                        Classes="H4"
+                        Text="{Binding Content}" 
+                        TextTrimming="CharacterEllipsis"
+                        Padding="0,2,10,8" TextWrapping="NoWrap"
+                        Foreground="DimGray"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <controls:HorizontalSeparator />
+    </StackPanel>
+</UserControl>

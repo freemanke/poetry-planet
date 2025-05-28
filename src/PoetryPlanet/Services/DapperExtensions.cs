@@ -9,12 +9,12 @@ public static class DapperExtensions
 {
     private static readonly char[] separator = ['。', '；'];
 
-    public static List<Work> ToWorks(this IEnumerable<dynamic> items)
+    public static List<WorkInfo> ToWorks(this IEnumerable<dynamic> items)
     {
-        var works = new List<Work>();
+        var works = new List<WorkInfo>();
         foreach (var item in items)
         {
-            var work = new Work();
+            var work = new WorkInfo();
             foreach (KeyValuePair<string, object> i in item)
             {
                 switch (i.Key)

@@ -67,7 +67,6 @@ public class App : Application
         services.AddSingleton<WorkListViewModel>();
         services.AddSingleton<WorkListItemViewModel>();
         services.AddSingleton<FavoriteListViewModel>();
-        services.AddSingleton<FavoriteViewModel>();
         services.AddSingleton<CollectionListViewModel>();
         services.AddTransient<CollectionListItemViewModel>();
         services.AddTransient<WorkViewModel>();

@@ -54,10 +54,6 @@
       <DependentUpon>WorkView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\FavoriteView.axaml.cs">
-      <DependentUpon>FavoriteWorkView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Controls\MobileNavigation.axaml.cs">
       <DependentUpon>MobileNavigation.axaml</DependentUpon>
       <SubType>Code</SubType>
@@ -142,6 +138,10 @@
     </Compile>
     <Compile Update="Views\CollectionView.axaml.cs">
       <DependentUpon>CollectionView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\FavoriteListItemView.axaml.cs">
+      <DependentUpon>FavoriteListItemView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

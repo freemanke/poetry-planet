@@ -10,12 +10,11 @@ namespace PoetryPlanet.Views;
 
 public partial class FavoriteListView : UserControl
 {
-    private FavoriteListViewModel vm;
     public FavoriteListView()
     {
         InitializeComponent();
 
-        vm = App.GetRequiredService<FavoriteListViewModel>();
+        var vm = App.GetRequiredService<FavoriteListViewModel>();
         DataContext = vm;
         Task.Run(() => vm.DoGetFavoriteWorks());
     }

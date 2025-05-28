@@ -14,8 +14,7 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class FavoriteListViewModel : ViewModelBase
 {
-    [ObservableProperty] private ObservableCollection<FavoriteViewModel> workList = [];
-    [ObservableProperty] private string keyword = "";
+    [ObservableProperty] private ObservableCollection<FavoriteListItemViewModel> workList = [];
 
     public FavoriteListViewModel()
     {
@@ -27,15 +26,12 @@ public partial class FavoriteListViewModel : ViewModelBase
 
     public void DoGetFavoriteWorks()
     {
-        var items = poetryService.GetFavoriteWorks().Select(a => new FavoriteViewModel
+        var items = poetryService.GetFavorites().Select(a => new FavoriteListItemViewModel
         {
             Id = a.Id,
             Title = a.Title,
-            Author = $"{a.Author}·{a.Dynasty}" ,
-            Dynasty = a.Dynasty,
+            AuthorAndDynasty = $"{a.Author}·{a.Dynasty}" ,
             Content = a.Content,
-            Intro = a.Intro??"暂无介绍",
-            Translation = a.Translation??"暂无译文",
         });
         WorkList.Clear();
         WorkList.AddRange(items);
@@ -44,23 +40,19 @@ public partial class FavoriteListViewModel : ViewModelBase
     private void CreateDefault()
     {
         WorkList.Clear();
-        WorkList.Add(new FavoriteViewModel
+        WorkList.Add(new FavoriteListItemViewModel
         {
             Id = 1,
             Title = "江城子 · 密州出猎",
-            Author = "苏轼",
-            Dynasty = "宋",
+            AuthorAndDynasty = "苏轼 宋",
             Content = "老夫聊发少年狂，左迁龙右擒苍",
-            Intro = "简介"
         });
-        WorkList.Add(new FavoriteViewModel
+        WorkList.Add(new FavoriteListItemViewModel
         {
             Id = 1,
             Title = "观书有感",
-            Author = "朱熹",
-            Dynasty = "宋",
+            AuthorAndDynasty = "朱熹 宋",
             Content = "半亩方塘一鉴开，天光云影共徘徊",
-            Intro = "简介"
         });
     }
 }
