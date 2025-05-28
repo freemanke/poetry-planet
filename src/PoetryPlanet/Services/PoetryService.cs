@@ -35,9 +35,8 @@ public class PoetryService
         this.logger = logger;
         this.appSetting = appSetting;
         
-        var sqliteFilePath = Path.Combine(AppSetting.ConfigRootPath, AppSetting.SQLiteFileName);
-        if(!File.Exists(sqliteFilePath)) File.Copy(AppSetting.SQLiteFileName, sqliteFilePath);
-        connection = new SqliteConnection($"DataSource={sqliteFilePath};Cache=Shared");
+        if(!File.Exists(AppSetting.SQLiteFilePath)) File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
+        connection = new SqliteConnection($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
         
         var rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)

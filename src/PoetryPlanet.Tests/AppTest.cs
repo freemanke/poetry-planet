@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using PoetryPlanet.Data;
 using PoetryPlanet.Data.Models;
 using PoetryPlanet.Dtos;
+using PoetryPlanet.Services;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
 
@@ -17,17 +18,14 @@ public class AppTest
     {
         var mainView = App.GetRequiredService<MainViewModel>();
         Assert.That(mainView, Is.Not.Null);
+        Assert.That(App.GetRequiredService<ApplicationDbContext>(), Is.Not.Null);
+        Assert.That(App.GetRequiredService<PoetryService>(), Is.Not.Null);
     }
     
     [Test]
-    public void CreateSQLiteDatabase()
+    public void EnsureSQLite()
     {
-        var db = App.GetRequiredService<ApplicationDbContext>();
-        db.Database.EnsureCreated();
-        db.EnsuredInitialize();
-        Console.WriteLine(App.DatabaseFilePath);
-        Assert.That(File.Exists(App.DatabaseFilePath), Is.True);
-        Assert.That(db.Authors.Count(), Is.GreaterThan(10));
+        Assert.That(File.Exists(AppSetting.SQLiteFilePath), Is.True);
     }
     
     [Test]
@@ -42,11 +40,10 @@ public class AppTest
     [Test]
     public void Dapper()
     {
-        var sqliteFilePath = Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite");
-        if(!File.Exists(sqliteFilePath)) File.Copy("poetry-planet.sqlite", sqliteFilePath);
-        var connection = new SqliteConnection($"DataSource={sqliteFilePath};Cache=Shared");
-        var items = connection.Query<AuthorInfo>("select * from authors");
-        Assert.That(items.Count(), Is.GreaterThan(10));
+        if(!File.Exists(AppSetting.SQLiteFilePath)) File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
+        var connection = new SqliteConnection($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
+        var items = connection.Query("select id as Id, title as Title, content as Content from works").ToWorks();
+        Assert.That(items, Has.Count.GreaterThan(10));
         Console.WriteLine(Serializer.Serialize(items.First()));
     }
 
