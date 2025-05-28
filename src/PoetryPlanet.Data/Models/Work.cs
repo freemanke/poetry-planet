@@ -6,6 +6,8 @@ namespace PoetryPlanet.Data.Models;
 [Table("works")]
 public class Work
 {
+    public Work(){}
+    
     public Work(long Id, string Title)
     {
         this.Id = Convert.ToInt32(Id);

@@ -69,26 +69,37 @@ public class PoetryService
             {
                 var works = new List<WorkListItemInfo>();
                 var items = connection.Query("select id as Id, title as Title from works");
-                foreach (var item in items )
+                foreach (var item in items)
                 {
                     var work = new WorkListItemInfo();
-                    foreach (KeyValuePair<string,object> i in item)
+                    foreach (KeyValuePair<string, object> i in item)
                     {
-                        if (i.Key == "Id") work.Id = int.Parse(i.Value.ToString() ?? "0");
-                        if (i.Key == "Title") work.Title = i.Value.ToString();
+                        switch (i.Key)
+                        {
+                            case "Id":
+                                work.Id = int.Parse(i.Value.ToString() ?? "0");
+                                break;
+                            case "Title":
+                                work.Title = i.Value.ToString();
+                                break;
+                            case "Author":
+                                work.Author = i.Value.ToString() ?? string.Empty;
+                                break;
+                            case "Content":
+                                work.Content = i.Value.ToString()?.Split(separator).FirstOrDefault() ?? "";
+                                break;
+                            case "Dynasty":
+                                work.Dynasty = i.Value.ToString() ?? string.Empty;
+                                break;
+                        }
                     }
+
                     works.Add(work);
                 }
-                /*works = items.Select(a => new WorkListItemInfo
-                {
-                    Id = a.Id, Title = a.Title, Author = a.Author,
-                    AuthorId = a.AuthorId,
-                    Content = a.Content.Split(separator).FirstOrDefault() ?? "",
-                    Dynasty = a.Dynasty
-                }).ToList();*/
+
                 workListCache.AddRange(works);
             }
-        
+
             return workListCache;
         }
         catch (Exception e)
@@ -101,15 +112,15 @@ public class PoetryService
 
     public List<WorkListItemInfo> GetWorkList(int collectionId)
     {
-        return new List<WorkListItemInfo>();
         try
         {
             lock (locker)
             {
-                var items = connection.Query<CollectionWork>("select * from collection_works").Where(a => a.CollectionId == collectionId).Select(a => a.WorkId).ToList();
-                return workListCache.Where(a => items.Contains(a.Id)).ToList();
+                var workIds = connection.Query(
+                    $"select work_id as WorkId, from collection_works where collection_id={collectionId}") as List<int>;
+                return workListCache.Where(a => workIds != null && workIds.Contains(a.Id)).ToList();
             }
-          
+
         }
         catch (Exception e)
         {
