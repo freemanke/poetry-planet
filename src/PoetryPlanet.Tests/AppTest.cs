@@ -1,6 +1,9 @@
 using System.Text.Json;
 using AutoMapper;
+using Dapper;
+using Microsoft.Data.Sqlite;
 using PoetryPlanet.Data;
+using PoetryPlanet.Data.Models;
 using PoetryPlanet.Dtos;
 using PoetryPlanet.ViewModels;
 using PoetryPlanet.Views;
@@ -23,6 +26,26 @@ public class AppTest
         db.Database.EnsureCreated();
         db.EnsuredInitialize();
         Assert.That(db.Authors.Count(), Is.GreaterThan(10));
+    }
+    
+    [Test]
+    public void CreateSQLite()
+    {
+        var db = App.GetRequiredService<ApplicationDbContext>();
+        db.Database.EnsureCreated();
+        db.EnsuredInitialize();
+        Assert.That(db.Authors.Count(), Is.GreaterThan(10));
+    }
+
+    [Test]
+    public void Dapper()
+    {
+        var sqliteFilePath = Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite");
+        if(!File.Exists(sqliteFilePath)) File.Copy("poetry-planet.sqlite", sqliteFilePath);
+        var connection = new SqliteConnection($"DataSource={sqliteFilePath};Cache=Shared");
+        var items = connection.Query<AuthorInfo>("select * from authors");
+        Assert.That(items.Count(), Is.GreaterThan(10));
+        Console.WriteLine(Serializer.Serialize(items.First()));
     }
 
     [Test]

@@ -73,8 +73,8 @@ public class App : Application
         services.AddTransient<CollectionViewModel>();
         
         // 注册 SQLite 数据库组件
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite($"DataSource={Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite")};Cache=Shared"));
+       // services.AddDbContext<ApplicationDbContext>(options =>
+       //     options.UseSqlite($"DataSource={Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite")};Cache=Shared"));
         //services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
           //  .AddEntityFrameworkStores<ApplicationDbContext>();
         serviceProvider = services.BuildServiceProvider();
@@ -90,11 +90,11 @@ public class App : Application
         var mainViewModel = GetRequiredService<MainViewModel>();
         var appSetting = GetRequiredService<AppSetting>();
         ChangeTheme(appSetting.IsDark);
-        var db = GetRequiredService<ApplicationDbContext>();
+        //var db = GetRequiredService<ApplicationDbContext>();
 
         try
         {
-            db.EnsuredInitialize();
+           // db.EnsuredInitialize();
         }
         catch (Exception e)
         {

@@ -26,4 +26,10 @@
     <ProjectReference Include="..\PoetryPlanet\PoetryPlanet.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="poetry-planet.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
