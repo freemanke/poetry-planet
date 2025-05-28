@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace PoetryPlanet.ViewModels;
 
-public partial class FavoriteWorkViewModel : ViewModelBase
+public partial class FavoriteViewModel : ViewModelBase
 {
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string? title = "临江仙 · 夜归临皋";
@@ -27,5 +27,5 @@ public partial class FavoriteWorkViewModel : ViewModelBase
     
     [ObservableProperty] private string? translation ="译文";
     
-    public FavoriteWorkViewModel(){}
+    public FavoriteViewModel(){}
 }

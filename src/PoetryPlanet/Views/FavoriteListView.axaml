@@ -6,28 +6,29 @@
              xmlns:views="clr-namespace:PoetryPlanet.Views"
              xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:DataType="viewModels:FavoriteWorksViewModel"
-             x:Class="PoetryPlanet.Views.FavoriteWorksView">
+             x:DataType="viewModels:FavoriteListViewModel"
+             x:Class="PoetryPlanet.Views.FavoriteListView">
     <Design.DataContext>
-        <viewModels:FavoriteWorksViewModel></viewModels:FavoriteWorksViewModel>
+        <viewModels:FavoriteListViewModel></viewModels:FavoriteListViewModel>
     </Design.DataContext>
     <ScrollViewer VerticalScrollBarVisibility="Hidden" GotFocus="InputElement_OnGotFocus">
         <StackPanel VerticalAlignment="Top">
             <TextBlock Classes="Body" TextAlignment="Center" HorizontalAlignment="Stretch"
                 Text="我的收藏" Margin="10"></TextBlock>
             <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
-            <ItemsControl ItemsSource="{Binding Works}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="viewModels:FavoriteWorkViewModel">
-                        <views:FavoriteWorkView></views:FavoriteWorkView>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
+                <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
+                <ItemsRepeater ItemsSource="{Binding WorkList}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate DataType="viewModels:WorkListItemViewModel">
+                            <views:WorkListItemView/>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </ScrollViewer>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

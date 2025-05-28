@@ -12,12 +12,12 @@ using PoetryPlanet.Services;
 
 namespace PoetryPlanet.ViewModels;
 
-public partial class FavoriteWorksViewModel : ViewModelBase
+public partial class FavoriteListViewModel : ViewModelBase
 {
-    [ObservableProperty] private ObservableCollection<FavoriteWorkViewModel> works = [];
+    [ObservableProperty] private ObservableCollection<FavoriteViewModel> workList = [];
     [ObservableProperty] private string keyword = "";
 
-    public FavoriteWorksViewModel()
+    public FavoriteListViewModel()
     {
         CreateDefault();
     }
@@ -27,7 +27,7 @@ public partial class FavoriteWorksViewModel : ViewModelBase
 
     public void DoGetFavoriteWorks()
     {
-        var items = poetryService.GetFavoriteWorks().Select(a => new FavoriteWorkViewModel
+        var items = poetryService.GetFavoriteWorks().Select(a => new FavoriteViewModel
         {
             Id = a.Id,
             Title = a.Title,
@@ -37,14 +37,14 @@ public partial class FavoriteWorksViewModel : ViewModelBase
             Intro = a.Intro??"暂无介绍",
             Translation = a.Translation??"暂无译文",
         });
-        Works.Clear();
-        Works.AddRange(items);
+        WorkList.Clear();
+        WorkList.AddRange(items);
     }
 
     private void CreateDefault()
     {
-        Works.Clear();
-        Works.Add(new FavoriteWorkViewModel
+        WorkList.Clear();
+        WorkList.Add(new FavoriteViewModel
         {
             Id = 1,
             Title = "江城子 · 密州出猎",
@@ -53,7 +53,7 @@ public partial class FavoriteWorksViewModel : ViewModelBase
             Content = "老夫聊发少年狂，左迁龙右擒苍",
             Intro = "简介"
         });
-        Works.Add(new FavoriteWorkViewModel
+        WorkList.Add(new FavoriteViewModel
         {
             Id = 1,
             Title = "观书有感",

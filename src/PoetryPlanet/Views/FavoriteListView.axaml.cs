@@ -8,14 +8,14 @@ using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
 
-public partial class FavoriteWorksView : UserControl
+public partial class FavoriteListView : UserControl
 {
-    private FavoriteWorksViewModel vm;
-    public FavoriteWorksView()
+    private FavoriteListViewModel vm;
+    public FavoriteListView()
     {
         InitializeComponent();
 
-        vm = App.GetRequiredService<FavoriteWorksViewModel>();
+        vm = App.GetRequiredService<FavoriteListViewModel>();
         DataContext = vm;
         Task.Run(() => vm.DoGetFavoriteWorks());
     }

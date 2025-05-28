@@ -5,10 +5,10 @@
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:controls="clr-namespace:PoetryPlanet.Controls"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:DataType="viewModels:FavoriteWorkViewModel"
-             x:Class="PoetryPlanet.Views.FavoriteWorkView">
+             x:DataType="viewModels:FavoriteViewModel"
+             x:Class="PoetryPlanet.Views.FavoriteView">
     <Design.DataContext>
-        <viewModels:FavoriteWorkViewModel/>
+        <viewModels:FavoriteViewModel/>
     </Design.DataContext>
     <StackPanel Margin="10" Spacing="10" Background="{StaticResource Background}">
         <TextBlock 

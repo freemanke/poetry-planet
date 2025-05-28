@@ -38,7 +38,7 @@
                         <TextBlock Classes="Navigator" Text="收藏" />
                     </StackPanel>
                 </TabItem.Header>
-                <views:FavoriteWorksView></views:FavoriteWorksView>
+                <views:FavoriteListView></views:FavoriteListView>
             </TabItem>
             <TabItem Classes="Navigator">
                 <TabItem.Header>

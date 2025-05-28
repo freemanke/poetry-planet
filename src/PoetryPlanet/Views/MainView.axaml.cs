@@ -16,10 +16,10 @@ public partial class MainView : UserControl
     
     private void TabFavoriteTapped(object? sender, TappedEventArgs e)
     {
-        var view = this.FindDescendantOfType<FavoriteWorksView>();
+        var view = this.FindDescendantOfType<FavoriteListView>();
         if (view != null)
         {
-            var vm = view.DataContext as FavoriteWorksViewModel;
+            var vm = view.DataContext as FavoriteListViewModel;
             vm?.DoGetFavoriteWorks();
         }
     }

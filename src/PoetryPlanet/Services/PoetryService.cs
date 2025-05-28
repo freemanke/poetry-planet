@@ -143,7 +143,7 @@ public class PoetryService
         {
             lock (locker)
             {
-                var items = GetWorkList().Where(a =>
+                var items = workListCache.Where(a =>
                         appSetting.FavoriteWorkIds.Contains(a.Id))
                     .Select(a =>new WorkInfo
                     {

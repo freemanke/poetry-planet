@@ -5,9 +5,9 @@ using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
 
-public partial class FavoriteWorkView : UserControl
+public partial class FavoriteView : UserControl
 {
-    public FavoriteWorkView()
+    public FavoriteView()
     {
         InitializeComponent();
     }
