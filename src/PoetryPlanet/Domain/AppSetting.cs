@@ -12,6 +12,7 @@ public class AppSetting
         ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
     public static string LogFilePath = Path.Combine(ConfigRootPath, "poetry.planet.log");
+    public static string SQLiteFileName = "poetry-planet.sqlite";
 
     private static string fileName = "App.setting.json";
 

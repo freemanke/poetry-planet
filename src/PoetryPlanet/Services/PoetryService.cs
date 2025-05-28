@@ -6,33 +6,39 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using AutoMapper;
+using Dapper;
+using JetBrains.Annotations;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Nelibur.ObjectMapper;
 using PoetryPlanet.Data;
+using PoetryPlanet.Data.Models;
 using PoetryPlanet.Dtos;
 
 namespace PoetryPlanet.Services;
 
 public class PoetryService
 {
-    private readonly ILogger<PoetryService> logger;
+    private object locker = new();
+    [UsedImplicitly] private HttpClient httpClient;
+    private SqliteConnection connection;
     private readonly AppSetting appSetting;
-    private readonly ApplicationDbContext db;
+    private readonly ILogger<PoetryService> logger;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
     private const string collectionListRoute = "/api/v1/collections";
     private List<CollectionInfo> collectionCache = [];
-    private HttpClient httpClient;
     private List<WorkListItemInfo> workListCache = [];
-    private static readonly char[] separator = ['。', '；'];
-    private object locker = new();
 
-    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting,
-        ApplicationDbContext db)
+    public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting)
     {
         this.logger = logger;
         this.appSetting = appSetting;
-        this.db = db;
+        
+        var sqliteFilePath = Path.Combine(AppSetting.ConfigRootPath, AppSetting.SQLiteFileName);
+        if(!File.Exists(sqliteFilePath)) File.Copy(AppSetting.SQLiteFileName, sqliteFilePath);
+        connection = new SqliteConnection($"DataSource={sqliteFilePath};Cache=Shared");
+        
         var rootPath = OperatingSystem.IsAndroid()
             ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
             : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -42,15 +48,6 @@ public class PoetryService
         handler.ClientCertificateOptions = ClientCertificateOption.Manual;
         handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
         httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://home.freemanke.com:60011") };
-
-        // 在IOS环境下，反序列化对象前，需要创建一个对象，否则会反序列化报错
-        var stamp = new WorkListItemInfo { Id = 10, Title = "", Author = "我", Dynasty = "", Content = "诗词内容", };
-        var work = new WorkInfo
-        {
-            Id = 10, Title = "标题", Author = "作者", Dynasty = "年代", Content = "内容", Intro = "", IsFavorite = false,
-            Translation = ""
-        };
-        var collection = new CollectionInfo { Name = "*", Desc = "*", Id = 10, Kind = "*" };
     }
 
     public List<WorkListItemInfo> GetWorkList()
@@ -61,16 +58,16 @@ public class PoetryService
         {
             lock (locker)
             {
-                var works = db.Works.Select(a => new WorkListItemInfo
-                {
-                    Id = a.Id, Title = a.Title, Author = a.Author,
-                    AuthorId = a.AuthorId,
-                    Content = a.Content.Split(separator).FirstOrDefault() ?? "",
-                    Dynasty = a.Dynasty
-                }).ToList();
-                workListCache.AddRange(works);
+                var works = new List<WorkListItemInfo>();
+                var items = connection.Query(
+                        "select id as Id, title as Title, author as Author, content as Content, dynasty as Dynasty  from works")
+                    .ToWorks().Select(a => new WorkListItemInfo
+                    {
+                        Id = a.Id, Title = a.Title, Author = a.Author, Content = a.Content, Dynasty = a.Dynasty
+                    }).ToList();
+                workListCache.AddRange(items);
             }
-        
+
             return workListCache;
         }
         catch (Exception e)
@@ -87,10 +84,12 @@ public class PoetryService
         {
             lock (locker)
             {
-                var items = db.CollectionWorks.Where(a => a.CollectionId == collectionId).Select(a => a.WorkId).ToList();
-                return workListCache.Where(a => items.Contains(a.Id)).ToList();
+                var workIds = connection.Query(
+                        $"select work_id as WorkId from collection_works where collection_id={collectionId}")
+                    .ToCollectionWorks().Select(a => a.WorkId).ToList();
+                return workListCache.Where(a => workIds.Contains(a.Id)).ToList();
             }
-          
+
         }
         catch (Exception e)
         {
@@ -106,7 +105,14 @@ public class PoetryService
         {
             lock (locker)
             {
-                return db.Collections.Select(a => TinyMapper.Map<CollectionInfo>(a)).ToList();
+                var items = connection.Query("select id as Id, name as Name from collections")
+                    .ToCollections();
+                    
+                 var infos = items.Select(a => new CollectionInfo
+                 {
+                     Id = a.Id, Name = a.Name
+                 }).ToList();
+                 return infos;
             }
         }
         catch (Exception e)
@@ -138,9 +144,12 @@ public class PoetryService
         {
             lock (locker)
             {
-                var items = db.Works.Where(a =>
+                var items = GetWorkList().Where(a =>
                         appSetting.FavoriteWorkIds.Contains(a.Id))
-                    .Select(a => TinyMapper.Map<WorkInfo>(a)).ToList();
+                    .Select(a =>new WorkInfo
+                    {
+                        Id = a.Id, Author = a.Author, Content = a.Content, Dynasty = a.Dynasty
+                    }).ToList();
                 logger.LogInformation("Get favorites \"{}\"", string.Join(",", items.Select(a => a.Title)));
                 return items;
             }
@@ -159,8 +168,21 @@ public class PoetryService
         {
             lock (locker)
             {
-                var find = db.Works.FirstOrDefault(a => a.Id == id);
-                return find != null ? TinyMapper.Map<WorkInfo>(find) : null;
+                var items = connection.Query<Work>(
+                    $"select id as Id, title as Title, author as Author, content as Content, dynasty as Dynasty" +
+                    $", intro as Intro, translation as Translation" +
+                    $" from works where id = {id}");
+                var find = items.FirstOrDefault(a => a.Id == id);
+                if (find != null)
+                    return new WorkInfo
+                    {
+                        Id = find.Id, Title = find.Title,
+                        Author = find.Author,
+                        Dynasty = find.Dynasty,
+                        Content = find.Content,
+                        Intro = find.Intro,
+                        Translation = find.Translation
+                    };
             }
         }
         catch (Exception e)

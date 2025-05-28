@@ -37,7 +37,6 @@ public class ApplicationDbContext : DbContext
 
     public void EnsuredInitialize()
     {
-        TinyMapperHelper.Init();
         Database.EnsureCreated();
         var authors = Authors.Take(2).ToList();
         if (Authors.Any())

@@ -10,6 +10,7 @@ public class PoetryServiceTest
         var service = App.GetRequiredService<PoetryService>();
         var lists =  service.GetWorkList();
         Assert.That(lists, Has.Count.GreaterThan(1));
+        Console.WriteLine(Serializer.Serialize(lists));
     }
     
     [Test]
@@ -18,6 +19,7 @@ public class PoetryServiceTest
         var service = App.GetRequiredService<PoetryService>();
         var lists =  service.GetCollectionList();
         Assert.That(lists, Has.Count.GreaterThan(1));
+        Console.WriteLine(Serializer.Serialize(lists));
     }
     
     [Test]

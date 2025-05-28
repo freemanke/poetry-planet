@@ -4,6 +4,8 @@ namespace PoetryPlanet.Dtos;
 
 public class AuthorInfo
 {
+    public AuthorInfo(){}
+    
     [JsonPropertyName("id")]
     public int Id { get; set; }
 
