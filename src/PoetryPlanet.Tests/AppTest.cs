@@ -24,11 +24,15 @@ public class AppTest
     }
     
     [Test]
-    public void CreateSQLite()
+    [Explicit]
+    public void ReCreateSQLite()
     {
         var db = App.GetRequiredService<ApplicationDbContext>();
+        if(File.Exists(AppSetting.SQLiteFilePath)) File.Delete(AppSetting.SQLiteFilePath);
         db.Database.EnsureCreated();
         db.EnsuredInitialize();
+        Console.WriteLine(AppSetting.SQLiteFilePath);
+        Assert.That(File.Exists(AppSetting.SQLiteFilePath), Is.True);
         Assert.That(db.Authors.Count(), Is.GreaterThan(10));
     }
 
@@ -42,6 +46,8 @@ public class AppTest
     [Test]
     public void ReadMp3()
     {
-       var  MediaStream = File.Open("./Assets/sample.mp3", FileMode.Open);
+       var  stream = File.Open("./Assets/sample.mp3", FileMode.Open);
+       Assert.That(stream, Is.Not.Null);
+       stream.Close();
     }
 }

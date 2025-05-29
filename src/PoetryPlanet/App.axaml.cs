@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
-using AutoMapper;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
@@ -21,7 +20,6 @@ namespace PoetryPlanet;
 public class App : Application
 {
     private static ServiceProvider? serviceProvider;
-    public static string DatabaseFilePath => Path.Combine(AppSetting.ConfigRootPath, "poetry-planet.sqlite");
     
     public static T GetRequiredService<T>() where T : class
     {
@@ -59,6 +57,7 @@ public class App : Application
             builder.AddProvider(new CustomFileLoggerProvider(new StreamWriter(AppSetting.LogFilePath, append: true)));
         }));
         services.AddLogging();
+        services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddSingleton(AppSetting.Load());
         services.AddSingleton<PoetryService>();
         services.AddSingleton<SQLiteService>();

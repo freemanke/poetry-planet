@@ -9,13 +9,12 @@ namespace PoetryPlanet;
 
 public class AppSetting
 {
-    public static string LogFilePath { get; } = Path.Combine(ConfigRootPath, "poetry.planet.log");
+    public static string fileName { get; } = "App.setting.json";
     public static string SQLiteFileName { get; } = "poetry-planet.sqlite";
     public static string SQLiteFilePath { get; } = Path.Combine(ConfigRootPath, SQLiteFileName);
     public static SolidColorBrush FavoriteColorBrush { get; } = new(Colors.MediumSeaGreen);
     public static SolidColorBrush UnFavoriteColorBrush { get; } = new(Colors.LightGray);
-    public static string fileName { get; } = "App.setting.json";
-
+    public static string LogFilePath { get; } = Path.Combine(ConfigRootPath, "poetry.planet.log");
     public static string ConfigRootPath => OperatingSystem.IsAndroid()
         ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

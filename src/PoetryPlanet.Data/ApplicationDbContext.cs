@@ -1,22 +1,12 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Nelibur.ObjectMapper;
 using PoetryPlanet.Data.Models;
 using PoetryPlanet.Dtos;
-using Author = PoetryPlanet.Data.Models.Author;
-using Collection = PoetryPlanet.Data.Models.Collection;
-using CollectionKind = PoetryPlanet.Data.Models.CollectionKind;
-using CollectionQuote = PoetryPlanet.Data.Models.CollectionQuote;
-using CollectionWork = PoetryPlanet.Data.Models.CollectionWork;
-using Dynasty = PoetryPlanet.Data.Models.Dynasty;
-using Quote = PoetryPlanet.Data.Models.Quote;
-using Work = PoetryPlanet.Data.Models.Work;
-
 namespace PoetryPlanet.Data;
 
-public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options)
+public class ApplicationDbContext(
+    ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options, IMapper mapper)
     : DbContext(options)
 {
     public DbSet<Dynasty> Dynasties { get; set; }
@@ -32,7 +22,6 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
     public void EnsuredInitialize()
     {
         Database.EnsureCreated();
-        var authors = Authors.Take(2).ToList();
         if (Authors.Any())
         {
             logger.LogInformation("数据库已初始化，此次无需操作");
@@ -46,10 +35,10 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
                 .Replace(": null,", ": \"\",")
                 .Replace("\"show_order\" : \"null,", "\"show_order\" : 0,")
                 .Replace("\"views_count\" : \"\",", "\"views_count\" : 0,");
-            var list = Serializer.Deserialize<AuthorList>(json);
-            foreach (var item in list!.Items)
+            var list = Serializer.Deserialize<AuthorList>(json) ?? new AuthorList();
+            foreach (var item in list.Items)
             {
-                var e = TinyMapper.Map<Author>(item);
+                var e = mapper.Map<Author>(item);
                 Authors.Add(e);
             }
 
@@ -58,42 +47,43 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
         {
             var filePath = Path.Combine(rootPath, "collection_kinds.json");
             var json = File.ReadAllText(filePath);
-            var list = Serializer.Deserialize<CollectionKindList>(json);
-            foreach (var item in list!.Items) CollectionKinds.Add(TinyMapper.Map<CollectionKind>(item));
+            var list = Serializer.Deserialize<CollectionKindList>(json) ?? new CollectionKindList();
+            foreach (var item in list.Items) CollectionKinds.Add(mapper.Map<CollectionKind>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "collection_quotes.json");
-            var list = Serializer.Deserialize<CollectionQuoteList>(File.ReadAllText(filePath));
-            foreach (var item in list!.Items) CollectionQuotes.Add(TinyMapper.Map<CollectionQuote>(item));
+            var list = Serializer.Deserialize<CollectionQuoteList>(File.ReadAllText(filePath)) ??
+                       new CollectionQuoteList();
+            foreach (var item in list.Items) CollectionQuotes.Add(mapper.Map<CollectionQuote>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "collection_works.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
-            var list = Serializer.Deserialize<CollectionWorkList>(json);
-            foreach (var item in list!.Items) CollectionWorks.Add(TinyMapper.Map<CollectionWork>(item));
+            var list = Serializer.Deserialize<CollectionWorkList>(json) ?? new CollectionWorkList();
+            foreach (var item in list.Items) CollectionWorks.Add(mapper.Map<CollectionWork>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "collections.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
-            var list = Serializer.Deserialize<CollectionList>(json);
-            foreach (var item in list!.Items) Collections.Add(TinyMapper.Map<Collection>(item));
+            var list = Serializer.Deserialize<CollectionList>(json) ?? new CollectionList();
+            foreach (var item in list.Items) Collections.Add(mapper.Map<Collection>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "dynasties.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
-            var list = Serializer.Deserialize<DynastyList>(json);
-            foreach (var item in list!.Items) Dynasties.Add(TinyMapper.Map<Dynasty>(item));
+            var list = Serializer.Deserialize<DynastyList>(json) ?? new DynastyList();
+            foreach (var item in list.Items) Dynasties.Add(mapper.Map<Dynasty>(item));
             SaveChanges();
         }
         {
             var filePath = Path.Combine(rootPath, "quotes.json");
             var json = File.ReadAllText(filePath).Replace(": null,", ": \"\",");
-            var list = Serializer.Deserialize<QuoteList>(json);
-            foreach (var item in list!.Items) Quotes.Add(TinyMapper.Map<Quote>(item));
+            var list = Serializer.Deserialize<QuoteList>(json) ?? new QuoteList();
+            foreach (var item in list.Items) Quotes.Add(mapper.Map<Quote>(item));
             SaveChanges();
         }
         {
@@ -102,8 +92,8 @@ public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContex
                 .Replace("\"show_order\" : null,", "\"show_order\" : 0,")
                 .Replace(": null,", ": \"\",")
                 .Replace("\"posts_count\" : \"\",", "\"posts_count\" : 0,");
-            var list = Serializer.Deserialize<WorkList>(json);
-            foreach (var item in list!.Items) Works.Add(TinyMapper.Map<Work>(item));
+            var list = Serializer.Deserialize<WorkList>(json) ?? new WorkList();
+            foreach (var item in list.Items) Works.Add(mapper.Map<Work>(item));
             SaveChanges();
         }
 
