@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoetryPlanet.Data.Models;
 
-[Table("user_favorite_works")]
 public class UserFavoriteWork
 {
     [Key]

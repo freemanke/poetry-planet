@@ -11,7 +11,6 @@ public class ContextDevelopmentTest : IntegrationTestBase
     [Test]
     public override void EnsuredInitialize()
     {
-       
         base.EnsuredInitialize();
     }
 }

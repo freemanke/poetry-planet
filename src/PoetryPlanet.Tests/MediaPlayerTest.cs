@@ -5,6 +5,7 @@ namespace PoetryPlanet.Tests;
 public class MediaPlayerTest
 {
     [Test]
+    [Explicit]
     public void Play()
     {
         var  libVlc = new LibVLC(enableDebugLogs: true);

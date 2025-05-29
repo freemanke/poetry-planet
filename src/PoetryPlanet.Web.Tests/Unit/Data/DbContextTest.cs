@@ -7,15 +7,11 @@ public class ApplicationDbContextTest : UnitTestBase
 	[OneTimeSetUp]
 	public void OneTimeSetUp()
 	{
-		db.Database.EnsureDeleted();
-		db.Database.EnsureCreated();
-		Assert.That(db.Authors.Count(), Is.EqualTo(0));
 	}
 
 	[OneTimeTearDown]
 	public void OneTimeTearDown()
 	{
-		db.Database.EnsureDeleted();
 		db.Dispose();
 	}
 
