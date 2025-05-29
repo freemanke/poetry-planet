@@ -6,8 +6,6 @@ namespace PoetryPlanet.Data.Models;
 [Table("authors")]
 public class Author
 {
-    public Author(){}
-        
     [Key]
     [Column("id")]
     public int Id { get; set; }

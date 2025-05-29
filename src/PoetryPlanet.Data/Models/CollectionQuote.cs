@@ -1,15 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-// ReSharper disable EntityFramework.ModelValidation.UnlimitedStringLength
-
 namespace PoetryPlanet.Data.Models
 {
     [Table("collection_quotes")]
     public class CollectionQuote
     {
-        public CollectionQuote(){}
-        
         [Key]
         [Column("id")]
         public int Id { get; set; }

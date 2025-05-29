@@ -61,6 +61,7 @@ public class App : Application
         services.AddLogging();
         services.AddSingleton(AppSetting.Load());
         services.AddSingleton<PoetryService>();
+        services.AddSingleton<SQLiteService>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<MineViewModel>();
         services.AddSingleton<SettingViewModel>();

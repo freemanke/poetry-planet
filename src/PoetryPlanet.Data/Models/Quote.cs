@@ -6,8 +6,6 @@ namespace PoetryPlanet.Data.Models;
 [Table("quotes")]
 public class Quote
 {
-    public Quote(){}
-        
     [Key]
     [Column("id")]
     public int Id { get; set; }

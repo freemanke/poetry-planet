@@ -16,9 +16,9 @@ using Work = PoetryPlanet.Data.Models.Work;
 
 namespace PoetryPlanet.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options)
+    : DbContext(options)
 {
-    private readonly ILogger<ApplicationDbContext> logger;
     public DbSet<Dynasty> Dynasties { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Work> Works { get; set; }
@@ -28,12 +28,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<CollectionQuote> CollectionQuotes { get; set; }
     public DbSet<CollectionWork> CollectionWorks { get; set; }
     public DbSet<UserFavoriteWork> UserFavoriteWorks { get; set; }
-
-    public ApplicationDbContext(ILogger<ApplicationDbContext> logger, DbContextOptions<ApplicationDbContext> options) :
-        base(options)
-    {
-        this.logger = logger;
-    }
 
     public void EnsuredInitialize()
     {

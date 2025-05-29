@@ -9,16 +9,16 @@ namespace PoetryPlanet;
 
 public class AppSetting
 {
-    public static string ConfigRootPath = OperatingSystem.IsAndroid()
+    public static string LogFilePath { get; } = Path.Combine(ConfigRootPath, "poetry.planet.log");
+    public static string SQLiteFileName { get; } = "poetry-planet.sqlite";
+    public static string SQLiteFilePath { get; } = Path.Combine(ConfigRootPath, SQLiteFileName);
+    public static SolidColorBrush FavoriteColorBrush { get; } = new(Colors.MediumSeaGreen);
+    public static SolidColorBrush UnFavoriteColorBrush { get; } = new(Colors.LightGray);
+    public static string fileName { get; } = "App.setting.json";
+
+    public static string ConfigRootPath => OperatingSystem.IsAndroid()
         ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-    public static string LogFilePath = Path.Combine(ConfigRootPath, "poetry.planet.log");
-    public static string SQLiteFileName = "poetry-planet.sqlite";
-    public static string SQLiteFilePath = Path.Combine(AppSetting.ConfigRootPath, AppSetting.SQLiteFileName);
-    public static readonly SolidColorBrush FavoriteColorBrush = new(Colors.MediumSeaGreen);
-    public static readonly SolidColorBrush UnFavoriteColorBrush = new(Colors.LightGray);
-
-    private static string fileName = "App.setting.json";
 
     [JsonPropertyName("is_dark")] public bool IsDark { get; set; }
     [JsonPropertyName("h1_font_size")] public int H1FontSize { get; set; } = 20;

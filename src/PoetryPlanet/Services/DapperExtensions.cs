@@ -5,6 +5,8 @@ using PoetryPlanet.Dtos;
 
 namespace PoetryPlanet.Services;
 
+
+
 public static class DapperExtensions
 {
     private static readonly char[] separator = ['。', '；'];
@@ -49,12 +51,12 @@ public static class DapperExtensions
         return works;
     }
     
-    public static List<Collection> ToCollections(this IEnumerable<dynamic> items)
+    public static List<CollectionInfo> ToCollections(this IEnumerable<dynamic> items)
     {
-        var entities = new List<Collection>();
+        var entities = new List<CollectionInfo>();
         foreach (var item in items)
         {
-            var entity = new Collection();
+            var entity = new CollectionInfo();
             foreach (KeyValuePair<string, object> i in item)
             {
                 switch (i.Key)
@@ -74,12 +76,12 @@ public static class DapperExtensions
         return entities;
     }
     
-    public static List<CollectionWork> ToCollectionWorks(this IEnumerable<dynamic> items)
+    public static List<CollectionWorkInfo> ToCollectionWorks(this IEnumerable<dynamic> items)
     {
-        var entities = new List<CollectionWork>();
+        var entities = new List<CollectionWorkInfo>();
         foreach (var item in items)
         {
-            var entity = new CollectionWork();
+            var entity = new CollectionWorkInfo();
             foreach (KeyValuePair<string, object> i in item)
             {
                 switch (i.Key)

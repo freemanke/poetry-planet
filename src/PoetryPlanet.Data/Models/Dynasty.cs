@@ -6,8 +6,6 @@ namespace PoetryPlanet.Data.Models;
 [Table("dynasties")]
 public class Dynasty
 {
-    public Dynasty(){}
-        
     [Key]
     [Column("id")]
     public int Id { get; set; }

@@ -6,8 +6,6 @@ namespace PoetryPlanet.Data.Models;
 [Table("collection_kinds")]
 public class CollectionKind
 {
-    public CollectionKind(){}
-        
     [Key]
     [Column("id")]
     public int Id { get; set; }
