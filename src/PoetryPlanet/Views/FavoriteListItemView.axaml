@@ -14,7 +14,7 @@
         <Grid>
             <Button 
                 Background="Transparent"
-                Command="{Binding FavoriteCommand}"
+                Command="{Binding UnFavoriteCommand}"
                 Foreground="{Binding FavoriteColor}"
                 Margin="4,0" Width="45" Height="45" BorderThickness="0" 
                 CornerRadius="10" HorizontalAlignment="Left">

@@ -19,7 +19,9 @@ public abstract partial class ViewModelBase : ObservableObject
         appSetting = App.GetRequiredService<AppSetting>();
         if (GetType().Name != nameof(WorkListItemViewModel)
             && GetType().Name != nameof(CollectionListItemViewModel))
-            logger.LogInformation("Create view model {}", GetType().Name);
+        {
+            // logger.LogInformation("Create view model {}", GetType().Name);
+        }
     }
 
     [RelayCommand]

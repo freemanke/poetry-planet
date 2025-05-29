@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Avalonia.Media;
 
 namespace PoetryPlanet;
 
@@ -14,6 +15,8 @@ public class AppSetting
     public static string LogFilePath = Path.Combine(ConfigRootPath, "poetry.planet.log");
     public static string SQLiteFileName = "poetry-planet.sqlite";
     public static string SQLiteFilePath = Path.Combine(AppSetting.ConfigRootPath, AppSetting.SQLiteFileName);
+    public static readonly SolidColorBrush FavoriteColorBrush = new(Colors.MediumSeaGreen);
+    public static readonly SolidColorBrush UnFavoriteColorBrush = new(Colors.LightGray);
 
     private static string fileName = "App.setting.json";
 

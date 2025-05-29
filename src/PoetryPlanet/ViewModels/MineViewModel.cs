@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
-using System.Net;
+using System.Linq;
 using System.Text.Json;
 using Avalonia;
 using Avalonia.Controls;
@@ -15,7 +16,7 @@ public partial class MineViewModel : ViewModelBase
 {
     [ObservableProperty] private string fileSetting;
     [ObservableProperty] private string memorySetting;
-    [ObservableProperty] private string logs = "点击加载读取日志...";
+    [ObservableProperty] private List<LogViewModel> logs = [];
 
     public MineViewModel()
     {
@@ -29,13 +30,15 @@ public partial class MineViewModel : ViewModelBase
         FileSetting = JsonSerializer.Serialize(AppSetting.Load());
         MemorySetting = JsonSerializer.Serialize(appSetting);
     }
-    
+
     [RelayCommand]
     private void RefreshLogs()
     {
-        Logs = File.ReadAllText(AppSetting.LogFilePath);
+        Logs = File.ReadAllLines(AppSetting.LogFilePath).Reverse()
+            .Take(500).Select(a => new LogViewModel { Log = a })
+            .ToList();
     }
-    
+
     [RelayCommand]
     private void ShowDialog()
     {

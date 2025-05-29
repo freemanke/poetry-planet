@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
              xmlns:controls="clr-namespace:PoetryPlanet.Controls"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:DataType="viewModels:MineViewModel"
              x:Class="PoetryPlanet.Views.MineView">
@@ -31,8 +32,18 @@
                 <controls:GroupBox FontSize="17" Header="日志文件">
                     <StackPanel Spacing="5">
                         <Button HorizontalAlignment="Left" Content="刷新日志" Command="{Binding RefreshLogsCommand}"></Button>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                            <TextBlock Text="{Binding Logs}" FontFamily="" TextWrapping="NoWrap"></TextBlock>
+                        <ScrollViewer Margin="0,0,0,0">
+                            <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
+                            <ItemsRepeater ItemsSource="{Binding Logs}">
+                                <ItemsRepeater.Layout>
+                                    <StackLayout />
+                                </ItemsRepeater.Layout>
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate DataType="viewModels:LogViewModel">
+                                        <views:LogView/>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
                         </ScrollViewer>
                     </StackPanel>
                 </controls:GroupBox>

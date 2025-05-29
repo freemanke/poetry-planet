@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using Microsoft.Extensions.Logging;
 using PoetryPlanet.Controls;
-using PoetryPlanet.Dtos;
-using PoetryPlanet.Services;
 
 namespace PoetryPlanet.ViewModels;
 
@@ -30,11 +26,15 @@ public partial class FavoriteListViewModel : ViewModelBase
         {
             Id = a.Id,
             Title = a.Title,
-            AuthorAndDynasty = $"{a.Author}·{a.Dynasty}" ,
+            AuthorAndDynasty = $"{a.Author}·{a.Dynasty}",
             Content = a.Content,
-        });
+            IsFavorite = true,
+            FavoriteColor = AppSetting.FavoriteColorBrush,
+        }).ToList();
         WorkList.Clear();
         WorkList.AddRange(items);
+        logger.LogInformation($"{nameof(DoGetFavoriteWorks)} {Serializer.Serialize(items.Select(a => a.Id))} " +
+                              $"{Serializer.Serialize(WorkList.Select(a => a.Id))}");
     }
 
     private void CreateDefault()

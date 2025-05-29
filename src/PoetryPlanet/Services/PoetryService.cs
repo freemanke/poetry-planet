@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json;
-using AutoMapper;
 using Dapper;
 using JetBrains.Annotations;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
-using Nelibur.ObjectMapper;
-using PoetryPlanet.Data;
 using PoetryPlanet.Data.Models;
 using PoetryPlanet.Dtos;
 
@@ -19,29 +14,29 @@ namespace PoetryPlanet.Services;
 
 public class PoetryService
 {
-    private object locker = new();
+    private readonly object locker = new();
     [UsedImplicitly] private HttpClient httpClient;
-    private SqliteConnection connection;
+    private readonly SqliteConnection connection;
     private readonly AppSetting appSetting;
     private readonly ILogger<PoetryService> logger;
     private const string worksRoute = "/api/v1/works";
     private const string workListRoute = "/api/v1/work_list";
     private const string collectionListRoute = "/api/v1/collections";
     private List<CollectionInfo> collectionCache = [];
-    private List<WorkInfo> workCache = [];
+    private readonly List<WorkInfo> workCache = [];
 
     public PoetryService(ILogger<PoetryService> logger, AppSetting appSetting)
     {
         this.logger = logger;
         this.appSetting = appSetting;
 
-        if (!File.Exists(AppSetting.SQLiteFilePath)) File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
+        if (!File.Exists(AppSetting.SQLiteFilePath))
+        {
+            File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
+            logger.LogInformation($"copy init database from {AppSetting.SQLiteFileName} to {AppSetting.SQLiteFilePath}");
+        }
         connection = new SqliteConnection($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
-
-        var rootPath = OperatingSystem.IsAndroid()
-            ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-            : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        logger.LogInformation("Current data root path: {}", rootPath);
+        logger.LogInformation("Current data root path: {}", AppSetting.ConfigRootPath);
 
         var handler = new HttpClientHandler();
         handler.ClientCertificateOptions = ClientCertificateOption.Manual;
@@ -57,9 +52,10 @@ public class PoetryService
             lock (locker)
             {
                 var items = connection.Query(
-                        "select id as Id, title as Title, author as Author, content as Content, dynasty as Dynasty  from works")
+                        "select id as Id, title as Title, author as Author, content as Content, dynasty as Dynasty from works")
                     .ToWorks();
                 workCache.AddRange(items);
+                logger.LogInformation($"{nameof(GetWorks)} {items.Count}");
             }
         }
         catch (Exception e)
@@ -72,28 +68,34 @@ public class PoetryService
 
     public List<WorkListItemInfo> GetWorkList()
     {
+        var items = new List<WorkListItemInfo>();
         try
         {
-            var works = GetWorks();
-            return works.Select(a => new WorkListItemInfo
+            lock (locker)
             {
-                Id = a.Id,
-                Title = a.Title ?? string.Empty,
-                Author = a.Author ?? string.Empty,
-                Content = a.Content ?? string.Empty,
-                Dynasty = a.Dynasty ?? string.Empty
-            }).ToList();
+                var works = GetWorks();
+                items = works.Select(a => new WorkListItemInfo
+                {
+                    Id = a.Id,
+                    Title = a.Title ?? string.Empty,
+                    Author = a.Author ?? string.Empty,
+                    Content = a.Content ?? string.Empty,
+                    Dynasty = a.Dynasty ?? string.Empty
+                }).ToList();
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
 
-        return [];
+        logger.LogInformation($"{nameof(GetWorkList)} {items.Count}");
+        return items;
     }
 
     public List<WorkListItemInfo> GetWorkList(int collectionId)
     {
+        var items = new List<WorkListItemInfo>();
         try
         {
             lock (locker)
@@ -102,7 +104,7 @@ public class PoetryService
                 var workIds = connection.Query(
                         $"select work_id as WorkId from collection_works where collection_id={collectionId}")
                     .ToCollectionWorks().Select(a => a.WorkId).ToList();
-                return workList.Where(a => workIds.Contains(a.Id)).ToList();
+                items = workList.Where(a => workIds.Contains(a.Id)).ToList();
             }
 
         }
@@ -111,7 +113,8 @@ public class PoetryService
             Console.WriteLine(e.Message);
         }
 
-        return [];
+        logger.LogInformation($"{nameof(GetWorkList)} {items.Count}");
+        return items;
     }
 
     public List<CollectionInfo> GetCollectionList()
@@ -169,7 +172,7 @@ public class PoetryService
                         Content = a.Content,
                         Dynasty = a.Dynasty
                     }).ToList();
-                logger.LogInformation("Get favorites \"{}\"", string.Join(",", items.Select(a => a.Title)));
+                logger.LogInformation($"{nameof(GetFavorites)} {Serializer.Serialize(items.Select(a => a.Id))}");
                 return items;
             }
         }

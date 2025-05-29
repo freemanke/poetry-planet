@@ -1,17 +1,5 @@
-using System;
 using System.Collections.ObjectModel;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using DeepSeek.Core;
-using DeepSeek.Core.Models;
-using Microsoft.Extensions.Logging;
-using PoetryPlanet.Controls;
-using PoetryPlanet.Services;
-using PoetryPlanet.Views;
-using MobileNavigation = PoetryPlanet.Controls.MobileNavigation;
 
 namespace PoetryPlanet.ViewModels;
 
@@ -24,7 +12,7 @@ public partial class CollectionViewModel : ViewModelBase
 
     public CollectionViewModel()
     {
-        WorkList.Add(new WorkListItemViewModel()
+        WorkList.Add(new WorkListItemViewModel
         {
             Title = "题西林壁", AuthorAndDynasty = "唐·白居易", Content = "内容"
         });

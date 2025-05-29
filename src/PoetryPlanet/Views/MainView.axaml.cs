@@ -1,8 +1,6 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Media;
-using Avalonia.VisualTree;
-using Material.Styles.Themes;
 using PoetryPlanet.ViewModels;
 
 namespace PoetryPlanet.Views;
@@ -11,16 +9,13 @@ public partial class MainView : UserControl
 {
     public MainView()
     {
-        InitializeComponent(); 
+        InitializeComponent();
     }
-    
+
     private void TabFavoriteTapped(object? sender, TappedEventArgs e)
     {
-        var view = this.FindDescendantOfType<FavoriteListView>();
-        if (view != null)
-        {
-            var vm = view.DataContext as FavoriteListViewModel;
-            vm?.DoGetFavoriteWorks();
-        }
+        Console.WriteLine("TabFavoriteTapped");
+        var vm = App.GetRequiredService<FavoriteListViewModel>();
+        vm.DoGetFavoriteWorks();
     }
 }

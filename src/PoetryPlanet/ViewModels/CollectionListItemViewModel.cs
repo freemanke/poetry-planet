@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,8 +10,6 @@ namespace PoetryPlanet.ViewModels;
 
 public partial class CollectionListItemViewModel : ViewModelBase
 {
-    public CollectionListItemViewModel(){}
-    
     [ObservableProperty] private int id = 1001;
     [ObservableProperty] private string name = "小学生诗词";
     [ObservableProperty] private string kind = "书籍";
@@ -24,18 +21,9 @@ public partial class CollectionListItemViewModel : ViewModelBase
     private void ShowDetail()
     {
         logger.LogInformation("Show collection detail");
-        var vm = new CollectionViewModel();
+        var vm = new CollectionViewModel { Name = Name, Desc = Desc, Id = Id };
         vm.WorkList.Clear();
         vm.WorkList.AddRange(poetryService.GetWorkList(Id).Select(a => WorkListItemViewModel.Create(a, false)));
         MobileNavigation.Push(new CollectionView { DataContext = vm });
-    }
-
-    public CollectionViewModel Create()
-    {
-        return new CollectionViewModel
-        {
-            Id = Id, Desc = Desc, Name = Name,
-            WorkList = new ObservableCollection<WorkListItemViewModel>()
-        };
     }
 }

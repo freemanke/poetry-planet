@@ -38,7 +38,7 @@
                         <StackPanel>
                             <controls:FormFieldSwitch Title="开启导航" IsChecked="False" />
                             <controls:HorizontalSeparator />
-                            <controls:MobilePicker Margin="5"
+                            <controls:MobilePicker Margin="5" IsVisible="False"
                                 SubTitle="选择系统文字样式"
                                 SelectedItem="默认"
                                 Title="文字样式">

@@ -3,13 +3,13 @@ using Avalonia.Markup.Xaml;
 
 namespace PoetryPlanet.Views;
 
-public partial class CollectionListItemView : UserControl
+public partial class LogView : UserControl
 {
-    public CollectionListItemView()
+    public LogView()
     {
         InitializeComponent();
     }
-
+    
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);

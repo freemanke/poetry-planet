@@ -11,12 +11,12 @@
     <Design.DataContext>
         <viewModels:FavoriteListViewModel></viewModels:FavoriteListViewModel>
     </Design.DataContext>
-    <ScrollViewer VerticalScrollBarVisibility="Hidden" GotFocus="InputElement_OnGotFocus">
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
         <StackPanel VerticalAlignment="Top">
             <TextBlock Classes="Body" TextAlignment="Center" HorizontalAlignment="Stretch"
                 Text="我的收藏" Margin="10"></TextBlock>
             <controls:HorizontalSeparator HorizontalAlignment="Stretch"/>
-            <ScrollViewer Margin="0,48,0,0" VerticalScrollBarVisibility="Hidden">
+            <ScrollViewer Margin="0,0,0,0" VerticalScrollBarVisibility="Hidden">
                 <!-- 使用 Avalonia.Controls.ItemsRepeater 内置的 Virtualization 实现高性能的列表渲染 -->
                 <ItemsRepeater ItemsSource="{Binding WorkList}">
                     <ItemsRepeater.Layout>
@@ -24,7 +24,7 @@
                     </ItemsRepeater.Layout>
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate DataType="viewModels:FavoriteListItemViewModel">
-                            <views:FavoriteListItemView/>
+                            <views:FavoriteListItemView IsVisible="{Binding IsFavorite}"/>
                         </DataTemplate>
                     </ItemsRepeater.ItemTemplate>
                 </ItemsRepeater>

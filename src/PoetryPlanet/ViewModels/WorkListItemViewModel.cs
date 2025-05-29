@@ -19,8 +19,6 @@ public partial class WorkListItemViewModel : ViewModelBase
     [ObservableProperty] private bool isFavorite;
     [ObservableProperty] private IBrush favoriteColor = UnFavoriteColorBrush;
 
-    public WorkListItemViewModel(){}
-    
     [RelayCommand]
     private void Favorite()
     {
@@ -33,6 +31,7 @@ public partial class WorkListItemViewModel : ViewModelBase
     public WorkViewModel CreateWorkViewModel()
     {
         var work = poetryService.GetWork(Id);
+        if (work == null) return new WorkViewModel();
         var vm = new WorkViewModel
         {
             Id = work.Id,
