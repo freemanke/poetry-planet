@@ -1,6 +1,4 @@
 using PoetryPlanet;
-using PoetryPlanet.Web;
-using PoetryPlanet.Web.Services;
 
 [assembly: ExceptionInterceptor(AttributeTargetTypes = "PoetryPlanet.Web.Services.DebugService")]
 
@@ -8,7 +6,6 @@ namespace PoetryPlanet.Web.Services;
 
 public class DebugService
 {
-    [ExceptionInterceptor]
     public void ReturnVoid()
     {
         throw new Exception("由服务主动产生的异常");

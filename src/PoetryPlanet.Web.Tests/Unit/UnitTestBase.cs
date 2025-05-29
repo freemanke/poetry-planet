@@ -1,4 +1,3 @@
-using PoetryPlanet.Data;
 using PoetryPlanet.Data.Models;
 using PoetryPlanet.Data.Repositories;
 

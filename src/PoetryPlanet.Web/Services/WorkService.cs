@@ -1,11 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using PoetryPlanet;
 using PoetryPlanet.Data;
 using PoetryPlanet.Data.Models;
 using PoetryPlanet.Data.Repositories;
-using PoetryPlanet.Web;
-
-[assembly: ExceptionInterceptor(AttributeTargetTypes = $"{nameof(PoetryPlanet.Web.Services.DebugService)}", AspectPriority = 10)]
 
 namespace PoetryPlanet.Web.Services;
 

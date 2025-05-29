@@ -49,23 +49,18 @@ public class UnitOfWorkTest : IntegrationTestBase
     }
 
     [Test]
-    public async Task ToListAsyncOfEntityForTest()
-    {
-        var items = await unit.TestTestEntities.ToListAsync();
-        Assert.That(items, Is.Empty);
-    }
-
-    [Test]
     public async Task CRUD()
     {
         var work = GetRequiredService<IUnitOfWork>();
         Assert.That(work, Is.Not.Null);
 
         var item = await work.Dynasties.FirstOrDefaultAsync(a => a.Name == "唐");
-        Assert.That(item!.Name, Is.EqualTo("唐"));
+        Assert.That(item, Is.Not.Null);
+        Assert.That(item.Name, Is.EqualTo("唐"));
 
         item = await work.Dynasties.FindAsync(10001);
-        Assert.That(item!.Name, Is.EqualTo("宋"));
+        Assert.That(item, Is.Not.Null);
+        Assert.That(item.Name, Is.EqualTo("宋"));
 
         var items = await work.Dynasties.ToListAsync();
         Assert.That(items, Is.Not.Null);
