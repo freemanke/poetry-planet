@@ -31,6 +31,10 @@
     <Content Update="poetry-planet.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\PoetryPlanet\Assets\sample.mp3">
+      <Link>sample.mp3</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\PoetryPlanet\poetry-planet.sqlite">
       <Link>poetry-planet.sqlite</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

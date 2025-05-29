@@ -17,7 +17,7 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Bottom"/>
         <ScrollViewer VerticalAlignment="Top" VerticalScrollBarVisibility="Hidden" Margin="10,0,10,48">
-            <StackPanel Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel Spacing="0" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <SelectableTextBlock 
                         Classes="H1"
                         Text="{Binding Name}" 

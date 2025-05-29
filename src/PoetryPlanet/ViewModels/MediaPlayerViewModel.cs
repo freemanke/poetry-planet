@@ -16,8 +16,6 @@ public partial class MediaPlayerViewModel : ViewModelBase
     private LibVLC? libVlc;
     private MediaPlayer? player;
     
-    public MediaPlayerViewModel(){}
-
     [RelayCommand]
     public void Play()
     {
@@ -35,7 +33,7 @@ public partial class MediaPlayerViewModel : ViewModelBase
                 player.TimeChanged += (_, _) => { PlayStatus = $"{player.Time / 1000.0} / {player.Length / 1000.0}"; };
             }
 
-            var stream = File.Open("./Assets/sample.mp3", FileMode.Open);
+            var stream = File.Open("sample.mp3", FileMode.Open);
             using var media = new Media(libVlc, new StreamMediaInput(stream));
             player.Media = media;
             player.Play();
