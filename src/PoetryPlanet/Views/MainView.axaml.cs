@@ -12,10 +12,17 @@ public partial class MainView : UserControl
         InitializeComponent();
     }
 
-    private void TabFavoriteTapped(object? sender, TappedEventArgs e)
+    private void FavoritesTapped(object? sender, TappedEventArgs e)
     {
-        Console.WriteLine("TabFavoriteTapped");
+        Console.WriteLine($"{nameof(FavoritesTapped)}");
         var vm = App.GetRequiredService<FavoriteListViewModel>();
         vm.DoGetFavoriteWorks();
+    }
+
+    private void WorksTapped(object? sender, TappedEventArgs e)
+    {
+        Console.WriteLine($"{nameof(WorksTapped)}");
+        var vm = App.GetRequiredService<WorkListViewModel>();
+        vm.DoGetWorkList();
     }
 }

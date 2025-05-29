@@ -6,5 +6,5 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:LogViewModel"
              x:Class="PoetryPlanet.Views.LogView">
-    <TextBlock Background="LightGray" TextWrapping="Wrap" FontSize="12" Text="{Binding Log}"></TextBlock>
+    <TextBlock Background="LightGray" TextWrapping="NoWrap" FontSize="12" Text="{Binding Log}"></TextBlock>
 </UserControl>

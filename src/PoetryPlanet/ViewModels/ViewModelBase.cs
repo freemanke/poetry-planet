@@ -10,6 +10,7 @@ public abstract partial class ViewModelBase : ObservableObject
 {
     protected readonly ILogger logger;
     protected readonly PoetryService poetryService;
+    protected readonly HttpService httpService;
     protected readonly AppSetting appSetting;
 
     protected ViewModelBase()
@@ -17,6 +18,7 @@ public abstract partial class ViewModelBase : ObservableObject
         logger = App.GetRequiredService<ILoggerFactory>().CreateLogger(GetType().FullName ?? "");
         poetryService = App.GetRequiredService<PoetryService>();
         appSetting = App.GetRequiredService<AppSetting>();
+        httpService = App.GetRequiredService<HttpService>();
         if (GetType().Name != nameof(WorkListItemViewModel)
             && GetType().Name != nameof(CollectionListItemViewModel))
         {

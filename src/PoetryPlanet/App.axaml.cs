@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
@@ -60,6 +61,7 @@ public class App : Application
         services.AddAutoMapper(typeof(AutoMapperProfile));
         services.AddSingleton(AppSetting.Load());
         services.AddSingleton<PoetryService>();
+        services.AddSingleton<HttpService>();
         services.AddSingleton<SQLiteService>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<MineViewModel>();
@@ -87,6 +89,8 @@ public class App : Application
     {
         var mainViewModel = GetRequiredService<MainViewModel>();
         var appSetting = GetRequiredService<AppSetting>();
+        var sqliteService = GetRequiredService<SQLiteService>();
+        Task.Run(()=>sqliteService.Initialize(true));
         ChangeTheme(appSetting.IsDark);
         switch (ApplicationLifetime)
         {

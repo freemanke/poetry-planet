@@ -65,3 +65,11 @@ dotnet user-secrets set "MYSQL_ROOT_PASSWORD" "***"
 
 ### Blazor 项目中如何处理全局未处理异常
 [参考文档](https://www.telerik.com/blogs/work-unhandled-exceptions-gracefully-blazor-server-dotnet-6-error-boundaries)
+
+
+## 发布到 Android 手机
+
+1. 访问[官方网址](https://docs.avaloniaui.net/docs/guides/platforms/android/setting-up-your-developer-environment-for-android)准备环境 
+2. 安装 Android Studio 在其中配置 SDK 和虚拟机
+3. dotnet build /p:AndroidSdkDirectory=/Users/freeman/Library/Android/sdk
+3. Rider 上安装 Rider Android Support 插件

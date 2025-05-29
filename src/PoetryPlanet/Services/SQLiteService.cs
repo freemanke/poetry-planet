@@ -15,20 +15,27 @@ namespace PoetryPlanet.Services;
 public class SQLiteService
 {
     private readonly ILogger<SQLiteService> logger;
+    private readonly HttpService httpService;
     private readonly SqliteConnection connection;
     private readonly Lock locker = new();
+    private static bool initialized = false;
 
-    public SQLiteService(ILogger<SQLiteService> logger)
+    public SQLiteService(ILogger<SQLiteService> logger, HttpService httpService)
     {
         this.logger = logger;
-        if (!File.Exists(AppSetting.SQLiteFilePath))
-        {
-            File.Copy(AppSetting.SQLiteFileName, AppSetting.SQLiteFilePath);
-            logger.LogInformation(
-                $"copy init database from {AppSetting.SQLiteFileName} to {AppSetting.SQLiteFilePath}");
-        }
-
+        this.httpService = httpService;
         connection = new SqliteConnection($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
+    }
+
+    public void Initialize(bool isForce)
+    {
+        if (!File.Exists(AppSetting.SQLiteFilePath) || isForce)
+        {
+            httpService.Download(AppSetting.SQLiteUrl, AppSetting.SQLiteFilePath);
+            logger.LogInformation($"Download from {AppSetting.SQLiteUrl} to {AppSetting.SQLiteFilePath}");
+        }
+        logger.LogInformation($"SQLite file path: {AppSetting.SQLiteFilePath}");
+        initialized = true;
     }
 
     public List<WorkInfo> GetWorks()

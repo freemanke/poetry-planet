@@ -11,7 +11,6 @@ namespace PoetryPlanet.Services;
 
 public class PoetryService
 {
-    [UsedImplicitly] private HttpClient httpClient;
 
     private readonly AppSetting appSetting;
     private readonly SQLiteService sqlite;
@@ -28,10 +27,6 @@ public class PoetryService
         this.logger = logger;
         this.appSetting = appSetting;
         this.sqlite = sqlite;
-        var handler = new HttpClientHandler();
-        handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-        handler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
-        httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://home.freemanke.com:60011") };
         logger.LogInformation("Root path {}", AppSetting.ConfigRootPath);
     }
 

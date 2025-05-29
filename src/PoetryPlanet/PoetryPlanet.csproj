@@ -152,17 +152,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Assets\sample.mp3" />
-    <Content Include="Assets\sample.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Remove="PoetryPlanet.csproj.DotSettings" />
-    <Content Update="poetry-planet.sqlite">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="poetry-planet.sqlite" />
-  </ItemGroup>
 </Project>

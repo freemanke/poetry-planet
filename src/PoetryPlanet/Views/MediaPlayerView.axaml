@@ -19,6 +19,7 @@
             <controls:HorizontalSeparator></controls:HorizontalSeparator>
             <Button Margin="10,20"
                     Content="播放音乐"
+                    IsEnabled="{Binding !IsPlaying}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Click="Button_OnClick" />

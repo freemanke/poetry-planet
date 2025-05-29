@@ -13,7 +13,7 @@
   </Design.DataContext>
     <controls:InteractiveContainer>
         <TabControl Classes="Navigator">
-            <TabItem Classes="Navigator">
+            <TabItem Classes="Navigator" Tapped="WorksTapped">
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Navigator" Data="{StaticResource home_regular}" />
@@ -31,7 +31,7 @@
                 </TabItem.Header>
                 <views:CollectionListView/>
             </TabItem>
-            <TabItem Classes="Navigator" Tapped="TabFavoriteTapped">
+            <TabItem Classes="Navigator" Tapped="FavoritesTapped">
                 <TabItem.Header>
                     <StackPanel>
                         <PathIcon Classes="Navigator" Data="{StaticResource favorite}" />

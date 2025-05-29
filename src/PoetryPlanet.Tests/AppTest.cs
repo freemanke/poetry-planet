@@ -9,6 +9,24 @@ namespace PoetryPlanet.Tests;
 public class AppTest
 {
     [Test]
+    public void DownloadSqlite()
+    {
+        var filePath = "/tmp/abc.sqlite";
+        var httpService = App.GetRequiredService<HttpService>();
+        httpService.Download(AppSetting.SQLiteUrl, filePath);
+        Assert.That(File.Exists(filePath), Is.True);
+    }
+    
+    [Test]
+    public void DownloadSampleMp3()
+    {
+        var filePath = "/tmp/sample.mp3";
+        var httpService = App.GetRequiredService<HttpService>();
+        httpService.Download(AppSetting.SampleMp3Url, filePath);
+        Assert.That(File.Exists(filePath), Is.True);
+    }
+
+    [Test]
     public void GetRequiredService()
     {
         var mainView = App.GetRequiredService<MainViewModel>();

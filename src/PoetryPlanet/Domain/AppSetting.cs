@@ -15,6 +15,8 @@ public class AppSetting
     public static SolidColorBrush FavoriteColorBrush { get; } = new(Colors.MediumSeaGreen);
     public static SolidColorBrush UnFavoriteColorBrush { get; } = new(Colors.LightGray);
     public static string LogFilePath { get; } = Path.Combine(ConfigRootPath, "poetry.planet.log");
+    public static string SQLiteUrl { get; } = "https://home.freemanke.com:60001/f/ea3a2673b9f6492a9630/?dl=1";
+    public static string SampleMp3Url { get; } = "https://home.freemanke.com:60001/f/2b3bee720d434c588672/?dl=1";
     public static string ConfigRootPath => OperatingSystem.IsAndroid()
         ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
