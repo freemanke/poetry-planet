@@ -23,6 +23,7 @@ public class AppSetting
     [JsonPropertyName("is_dark")] public bool IsDark { get; set; }
     [JsonPropertyName("h1_font_size")] public int H1FontSize { get; set; } = 20;
     [JsonPropertyName("body_font_size")] public int BodyFontSize { get; set; } = 16;
+    [JsonPropertyName("username")] public string Username { get; set; } = "freemanke";
 
     [JsonPropertyName("favorite_work_ids")]
     public List<int> FavoriteWorkIds { get; set; } = [];

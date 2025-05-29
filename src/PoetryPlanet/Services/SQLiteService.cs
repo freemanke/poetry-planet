@@ -144,4 +144,30 @@ public class SQLiteService
         logger.LogInformation($"{nameof(GetWork)} {Serializer.Serialize(work?.Title)}");
         return work;
     }
+
+    public List<UserFavoriteWork> GetUserFavorite(string username)
+    {
+        var items = new List<UserFavoriteWork>();
+        try
+        {
+            using (locker.EnterScope())
+            {
+                items = connection.Query<UserFavoriteWork>(
+                    $"select id as Id, username as Username, work_id as WorkId" +
+                    $" from works where username  = {username}").ToList();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        logger.LogInformation($"{nameof(GetWork)} {Serializer.Serialize(items)}");
+        return items;
+    }
+    
+    public bool UserFavoriteWork(string username, int workId)
+    {
+        return true;
+    }
 }
