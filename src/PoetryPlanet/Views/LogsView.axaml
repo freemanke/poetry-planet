@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             xmlns:views="clr-namespace:PoetryPlanet.Views"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+             x:DataType="viewModels:LogsViewModel"
+             x:Class="PoetryPlanet.Views.LogsView">
+     <Design.DataContext>
+        <viewModels:LogsViewModel/>
+    </Design.DataContext>
+    <DockPanel Background="{DynamicResource Background}">
+        <StackPanel Margin="5"
+            VerticalAlignment="Top" HorizontalAlignment="Left" 
+            DockPanel.Dock="Top"
+            Orientation="Horizontal">
+            <Button HorizontalAlignment="Left" Content="刷新日志" Command="{Binding RefreshLogsCommand}"></Button>
+        </StackPanel>
+        <Button 
+            Command="{Binding PreviousViewCommand}"
+            Content="返回" Height="48"
+            HorizontalAlignment="Stretch"
+            DockPanel.Dock="Bottom"/>
+        <ScrollViewer Background="DimGray" Margin="4,0,4,4" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <ItemsRepeater ItemsSource="{Binding Logs}">
+                <ItemsRepeater.Layout>
+                    <StackLayout />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate DataType="viewModels:LogItemViewModel">
+                        <views:LogItemView/>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

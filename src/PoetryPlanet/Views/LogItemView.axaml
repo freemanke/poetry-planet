@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:PoetryPlanet.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="100"
+             x:DataType="viewModels:LogItemViewModel"
+             x:Class="PoetryPlanet.Views.LogItemView">
+    <Design.DataContext>
+        <viewModels:LogItemViewModel></viewModels:LogItemViewModel>
+    </Design.DataContext>
+        <TextBlock 
+            Margin="2" TextWrapping="NoWrap" 
+            FontSize="11" FontFamily="Nunito"
+            Foreground="LightGray"
+            Text="{Binding Log}"/>
+   
+</UserControl>

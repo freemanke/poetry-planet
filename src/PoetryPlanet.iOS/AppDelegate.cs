@@ -18,6 +18,7 @@ public partial class AppDelegate : AvaloniaAppDelegate<App>
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
         return base.CustomizeAppBuilder(builder)
+            .ConfigureFonts(fontManager => { fontManager.AddFontCollection(new InterFontCollection());})
             .WithInterFont();
     }
 }

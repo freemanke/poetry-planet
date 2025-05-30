@@ -5,14 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace PoetryPlanet.Services;
 
-public class CustomFileLoggerProvider : ILoggerProvider
+public class CustomFileLoggerProvider(StreamWriter logFileWriter) : ILoggerProvider
 {
-    private readonly StreamWriter logFileWriter;
-
-    public CustomFileLoggerProvider(StreamWriter logFileWriter)
-    {
-        this.logFileWriter = logFileWriter ?? throw new ArgumentNullException(nameof(logFileWriter));
-    }
+    private readonly StreamWriter logFileWriter = logFileWriter ?? throw new ArgumentNullException(nameof(logFileWriter));
 
     public ILogger CreateLogger(string categoryName)
     {
@@ -25,18 +20,9 @@ public class CustomFileLoggerProvider : ILoggerProvider
     }
 }
 
-public class CustomFileLogger : ILogger
+public class CustomFileLogger(string categoryName, StreamWriter logFileWriter) : ILogger
 {
-    private readonly string categoryName;
-    private readonly StreamWriter logFileWriter;
-
-    public CustomFileLogger(string categoryName, StreamWriter logFileWriter)
-    {
-        this.categoryName = categoryName;
-        this.logFileWriter = logFileWriter;
-    }
-
-    public IDisposable BeginScope<TState>(TState state) where TState : notnull
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
         return null;
     }
@@ -51,7 +37,7 @@ public class CustomFileLogger : ILogger
         EventId eventId,
         TState state,
         Exception? exception,
-        Func<TState, Exception, string> formatter)
+        Func<TState, Exception?, string> formatter)
     {
         if (!IsEnabled(logLevel)) return;
         var message = formatter(state, exception);

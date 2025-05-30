@@ -16,7 +16,7 @@ public partial class MineViewModel : ViewModelBase
 {
     [ObservableProperty] private string fileSetting;
     [ObservableProperty] private string memorySetting;
-    [ObservableProperty] private List<LogViewModel> logs = [];
+    [ObservableProperty] private List<LogItemViewModel> logs = [];
 
     public MineViewModel()
     {
@@ -32,11 +32,9 @@ public partial class MineViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void RefreshLogs()
+    private void ViewLogs()
     {
-        Logs = File.ReadAllLines(AppSetting.LogFilePath).Reverse()
-            .Take(500).Select(a => new LogViewModel { Log = a })
-            .ToList();
+        MobileNavigation.Push(new LogsView { DataContext = new LogsViewModel() });
     }
 
     [RelayCommand]

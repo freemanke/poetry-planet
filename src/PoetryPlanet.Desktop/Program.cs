@@ -16,6 +16,7 @@ internal sealed class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
+            .ConfigureFonts(fontManager => { fontManager.AddFontCollection(new InterFontCollection());})
             .WithInterFont()
             .LogToTrace();
 }

@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace PoetryPlanet.Views;
 
-public partial class LogView : UserControl
+public partial class LogItemView : UserControl
 {
-    public LogView()
+    public LogItemView()
     {
         InitializeComponent();
     }

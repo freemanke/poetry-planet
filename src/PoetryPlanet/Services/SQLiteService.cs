@@ -12,20 +12,11 @@ using PoetryPlanet.Dtos;
 
 namespace PoetryPlanet.Services;
 
-public class SQLiteService
+public class SQLiteService(ILogger<SQLiteService> logger, HttpService httpService)
 {
-    private readonly ILogger<SQLiteService> logger;
-    private readonly HttpService httpService;
-    private readonly SqliteConnection connection;
+    private readonly SqliteConnection connection = new($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
     private readonly Lock locker = new();
-    private static bool initialized = false;
-
-    public SQLiteService(ILogger<SQLiteService> logger, HttpService httpService)
-    {
-        this.logger = logger;
-        this.httpService = httpService;
-        connection = new SqliteConnection($"DataSource={AppSetting.SQLiteFilePath};Cache=Shared");
-    }
+    private static bool initialized;
 
     public void Initialize(bool isForce)
     {
@@ -40,6 +31,7 @@ public class SQLiteService
 
     public List<WorkInfo> GetWorks()
     {
+        if (!initialized) return [];
         var items = new List<WorkInfo>();
         using (locker.EnterScope())
         {

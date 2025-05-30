@@ -144,6 +144,10 @@
       <DependentUpon>FavoriteListItemView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\LogItemView.axaml.cs">
+      <DependentUpon>LogItemView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

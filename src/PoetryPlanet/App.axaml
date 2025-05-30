@@ -12,4 +12,7 @@
         <StyleInclude Source="Styles/Index.axaml" />
         <semi:SemiTheme Locale="zh-CN" />
     </Application.Styles>
+    <Application.Resources>
+        <FontFamily x:Key="NunitoFont">avares://Assets/Fonts#Nunito</FontFamily>
+    </Application.Resources>
 </Application>

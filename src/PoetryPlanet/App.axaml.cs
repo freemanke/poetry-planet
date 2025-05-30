@@ -89,8 +89,8 @@ public class App : Application
     {
         var mainViewModel = GetRequiredService<MainViewModel>();
         var appSetting = GetRequiredService<AppSetting>();
-        var sqliteService = GetRequiredService<SQLiteService>();
-        Task.Run(()=>sqliteService.Initialize(true));
+        var sqliteService = GetRequiredService<SQLiteService>(); 
+        if(!Design.IsDesignMode) Task.Run(() => sqliteService.Initialize(false));
         ChangeTheme(appSetting.IsDark);
         switch (ApplicationLifetime)
         {
