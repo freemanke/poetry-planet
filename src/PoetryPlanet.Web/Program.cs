@@ -1,9 +1,11 @@
 using System.Net;
+using System.Reflection;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using PoetryPlanet.Data;
 using PoetryPlanet.Data.Repositories;
@@ -23,6 +25,14 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         RegisterServices(builder);
         RegisterDbMysql(builder);
+        
+        // 注册文档框架组件
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1" });
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
 
         var app = builder.Build();
         app.UseExceptionHandler(Consts.RouterError);
@@ -30,6 +40,12 @@ public class Program
         app.MapControllers();
         app.UseAntiforgery();
         app.MapStaticAssets();
+        app.UseSwagger(c => { c.RouteTemplate = "/api/swagger/{documentname}/swagger.json"; });
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint($"/api/swagger/v1/swagger.json", "授权管理客户端接口");
+            c.RoutePrefix = "api/swagger"; // 通过该路由访问 Swagger UI
+        });
         app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
         app.MapAdditionalIdentityEndpoints();
         app.UseStatusCodePagesWithRedirects(Consts.RouterNotFound);

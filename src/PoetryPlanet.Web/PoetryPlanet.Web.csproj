@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-PoetryPlanet.Web-e54df4e5-70e7-4f29-b002-979b4c32d466</UserSecretsId>
         <AssemblyVersion>1.0.0.101</AssemblyVersion>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,6 +25,9 @@
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.3.efcore.9.0.0" />
         <PackageReference Include="radzen.blazor" Version="6.2.3" />
         <PackageReference Include="PostSharp.Redist" Version="2025.0.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="9.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.1" />
         <PackageReference Include="System.Text.Json" Version="9.0.5" />
     </ItemGroup>
 
