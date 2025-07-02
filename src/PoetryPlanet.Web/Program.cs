@@ -1,5 +1,4 @@
 using System.Net;
-using AutoMapper;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
@@ -80,7 +79,7 @@ public class Program
         var services = builder.Services;
         var config = builder.Configuration;
         var serverVersion = new MySqlServerVersion(new Version(5, 7, 44));
-        var cb = new MySqlConnectionStringBuilder(config.GetConnectionString(Consts.DEFAULT_CONNECTION)!);
+        var cb = new MySqlConnectionStringBuilder(config.GetConnectionString(Consts.DEFAULT_CONNECTION) ?? "");
         var passwordFromUserSecrets = config[Consts.MYSQL_ROOT_PASSWORD];
         cb.Password = passwordFromUserSecrets;
         var pwdFromContainerEnv = Environment.GetEnvironmentVariable(Consts.MYSQL_ROOT_PASSWORD);
@@ -126,7 +125,7 @@ public class Program
         var sp = ((IApplicationBuilder)app).ApplicationServices.CreateScope().ServiceProvider;
         var db = sp.GetRequiredService<ApplicationDbContext>();
         var logger = sp.GetRequiredService<ILogger<Program>>();
-        var cb = new MySqlConnectionStringBuilder(db.Database.GetConnectionString()!);
+        var cb = new MySqlConnectionStringBuilder(db.Database.GetConnectionString()??"");
         cb.Password = "*";
         
         logger.LogInformation("====================================================");
