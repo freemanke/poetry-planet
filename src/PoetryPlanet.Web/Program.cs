@@ -96,10 +96,11 @@ public class Program
             .AddDefaultTokenProviders();
     }
     
-    public static void RegisterDbSqlite(IServiceCollection services)
+    public static void RegisterDbSqlite(WebApplicationBuilder builder)
     {
+        var services = builder.Services;
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite("DataSource=./data/poetry-planet.db;Cache=Shared"));
+            options.UseSqlite("DataSource=/Users/freeman/Downloads/poetry-planet.sqlite;Cache=Shared"));
         services.AddDatabaseDeveloperPageExceptionFilter();
         services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<ApplicationDbContext>()

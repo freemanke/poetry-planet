@@ -17,10 +17,10 @@ public class WorkListController(ApplicationDbContext db, IMapper mapper) : Contr
         {
             Id = a.Id,
             Title = a.Title,
-            Author = a.Author,
-            AuthorId = a.AuthorId,
-            Dynasty = a.Dynasty,
-            Content = a.Content.Split("。", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? ""
+            Author = a.Author ?? "",
+            AuthorId = a.AuthorId ?? 0,
+            Dynasty = a.Dynasty ?? "",
+            Content = a.Content ?? "".Split("。", StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? ""
         }).ToListAsync();
         return items;
     }

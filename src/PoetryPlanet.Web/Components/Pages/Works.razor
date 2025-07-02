@@ -58,7 +58,7 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="Work" Property="Author" Title="诗人" Width="90px">
             <Template Context="data">
-                <a style="text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => ShowAuthorDetailAsync(data.AuthorId))">@data.Author</a>
+                <a style="text-underline-position:below; cursor:pointer;color: #0071c1;" @onclick="@(() => ShowAuthorDetailAsync(data.AuthorId??0))">@data.Author</a>
             </Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="Work" TextAlign="TextAlign.Center" Property="Dynasty" Title="朝代" Width="75px" />
